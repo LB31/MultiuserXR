@@ -7,7 +7,8 @@ using UnityEngine;
 
 public class ARPlayerController : NetworkBehaviour
 {
-
+    public GameObject Nose;
+    public float ScaleValue = 0.4f;
     public ulong LocalPlayerID;
 
     public NetworkVariable<Color> MaterialColor = new NetworkVariable<Color>(new NetworkVariableSettings
@@ -24,6 +25,7 @@ public class ARPlayerController : NetworkBehaviour
 
     private Renderer Renderer;
 
+    // This object is now spawned across the network and RPC's can be sent
     public override void NetworkStart()
     {
         Renderer = GetComponent<Renderer>();
@@ -31,7 +33,12 @@ public class ARPlayerController : NetworkBehaviour
         if (IsServer || IsHost)
         {
             MaterialColor.Value = Random.ColorHSV();
-            OwnScale.Value = 0.2f;
+            OwnScale.Value = ScaleValue;            
+        }
+
+        if(IsOwner)
+        {
+            Nose.SetActive(false);
         }
             
         Renderer.material.color = MaterialColor.Value;
@@ -41,7 +48,7 @@ public class ARPlayerController : NetworkBehaviour
     public void PrepareARPlayer()
     {
         transform.parent = Camera.main.transform;
-        transform.localPosition = Vector3.zero;
+        transform.position = Vector3.zero;
     }
 
     [ClientRpc]

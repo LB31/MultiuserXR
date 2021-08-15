@@ -63,11 +63,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_SessionOrigin = GetComponent<ARSessionOrigin>();
             m_RaycastManager = GetComponent<ARRaycastManager>();
 
-            Invoke(nameof(CustomStart), 2);
+            //Invoke(nameof(CustomStart), 0);
+            CustomStart();
         }
 
         private void CustomStart()
         {
+            // Show real content
             if (!isClient)
             {
                 ContentRepresentation.SetActive(false);
@@ -75,6 +77,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 return;
             }
 
+            // Show content representation for placement
             ContentRepresentation.SetActive(true);
             Content.gameObject.SetActive(false);
             
@@ -84,6 +87,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void Update()
         {
+            // Return if server or when placement was paused
             if (!isClient || !Recenter) return;
 
             UpdatePlacementPose();
@@ -101,27 +105,24 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         }
 
+        // Currently called by PlaceButton Button Object
         public void PlaceObject()
         {
             if (!placementPoseIsValid) return;
-            // This does not move the content; instead, it moves and orients the ARSessionOrigin
-            // such that the content appears to be at the raycast hit position.
+
             m_SessionOrigin.MakeContentAppearAt(Content, placementPose.position, placementPose.rotation);
 
-            RecenterButton.SetActive(true);
-            PlaceButton.SetActive(false);
-            Content.gameObject.SetActive(true);
-            ContentRepresentation.SetActive(false);
-            Recenter = false;
+            TooglePlacing(false);
         }
 
-        public void RestartPlacing()
+        // Currently called by RecenterWorldButton Button Object
+        public void TooglePlacing(bool startPlacing)
         {
-            RecenterButton.SetActive(false);
-            PlaceButton.SetActive(true);
-            Content.gameObject.SetActive(false);
-            ContentRepresentation.SetActive(true);
-            Recenter = true;
+            RecenterButton.SetActive(!startPlacing);
+            PlaceButton.SetActive(startPlacing);
+            Content.gameObject.SetActive(!startPlacing);
+            ContentRepresentation.SetActive(startPlacing);
+            Recenter = startPlacing;
         }
 
         private void UpdatePlacementIndicator()
@@ -147,7 +148,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 placementPoseIsValid = hits.Count > 0;
                 placementPose = hits[0].pose;
             }
-
 
             if (placementPoseIsValid)
             {

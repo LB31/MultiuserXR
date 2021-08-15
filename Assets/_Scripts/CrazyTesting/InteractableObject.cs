@@ -16,24 +16,32 @@ public class InteractableObject : NetworkBehaviour
     {
         WritePermission = NetworkVariablePermission.Everyone,
         ReadPermission = NetworkVariablePermission.Everyone
-    });
+    }, Color.white);
 
     public NetworkVariable<Vector3> OwnScale = new NetworkVariable<Vector3>(new NetworkVariableSettings
     {
         WritePermission = NetworkVariablePermission.Everyone,
         ReadPermission = NetworkVariablePermission.Everyone
-    });
+    }, Vector3.one);
 
     private Renderer Renderer;
 
-    public override void NetworkStart()
+    public void Awake()
     {
         Renderer = GetComponent<Renderer>();
+
+        if (IsServer || IsHost)
+            OwnScale.Value = transform.localScale;
+
         // Assign start values
-        if (MaterialColor.Value != new Color(0, 0, 0, 0))
+        if (MaterialColor.Value != Color.white)
             Renderer.material.color = MaterialColor.Value;
-        if (OwnScale.Value != Vector3.zero)
+        if (OwnScale.Value != Vector3.one)
+        {
             transform.localScale = OwnScale.Value;
+            Debug.Log(OwnScale.Value);
+        }
+            
 
         // Assign listeners for changed values
         MaterialColor.OnValueChanged += ChangeLocalColor;
@@ -44,6 +52,19 @@ public class InteractableObject : NetworkBehaviour
         ColorButton.onClick.AddListener(ChangeColor);
         BiggerButton.onClick.AddListener(() => ChangeScale(true));
         SmallerButton.onClick.AddListener(() => ChangeScale(false));
+        Debug.Log("Prepare interaction buttons");
+    }
+
+    private void OnEnable()
+    {
+        MaterialColor.OnValueChanged += ChangeLocalColor;
+        OwnScale.OnValueChanged += ChangeLocalScale;
+    }
+
+    private void OnDisable()
+    {
+        MaterialColor.OnValueChanged -= ChangeLocalColor;
+        OwnScale.OnValueChanged -= ChangeLocalScale;
     }
 
 
@@ -53,8 +74,9 @@ public class InteractableObject : NetworkBehaviour
         OwnScale.Value = bigger ? transform.localScale * 1.2f : transform.localScale / 1.2f;
     }
     private void ChangeColor()
-    {     
+    {
         MaterialColor.Value = Random.ColorHSV();
+        Debug.Log("ChangeColor");
     }
 
     private void ChangeLocalScale(Vector3 previousValue, Vector3 newValue)
