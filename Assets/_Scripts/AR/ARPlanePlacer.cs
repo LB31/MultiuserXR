@@ -14,7 +14,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
     /// </summary>
     [RequireComponent(typeof(ARSessionOrigin))]
     [RequireComponent(typeof(ARRaycastManager))]
-    public class MakeAppearOnPlane : MonoBehaviour
+    public class ARPlanePlacer : MonoBehaviour
     {
         public GameObject ContentRepresentation;
         public Transform Content;

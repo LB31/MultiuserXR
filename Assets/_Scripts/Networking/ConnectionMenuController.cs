@@ -10,8 +10,9 @@ using MLAPI.Spawning;
 using UnityEngine.SceneManagement;
 using MLAPI.SceneManagement;
 
-public class MenuManager : MonoBehaviour
+public class ConnectionMenuController : MonoBehaviour
 {
+    public bool StartDirectlyAsServer;
     public GameObject MenuPanel;
     public TMP_InputField InputFieldIP;
     public Button ButtonServer;
@@ -28,6 +29,13 @@ public class MenuManager : MonoBehaviour
         ButtonClient.onClick.AddListener(() => Client());
 
         NetworkManager.Singleton.ConnectionApprovalCallback += ApprovalCheck;
+
+        if (StartDirectlyAsServer)
+            Server();
+
+#if UNITY_STANDALONE_LINUX
+        StartDirectlyAsServer = true;
+#endif
     }
 
     private void ApprovalCheck(byte[] connectionData, ulong clientID, NetworkManager.ConnectionApprovedDelegate callback)
@@ -63,7 +71,7 @@ public class MenuManager : MonoBehaviour
     {
         if (string.IsNullOrEmpty(InputFieldIP.text))
         {
-            InputFieldIP.text = "127.0.0.1";
+            InputFieldIP.text = "3.236.38.125";
         }
         // TODO read the password via input when needed
         NetworkManager.Singleton.NetworkConfig.ConnectionData = System.Text.Encoding.ASCII.GetBytes(correctPassword);

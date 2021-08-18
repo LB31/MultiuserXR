@@ -365,9 +365,9 @@ MonoBehaviour:
   MessageBufferSize: 5120
   MaxConnections: 100
   MaxSentMessageQueueSize: 128
-  ConnectAddress: 127.0.0.1
-  ConnectPort: 7777
-  ServerListenPort: 7777
+  ConnectAddress: 3.236.38.125
+  ConnectPort: 3142
+  ServerListenPort: 3142
   ServerWebsocketListenPort: 8887
   SupportWebsocket: 0
   Channels: []
@@ -1515,6 +1515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0d23ca6f9a7c114d8099275fbba452f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StartDirectlyAsServer: 0
   MenuPanel: {fileID: 1665325532063303047}
   InputFieldIP: {fileID: 1665325533347934300}
   ButtonServer: {fileID: 1665325532005753393}

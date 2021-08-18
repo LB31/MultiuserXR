@@ -6,7 +6,7 @@ using UnityEngine.XR.ARFoundation.Samples;
 
 public class GameManager : Singleton<GameManager>
 {
-    public MakeAppearOnPlane MakeAppearOnPlane;
+    public ARPlanePlacer MakeAppearOnPlane;
     public ulong OwnClientID;
     public NetworkObject OwnClient
     {
@@ -15,7 +15,7 @@ public class GameManager : Singleton<GameManager>
         {
             Client = value;
             // TODO handle all kinds of XR players
-            Client.GetComponent<ARPlayerController>().PrepareARPlayer();
+            Client.GetComponent<ARPlayer>().PrepareARPlayer();
             HandleAllLookAtObjects();
             MakeAppearOnPlane.enabled = true;
         }
