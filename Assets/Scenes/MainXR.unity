@@ -143,6 +143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MakeAppearOnPlane: {fileID: 1659859601}
   OwnClientID: 0
+  Client: {fileID: 0}
 --- !u!1 &422218013
 GameObject:
   m_ObjectHideFlags: 0
@@ -1038,7 +1039,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9849032840efa64bb8bf4e926485148, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ContentRepresentation: {fileID: 2357588503296040322}
+  ContentRepresentation: {fileID: 7174636053814050295}
   Content: {fileID: 7174636053814050293}
   RecenterButton: {fileID: 1302450071}
   PlaceButton: {fileID: 1748115064}

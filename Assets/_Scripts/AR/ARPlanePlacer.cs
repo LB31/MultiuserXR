@@ -41,7 +41,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// <summary>
         /// The rotation the content should appear to have.
         /// </summary>
-        public Quaternion rotation
+        public Quaternion Rotation
         {
             get { return m_Rotation; }
             set

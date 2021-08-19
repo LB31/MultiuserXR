@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Connection.unity
+    path: Assets/Scenes/ConnectionLobby.unity
     guid: 324fefaf59f60fe4694cf3681f6c63e6
   - enabled: 1
     path: Assets/Scenes/MainXR.unity

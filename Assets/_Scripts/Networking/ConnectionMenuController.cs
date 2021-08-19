@@ -17,16 +17,15 @@ public class ConnectionMenuController : MonoBehaviour
     public TMP_InputField InputFieldIP;
     public Button ButtonServer;
     public Button ButtonHost;
-    public Button ButtonClient;
     public string MainScene = "MainXR";
 
     private string correctPassword = "password31";
+    private string ipToConnect;
 
     private void Start()
     {
         ButtonServer.onClick.AddListener(Server);
         ButtonHost.onClick.AddListener(() => Host());
-        ButtonClient.onClick.AddListener(() => Client());
 
         NetworkManager.Singleton.ConnectionApprovalCallback += ApprovalCheck;
 
@@ -44,7 +43,7 @@ public class ConnectionMenuController : MonoBehaviour
         bool approve = false;
         // if the connection date is correct then approve
         string password = System.Text.Encoding.ASCII.GetString(connectionData);
-        if(password == correctPassword)
+        if (password == correctPassword)
         {
             // we can join
             approve = true;
@@ -52,7 +51,7 @@ public class ConnectionMenuController : MonoBehaviour
 
         //ulong? prefabHash = NetworkSpawnManager.GetPrefabHashFromGenerator("13069875965682951367");
 
-        callback(false, null, approve, new Vector3(0,0,0), Quaternion.identity);
+        callback(false, null, approve, new Vector3(0, 0, 0), Quaternion.identity);
     }
 
     public void Server()
@@ -67,18 +66,44 @@ public class ConnectionMenuController : MonoBehaviour
         ChangeScene();
     }
 
+    #region ClientConnect
+    public void StartClientLocal()
+    {
+        ipToConnect = "127.0.0.1";
+        Client();
+    }
+
+    public void StartClientRouter()
+    {
+        ipToConnect = "79.225.183.124";
+        Client();
+    }
+
+    public void StartClientAWS()
+    {
+        ipToConnect = "3.236.38.125";
+        Client();
+    }
+
+    public void StartClientNetwork()
+    {
+        ipToConnect = "192.168.178.76";
+        Client();
+    }
+
     public void Client()
     {
-        if (string.IsNullOrEmpty(InputFieldIP.text))
+        if (!string.IsNullOrEmpty(InputFieldIP.text))
         {
-            InputFieldIP.text = "3.236.38.125";
+            ipToConnect = InputFieldIP.text;
         }
         // TODO read the password via input when needed
         NetworkManager.Singleton.NetworkConfig.ConnectionData = System.Text.Encoding.ASCII.GetBytes(correctPassword);
-        NetworkManager.Singleton.GetComponent<UNetTransport>().ConnectAddress = InputFieldIP.text;
+        NetworkManager.Singleton.GetComponent<UNetTransport>().ConnectAddress = ipToConnect;
         NetworkManager.Singleton.StartClient();
         MenuPanel.SetActive(false);
     }
+    #endregion
 
     private void ChangeScene()
     {
