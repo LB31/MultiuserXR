@@ -52,6 +52,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
         }
 
+        public void TestSetRotation()
+        {
+            Rotation = m_Rotation;
+        }
+
         private void Start()
         {
             // For debugging
@@ -110,6 +115,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             if (!placementPoseIsValid) return;
 
+            float angle = Quaternion.Angle(Content.rotation, m_SessionOrigin.transform.rotation);
+            placementPose.rotation.y = angle;
             m_SessionOrigin.MakeContentAppearAt(Content, placementPose.position, placementPose.rotation);
 
             TooglePlacing(false);
@@ -121,7 +128,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             RecenterButton.SetActive(!startPlacing);
             PlaceButton.SetActive(startPlacing);
             Content.gameObject.SetActive(!startPlacing);
-            ContentRepresentation.SetActive(startPlacing);
+            ContentRepresentation.SetActive(startPlacing); // Test !
             Recenter = startPlacing;
         }
 
@@ -129,8 +136,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             if (placementPoseIsValid)
             {
-                ContentRepresentation.gameObject.SetActive(true);
-                ContentRepresentation.gameObject.transform.SetPositionAndRotation(placementPose.position, placementPose.rotation);
+                ContentRepresentation.SetActive(true);
+
+                //ContentRepresentation.transform.SetPositionAndRotation(placementPose.position, placementPose.rotation);
+                ContentRepresentation.transform.position = placementPose.position;
             }
             else
             {
@@ -151,6 +160,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             if (placementPoseIsValid)
             {
+                // let object look in same z direction as camera
+                //Vector3 newRotation = ContentRepresentation.transform.eulerAngles;
+                //newRotation.y = Camera.main.transform.eulerAngles.y;
+                //ContentRepresentation.transform.eulerAngles = newRotation;
+                //return;
+
                 Vector3 cameraForward = Camera.main.transform.forward;
                 Vector3 cameraBearing = new Vector3(cameraForward.x, 0, cameraForward.z).normalized;
                 placementPose.rotation = Quaternion.LookRotation(cameraBearing);

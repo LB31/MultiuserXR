@@ -1,11 +1,14 @@
 using MLAPI;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation.Samples;
 
 public class GameManager : Singleton<GameManager>
 {
+    public TextMeshProUGUI DebugText;
+
     public ARPlanePlacer MakeAppearOnPlane;
     public ulong OwnClientID;
     public NetworkObject OwnClient
