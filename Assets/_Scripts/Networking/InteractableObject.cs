@@ -10,6 +10,13 @@ public class InteractableObject : NetworkBehaviour
 {
     public bool PivotIsInMiddle;
     public GameObject SelectionReticle;
+    [SerializeField]
+    [Tooltip("Use absolute values. Like 10 -> 10 times bigger than original")]
+    private Vector2 MinMaxScale;
+    [HideInInspector]
+    public float allowedMin;
+    [HideInInspector]
+    public float allowedMax;
 
     public Button ColorButton;
 
@@ -33,8 +40,9 @@ public class InteractableObject : NetworkBehaviour
         ReadPermission = NetworkVariablePermission.Everyone
     }, Vector3.zero);
 
-
+    [HideInInspector]
     public bool ClientRotates;
+    [HideInInspector]
     public bool ClientScales;
 
     private Renderer Renderer;
@@ -43,20 +51,23 @@ public class InteractableObject : NetworkBehaviour
     private Vector3 newRotationValue = Vector3.zero;
     private Vector3 newScaleValue = Vector3.one;
 
+    private Vector3 originalScale;
 
     public void Awake()
     {
 
         // Prepare selection Reticle
-        MeshFilter mf = GetComponent<MeshFilter>();
-        float objHeight = mf.sharedMesh.bounds.size.y * transform.localScale.y;
+        
         Vector3 reticlePos = Vector3.zero;
-        if (PivotIsInMiddle) reticlePos.y -= objHeight * 0.5f;
+        if (PivotIsInMiddle) reticlePos.y -= GetHeight() * 0.5f;
         SelectionReticle = Instantiate(SelectionReticle, transform);
         SelectionReticle.transform.localPosition = reticlePos;
         SelectionReticle.SetActive(false);
 
         Renderer = GetComponent<Renderer>();
+
+        allowedMin = transform.localScale.y / MinMaxScale.x;
+        allowedMax = transform.localScale.y * MinMaxScale.y;
 
         // Define start values
         if (IsServer || IsHost)
@@ -94,7 +105,11 @@ public class InteractableObject : NetworkBehaviour
         ObjectRotation.OnValueChanged -= ChangeLocalRotation;
     }
 
-
+    public float GetHeight()
+    {
+        MeshFilter mf = GetComponent<MeshFilter>();
+        return mf.sharedMesh.bounds.size.y * transform.localScale.y;
+    }
 
     private void ChangeScale(bool bigger)
     {

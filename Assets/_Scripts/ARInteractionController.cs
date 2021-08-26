@@ -73,7 +73,9 @@ public class ARInteractionController : InteractionController
                 lastPos2 = Input.GetTouch(1).position - Input.GetTouch(1).deltaPosition;
                 float zoom = Vector3.Distance(currentPos, currentPos2) / Vector3.Distance(lastPos, lastPos2);
                 selectedObject.ClientScales = true;
-                ScaleObject(selectedObject.transform, zoom);
+
+                ScaleObject(selectedObject, zoom);
+
             }
 
             // Rotation

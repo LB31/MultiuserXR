@@ -13,9 +13,21 @@ public class InteractionController : MonoBehaviour
         hitObject.Rotate(Vector3.up, rotation * Time.deltaTime * RotationSpeed);
     }
 
-    public void ScaleObject(Transform hitObject, float zoom)
+    public void ScaleObject(InteractableObject hitObject, float zoom)
     {
-        hitObject.localScale *= zoom;
+        // Check if objects is in desired scale range
+        Vector3 expectedScale = hitObject.transform.localScale * zoom;
+        if (expectedScale.y > hitObject.allowedMin && expectedScale.y < hitObject.allowedMax)
+        {
+            hitObject.transform.localScale *= zoom;
+            if (hitObject.PivotIsInMiddle)
+            {
+                Vector3 curPos = hitObject.transform.localPosition;
+                hitObject.transform.localPosition = new Vector3(curPos.x, curPos.y - hitObject.GetHeight() * 0.5f, curPos.z);
+            }
+                
+        }
+        
     }
 
 }
