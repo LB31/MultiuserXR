@@ -21,6 +21,7 @@ public class InteractableObject : NetworkBehaviour
     public Button ColorButton;
 
     public float MinDegrees = 1.5f;
+    public float SnapDistance = 5f;
 
     public NetworkVariable<Color> MaterialColor = new NetworkVariable<Color>(new NetworkVariableSettings
     {
@@ -40,24 +41,32 @@ public class InteractableObject : NetworkBehaviour
         ReadPermission = NetworkVariablePermission.Everyone
     }, Vector3.zero);
 
+    public NetworkVariable<Vector3> ObjectPosition = new NetworkVariable<Vector3>(new NetworkVariableSettings
+    {
+        WritePermission = NetworkVariablePermission.Everyone,
+        ReadPermission = NetworkVariablePermission.Everyone
+    }, Vector3.zero);
+
     [HideInInspector]
     public bool ClientRotates;
     [HideInInspector]
     public bool ClientScales;
+    [HideInInspector]
+    public bool ClientMoves;
 
     private Renderer Renderer;
 
     private float lerpTime;
     private Vector3 newRotationValue = Vector3.zero;
     private Vector3 newScaleValue = Vector3.one;
+    private Vector3 newPositionValue = Vector3.one;
 
     private Vector3 originalScale;
 
     public void Awake()
     {
 
-        // Prepare selection Reticle
-        
+        // Prepare selection Reticle     
         Vector3 reticlePos = Vector3.zero;
         if (PivotIsInMiddle) reticlePos.y -= GetHeight() * 0.5f;
         SelectionReticle = Instantiate(SelectionReticle, transform);
@@ -73,14 +82,18 @@ public class InteractableObject : NetworkBehaviour
         if (IsServer || IsHost)
         {
             ObjectScale.Value = transform.localScale;
-            MaterialColor.Value = Renderer.material.color;
             ObjectRotation.Value = transform.rotation.eulerAngles;
+            ObjectPosition.Value = transform.position;
+
+            MaterialColor.Value = Renderer.material.color;
         }
         // Assign start values
         if (IsHost || IsServer || IsClient)
         {
             transform.localScale = ObjectScale.Value;
             transform.rotation = Quaternion.Euler(ObjectRotation.Value);
+            transform.position = ObjectPosition.Value;
+
             Renderer.material.color = MaterialColor.Value;
         }
 
@@ -96,6 +109,7 @@ public class InteractableObject : NetworkBehaviour
         MaterialColor.OnValueChanged += ChangeLocalColor;
         ObjectScale.OnValueChanged += ChangeLocalScale;
         ObjectRotation.OnValueChanged += ChangeLocalRotation;
+        ObjectPosition.OnValueChanged += ChangeLocalPosition;
     }
 
     private void OnDisable()
@@ -103,22 +117,13 @@ public class InteractableObject : NetworkBehaviour
         MaterialColor.OnValueChanged -= ChangeLocalColor;
         ObjectScale.OnValueChanged -= ChangeLocalScale;
         ObjectRotation.OnValueChanged -= ChangeLocalRotation;
+        ObjectPosition.OnValueChanged -= ChangeLocalPosition;
     }
 
     public float GetHeight()
     {
         MeshFilter mf = GetComponent<MeshFilter>();
         return mf.sharedMesh.bounds.size.y * transform.localScale.y;
-    }
-
-    private void ChangeScale(bool bigger)
-    {
-        ObjectScale.Value = bigger ? transform.localScale * 1.2f : transform.localScale / 1.2f;
-    }
-    private void ChangeColor()
-    {
-        MaterialColor.Value = Random.ColorHSV();
-        Debug.Log("ChangeColor");
     }
 
     private void ChangeLocalScale(Vector3 previousValue, Vector3 newValue)
@@ -141,6 +146,16 @@ public class InteractableObject : NetworkBehaviour
         lerpTime = 0;
     }
 
+    private void ChangeLocalPosition(Vector3 previousValue, Vector3 newValue)
+    {
+        // Avoid getting back own sent change
+        if (ClientMoves)
+            return;
+
+        newPositionValue = newValue;
+        lerpTime = 0;
+    }
+
     private void ChangeLocalColor(Color previousValue, Color newValue)
     {
         Renderer.material.color = newValue;
@@ -148,28 +163,42 @@ public class InteractableObject : NetworkBehaviour
 
     private void Update()
     {
-        // When Client is scaling
+        // When Client is scaling the object
         if (ClientScales)
             ObjectScale.Value = transform.localScale;
-        // When Client is rotating
+        // When Client is rotating the object
         else if (ClientRotates)
             ObjectRotation.Value = transform.rotation.eulerAngles;
+        // When Client is moving the object
+        else if (ClientMoves)
+            ObjectPosition.Value = transform.position;
 
-        // When Client is not rotating and the network value has changed
-
+        
+        // When Client is not scaling and the network value has changed
         if (!ClientScales && transform.localScale != ObjectScale.Value)
         {
             lerpTime += Time.deltaTime;
             transform.localScale = Vector3.Lerp(transform.localScale, newScaleValue, lerpTime);
+            // When scale has reached almost the new scale
             if (transform.localScale.x >= newScaleValue.x * 0.9f) lerpTime = 1;
         }
-        if (!ClientRotates && transform.rotation.eulerAngles != ObjectRotation.Value)
+
+        // When Client is not rotating and the network value has changed
+        else if (!ClientRotates && transform.rotation.eulerAngles != ObjectRotation.Value)
         {
             // Interpolate rotation
             lerpTime += Time.deltaTime;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(newRotationValue), lerpTime);
             // Finish lerping
             if (Quaternion.Angle(transform.rotation, Quaternion.Euler(newRotationValue)) < MinDegrees) lerpTime = 1;
+        }
+
+        // When Client is not moving and the network value has changed
+        else if (!ClientMoves && transform.position != ObjectPosition.Value)
+        {
+            lerpTime += Time.deltaTime;
+            transform.position = Vector3.Lerp(transform.position, newPositionValue, lerpTime);
+            if (Vector3.Distance(transform.position, newPositionValue) > SnapDistance) lerpTime = 1;
         }
         
 

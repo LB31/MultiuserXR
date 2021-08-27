@@ -16,6 +16,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
     [RequireComponent(typeof(ARRaycastManager))]
     public class ARPlanePlacer : MonoBehaviour
     {
+        // Debug
+        public bool Debugging;
+
         public GameObject ContentRepresentation;
         public Transform Content;
 
@@ -74,13 +77,18 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         private void CustomStart()
         {
+            if (Debugging)
+            {
+                Content.position += new Vector3(0, -1, 2);
+            }
+
             // Show real content
-            if (!isClient)
+            if (!isClient || Debugging)
             {
                 ContentRepresentation.SetActive(false);
                 Content.gameObject.SetActive(true);
                 return;
-            }
+            }         
 
             // Show content representation for placement
             ContentRepresentation.SetActive(true);
