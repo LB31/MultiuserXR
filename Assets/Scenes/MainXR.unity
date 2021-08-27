@@ -404,6 +404,7 @@ MonoBehaviour:
   PivotIsInMiddle: 0
   SelectionReticle: {fileID: 4239224622114764614, guid: 6ca2be6e8630fa44981a92d383f45a07,
     type: 3}
+  SelectionReticleSize: 1
   MinMaxScale: {x: 1.5, y: 2}
   allowedMin: 0
   allowedMax: 0
@@ -418,6 +419,8 @@ MonoBehaviour:
     m_InternalValue: {x: 0, y: 0, z: 0}
   ObjectPosition:
     m_InternalValue: {x: 0, y: 0, z: 0}
+  SelectedBy:
+    m_InternalValue: 18446744073709551615
   ClientRotates: 0
   ClientScales: 0
   ClientMoves: 0
@@ -1606,7 +1609,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9849032840efa64bb8bf4e926485148, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Debugging: 0
+  Debugging: 1
   ContentRepresentation: {fileID: 5940135313307180076}
   Content: {fileID: 671748096}
   RecenterButton: {fileID: 1302450071}
@@ -6903,6 +6906,7 @@ MonoBehaviour:
   PivotIsInMiddle: 0
   SelectionReticle: {fileID: 4239224622114764614, guid: 6ca2be6e8630fa44981a92d383f45a07,
     type: 3}
+  SelectionReticleSize: 2
   MinMaxScale: {x: 2, y: 1.5}
   allowedMin: 0
   allowedMax: 0
@@ -6917,6 +6921,8 @@ MonoBehaviour:
     m_InternalValue: {x: 0, y: 0, z: 0}
   ObjectPosition:
     m_InternalValue: {x: 0, y: 0, z: 0}
+  SelectedBy:
+    m_InternalValue: 18446744073709551615
   ClientRotates: 0
   ClientScales: 0
   ClientMoves: 0

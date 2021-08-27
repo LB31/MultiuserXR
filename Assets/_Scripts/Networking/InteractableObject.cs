@@ -1,5 +1,6 @@
 using MLAPI;
 using MLAPI.NetworkVariable;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,8 @@ public class InteractableObject : NetworkBehaviour
 {
     public bool PivotIsInMiddle;
     public GameObject SelectionReticle;
+    [Tooltip("X times as big or small")]
+    public float SelectionReticleSize = 1;
     [SerializeField]
     [Tooltip("Use absolute values. Like 10 -> 10 times bigger than original")]
     private Vector2 MinMaxScale;
@@ -47,6 +50,13 @@ public class InteractableObject : NetworkBehaviour
         ReadPermission = NetworkVariablePermission.Everyone
     }, Vector3.zero);
 
+    // Network ID of player who has selected this object currently
+    public NetworkVariable<ulong> SelectedBy = new NetworkVariable<ulong>(new NetworkVariableSettings
+    {
+        WritePermission = NetworkVariablePermission.Everyone,
+        ReadPermission = NetworkVariablePermission.Everyone
+    }, ulong.MaxValue);
+
     [HideInInspector]
     public bool ClientRotates;
     [HideInInspector]
@@ -71,6 +81,7 @@ public class InteractableObject : NetworkBehaviour
         if (PivotIsInMiddle) reticlePos.y -= GetHeight() * 0.5f;
         SelectionReticle = Instantiate(SelectionReticle, transform);
         SelectionReticle.transform.localPosition = reticlePos;
+        SelectionReticle.transform.localScale *= SelectionReticleSize != 0 ? SelectionReticleSize : 1;
         SelectionReticle.SetActive(false);
 
         Renderer = GetComponent<Renderer>();
@@ -110,6 +121,7 @@ public class InteractableObject : NetworkBehaviour
         ObjectScale.OnValueChanged += ChangeLocalScale;
         ObjectRotation.OnValueChanged += ChangeLocalRotation;
         ObjectPosition.OnValueChanged += ChangeLocalPosition;
+        SelectedBy.OnValueChanged += ChangeSelectionOwner;
     }
 
     private void OnDisable()
@@ -118,6 +130,7 @@ public class InteractableObject : NetworkBehaviour
         ObjectScale.OnValueChanged -= ChangeLocalScale;
         ObjectRotation.OnValueChanged -= ChangeLocalRotation;
         ObjectPosition.OnValueChanged -= ChangeLocalPosition;
+        SelectedBy.OnValueChanged -= ChangeSelectionOwner;
     }
 
     public float GetHeight()
@@ -159,6 +172,25 @@ public class InteractableObject : NetworkBehaviour
     private void ChangeLocalColor(Color previousValue, Color newValue)
     {
         Renderer.material.color = newValue;
+    }
+
+    private void ChangeSelectionOwner(ulong previousValue, ulong newValue)
+    {
+        // Was the object selected by local player?
+        if (NetworkManager.Singleton.LocalClientId == newValue)
+            return;
+        // Object was deselcted
+        else if(newValue == ulong.MaxValue)
+        {
+            SelectionReticle.SetActive(false);
+        }
+        // Another player selected this object
+        else
+        {
+            SelectionReticle.GetComponent<SpriteRenderer>().color = Color.red;
+            SelectionReticle.SetActive(true);
+        }
+            
     }
 
     private void Update()

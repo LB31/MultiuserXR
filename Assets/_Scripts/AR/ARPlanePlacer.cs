@@ -79,11 +79,18 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             if (Debugging)
             {
-                Content.position += new Vector3(0, -1, 2);
+                
             }
 
+#if UNITY_EDITOR
+            Camera.main.transform.position += new Vector3(0, 1, -2);
+            ContentRepresentation.SetActive(false);
+            Content.gameObject.SetActive(true);
+            return;
+#endif
+
             // Show real content
-            if (!isClient || Debugging)
+            if (!isClient)
             {
                 ContentRepresentation.SetActive(false);
                 Content.gameObject.SetActive(true);

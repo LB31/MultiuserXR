@@ -1,3 +1,4 @@
+using MLAPI;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
     public float RotationSpeed { get { return rotationSpeed; } set { rotationSpeed = value; } }
 
     private InteractableObject selectedObject;
+    private InteractableObject previousSelectedObject;
 
     // Finger / Joystick positions
     private Vector2 currentPos;
@@ -18,6 +20,7 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
     private Vector2 deltaPo2;
 
     private bool holdingFingerOnObj;
+    private bool deselectedWithoutInteraction;
 
     // For dragging objects 
     private Vector3 startPos;
@@ -53,13 +56,35 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
             // only hit objects that are shared through network
             if (hit.transform.GetComponent<InteractableObject>())
             {
-                // When there was an object selected already
-                if (selectedObject)
-                    selectedObject.SelectionReticle.SetActive(false);
-
+                previousSelectedObject = selectedObject;
                 selectedObject = hit.transform.GetComponent<InteractableObject>();
                 selectedObject.SelectionReticle.SetActive(true);
+
+                
+
+                // Is this object selected already by someone else?
+                if (selectedObject.SelectedBy.Value != ulong.MaxValue &&
+                    selectedObject.SelectedBy.Value != NetworkManager.Singleton.LocalClientId)
+                {
+                    selectedObject = null;
+                    return;
+                }
+                // Show that the other object was selected by Client now
+                else
+                {
+                    selectedObject.SelectedBy.Value = NetworkManager.Singleton.LocalClientId;
+                    selectedObject.SelectionReticle.GetComponent<SpriteRenderer>().color = Color.cyan;
+                }
+
+                // When Client selects a new object
+                if (previousSelectedObject && previousSelectedObject != selectedObject)
+                {
+                    previousSelectedObject.SelectionReticle.SetActive(false);
+                    previousSelectedObject.SelectedBy.Value = ulong.MaxValue;
+                }
+
                 holdingFingerOnObj = true;
+                deselectedWithoutInteraction = true;
 
                 // For moving
                 startPos = selectedObject.transform.position;
@@ -75,27 +100,35 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
     {
         if (selectedObject == null) return;
 
+#if UNITY_EDITOR
+        currentPos = Input.mousePosition;
+        deltaPos = Input.mouseScrollDelta;
+#else
         currentPos = Input.GetTouch(0).position;
         deltaPos = Input.GetTouch(0).deltaPosition;
+#endif
         lastPos = currentPos - deltaPos;
 
         // Moving
         if (holdingFingerOnObj && Mathf.Abs(deltaPos.magnitude) > 10 && Input.touchCount == 1)
         {
             MoveObject();
+            deselectedWithoutInteraction = false;
         }
-
         // Scaling
-        if (Input.touchCount >= 2 && holdingFingerOnObj)
+        else if (holdingFingerOnObj && Input.touchCount >= 2)
         {
             ScaleObject();
+            deselectedWithoutInteraction = false;
         }
-
         // Rotation
-        if (!holdingFingerOnObj)
+        else if (!holdingFingerOnObj)
         {
             RotateObject();
+            deselectedWithoutInteraction = false;
         }
+
+
     }
 
     private async void FingerReleased()
@@ -106,9 +139,17 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
             selectedObject.ClientRotates = false;
             selectedObject.ClientScales = false;
             selectedObject.ClientMoves = false;
-        }
+            holdingFingerOnObj = false;
 
-        holdingFingerOnObj = false;
+            // Deselect when the same object was hit without interaction
+            if (selectedObject.Equals(previousSelectedObject) && deselectedWithoutInteraction)
+            {                           
+                selectedObject.SelectedBy.Value = ulong.MaxValue;
+                selectedObject.SelectionReticle.SetActive(false);
+                selectedObject = null;
+                deselectedWithoutInteraction = false;
+            }
+        }
     }
 
     public void RotateObject()
@@ -138,6 +179,7 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
         }
     }
 
+    // http://answers.unity.com/answers/1215311/view.html
     public void MoveObject()
     {
         selectedObject.ClientMoves = true;
