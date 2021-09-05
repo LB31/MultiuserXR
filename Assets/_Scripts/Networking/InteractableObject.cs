@@ -206,7 +206,7 @@ public class InteractableObject : NetworkBehaviour
             ObjectPosition.Value = transform.position;
 
         
-        // When Client is not scaling and the network value has changed
+        // When Client is not scaling and the network value was changed
         if (!ClientScales && transform.localScale != ObjectScale.Value)
         {
             lerpTime += Time.deltaTime;
@@ -215,7 +215,7 @@ public class InteractableObject : NetworkBehaviour
             if (transform.localScale.x >= newScaleValue.x * 0.9f) lerpTime = 1;
         }
 
-        // When Client is not rotating and the network value has changed
+        // When Client is not rotating and the network value was changed
         else if (!ClientRotates && transform.rotation.eulerAngles != ObjectRotation.Value)
         {
             // Interpolate rotation
@@ -225,7 +225,7 @@ public class InteractableObject : NetworkBehaviour
             if (Quaternion.Angle(transform.rotation, Quaternion.Euler(newRotationValue)) < MinDegrees) lerpTime = 1;
         }
 
-        // When Client is not moving and the network value has changed
+        // When Client is not moving and the network value was changed
         else if (!ClientMoves && transform.position != ObjectPosition.Value)
         {
             lerpTime += Time.deltaTime;

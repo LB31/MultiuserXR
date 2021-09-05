@@ -26,6 +26,8 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
     private Vector3 startPos;
     private Vector3 newPos;
 
+    private Vector3 lastMousePos;
+    private Vector3 prevCamRotation;
 
 
     private void Update()
@@ -60,7 +62,7 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
                 selectedObject = hit.transform.GetComponent<InteractableObject>();
                 selectedObject.SelectionReticle.SetActive(true);
 
-                
+
 
                 // Is this object selected already by someone else?
                 if (selectedObject.SelectedBy.Value != ulong.MaxValue &&
@@ -86,31 +88,36 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
                 holdingFingerOnObj = true;
                 deselectedWithoutInteraction = true;
 
-                // For moving
-                startPos = selectedObject.transform.position;
-                Vector3 dist = Camera.main.WorldToScreenPoint(startPos);
-                newPos.x = Input.mousePosition.x - dist.x;
-                newPos.y = Input.mousePosition.y - dist.y;
-                newPos.z = Input.mousePosition.z - dist.z;
+                
             }
         }
+
+        // For moving
+        lastMousePos = Input.mousePosition;
+        prevCamRotation = Camera.main.transform.eulerAngles;
     }
 
     private void FingerHeld()
     {
         if (selectedObject == null) return;
 
-#if UNITY_EDITOR
+
         currentPos = Input.mousePosition;
-        deltaPos = Input.mouseScrollDelta;
-#else
-        currentPos = Input.GetTouch(0).position;
-        deltaPos = Input.GetTouch(0).deltaPosition;
-#endif
+        deltaPos = Input.mousePosition - lastMousePos;
+        lastMousePos = currentPos;
+
         lastPos = currentPos - deltaPos;
 
-        // Moving
-        if (holdingFingerOnObj && Mathf.Abs(deltaPos.magnitude) > 10 && Input.touchCount == 1)
+        int touchCount = Input.touchCount;
+#if UNITY_EDITOR
+        touchCount = 1;
+#endif
+        float distanceAngle = Vector3.Angle(Camera.main.transform.eulerAngles, prevCamRotation);
+
+        Debug.Log(distanceAngle > 2 ? distanceAngle : 1);
+
+        // Moving; only allowed with one finger + when finger was moved or when cam has rotated enough
+        if (holdingFingerOnObj && Input.touchCount == 1 && (Mathf.Abs(deltaPos.magnitude) > 10 || Vector3.Angle(Camera.main.transform.eulerAngles, prevCamRotation) > 3))
         {
             MoveObject();
             deselectedWithoutInteraction = false;
@@ -122,13 +129,13 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
             deselectedWithoutInteraction = false;
         }
         // Rotation
-        else if (!holdingFingerOnObj)
+        else if (!holdingFingerOnObj && Input.touchCount == 1)
         {
             RotateObject();
             deselectedWithoutInteraction = false;
         }
 
-
+        prevCamRotation = Camera.main.transform.eulerAngles;
     }
 
     private async void FingerReleased()
@@ -143,7 +150,7 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
 
             // Deselect when the same object was hit without interaction
             if (selectedObject.Equals(previousSelectedObject) && deselectedWithoutInteraction)
-            {                           
+            {
                 selectedObject.SelectedBy.Value = ulong.MaxValue;
                 selectedObject.SelectionReticle.SetActive(false);
                 selectedObject = null;
@@ -183,13 +190,23 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
     public void MoveObject()
     {
         selectedObject.ClientMoves = true;
-        Vector3 dis = new Vector3(
-        Input.mousePosition.x - newPos.x,
-        Input.mousePosition.y - newPos.y,
-        Input.mousePosition.z - newPos.z
-        );
 
-        Vector3 lastPos = Camera.main.ScreenToWorldPoint(new Vector3(dis.x, dis.y, dis.z));
-        selectedObject.transform.position = new Vector3(lastPos.x, startPos.y, lastPos.z);
+        // Layer mask named DraggingPlane
+        int layerMask = 1 << 6;
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        // If point on plane was hit
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, layerMask))
+        {
+            selectedObject.transform.position = hit.point;
+        }
+
+        //Vector3 dis = new Vector3(
+        //Input.mousePosition.x - newPos.x,
+        //Input.mousePosition.y - newPos.y,
+        //Input.mousePosition.z - newPos.z
+        //);
+        //Vector3 lastPos = Camera.main.ScreenToWorldPoint(new Vector3(dis.x, dis.y, dis.z));
+        //selectedObject.transform.position = new Vector3(lastPos.x, startPos.y, lastPos.z);
     }
 }

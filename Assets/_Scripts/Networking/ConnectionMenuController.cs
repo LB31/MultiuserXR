@@ -75,7 +75,7 @@ public class ConnectionMenuController : MonoBehaviour
 
     public void StartClientRouter()
     {
-        ipToConnect = "79.225.183.124";
+        ipToConnect = "79.224.113.93";
         Client();
     }
 
