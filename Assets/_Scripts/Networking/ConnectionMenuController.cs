@@ -27,14 +27,15 @@ public class ConnectionMenuController : MonoBehaviour
         ButtonServer.onClick.AddListener(Server);
         ButtonHost.onClick.AddListener(() => Host());
 
+        // Just for testing
         NetworkManager.Singleton.ConnectionApprovalCallback += ApprovalCheck;
-
-        if (StartDirectlyAsServer)
-            Server();
 
 #if UNITY_STANDALONE_LINUX
         StartDirectlyAsServer = true;
 #endif
+
+        if (StartDirectlyAsServer)
+            Server();
     }
 
     private void ApprovalCheck(byte[] connectionData, ulong clientID, NetworkManager.ConnectionApprovedDelegate callback)
@@ -99,6 +100,7 @@ public class ConnectionMenuController : MonoBehaviour
         }
         // TODO read the password via input when needed
         NetworkManager.Singleton.NetworkConfig.ConnectionData = System.Text.Encoding.ASCII.GetBytes(correctPassword);
+
         NetworkManager.Singleton.GetComponent<UNetTransport>().ConnectAddress = ipToConnect;
         NetworkManager.Singleton.StartClient();
         MenuPanel.SetActive(false);

@@ -32,18 +32,17 @@ namespace UnityEngine.XR.ARFoundation.Samples
         private ARSessionOrigin m_SessionOrigin;
         private ARRaycastManager m_RaycastManager;
 
-        [SerializeField]
-        [Tooltip("The rotation the content should appear to have.")]
-        Quaternion m_Rotation;
+        
 
         private bool placementPoseIsValid;
         private Pose placementPose;
         private bool isClient;
 
 
-        /// <summary>
-        /// The rotation the content should appear to have.
-        /// </summary>
+        [SerializeField]
+        [Tooltip("The rotation the content should appear to have.")]
+        private Quaternion m_Rotation;
+
         public Quaternion Rotation
         {
             get { return m_Rotation; }
@@ -169,8 +168,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             //arOrigin.Raycast(screenCenter, hits, TrackableType.Planes);
             if (m_RaycastManager.Raycast(screenCenter, hits, TrackableType.PlaneWithinPolygon))
             {
-                placementPoseIsValid = hits.Count > 0;
-                placementPose = hits[0].pose;
+                placementPoseIsValid = hits.Count > 0;              
             }
 
             if (placementPoseIsValid)
@@ -180,6 +178,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 //newRotation.y = Camera.main.transform.eulerAngles.y;
                 //ContentRepresentation.transform.eulerAngles = newRotation;
                 //return;
+                placementPose = hits[0].pose;
 
                 Vector3 cameraForward = Camera.main.transform.forward;
                 Vector3 cameraBearing = new Vector3(cameraForward.x, 0, cameraForward.z).normalized;
