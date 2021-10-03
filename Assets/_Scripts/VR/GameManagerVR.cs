@@ -10,7 +10,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class GameManagerVR : Singleton<GameManagerVR>
 {
-    public Transform Player;
+    public Transform VRPlayer;
 
 
     [HideInInspector] public bool OculusInUse;
@@ -27,7 +27,7 @@ public class GameManagerVR : Singleton<GameManagerVR>
     {
         base.Awake();
 
-        Player = FindObjectOfType<XRRig>().transform;
+        VRPlayer = FindObjectOfType<XRRig>().transform;
 
         GetXRInputs();
     }
@@ -58,10 +58,16 @@ public class GameManagerVR : Singleton<GameManagerVR>
 
     // During the runtime sometimes new GameObjects are created for assigning positions
     // This mehtod destroys them
-    public async void DestryEmptyObjects(GameObject objToDestroy)
+    public async void DestroyEmptyObjects(GameObject objToDestroy)
     {
         await Task.Delay(1000);
         Destroy(objToDestroy);
+    }
+
+    public async void DeactivateWithDelay(GameObject obj)
+    {
+        await Task.Delay(100);
+        obj.SetActive(false);
     }
 }
 

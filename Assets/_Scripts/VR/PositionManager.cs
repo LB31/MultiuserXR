@@ -63,7 +63,7 @@ public class PositionManager : Singleton<PositionManager>
         nextVeroPos.position = nextTransform.Position;
         nextVeroPos.rotation = Quaternion.Euler(nextTransform.Rotation);
 
-        GameManagerVR.Instance.DestryEmptyObjects(nextVeroPos.gameObject);
+        GameManagerVR.Instance.DestroyEmptyObjects(nextVeroPos.gameObject);
 
         return nextVeroPos;
     }
