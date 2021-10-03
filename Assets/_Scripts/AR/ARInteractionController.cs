@@ -26,7 +26,7 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
     private Vector3 startPos;
     private Vector3 newPos;
 
-    private Vector3 lastMousePos;
+    private Vector3 previousMousePos;
     private Vector3 prevCamRotation;
 
 
@@ -62,8 +62,6 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
                 selectedObject = hit.transform.GetComponent<InteractableObject>();
                 selectedObject.SelectionReticle.SetActive(true);
 
-
-
                 // Is this object selected already by someone else?
                 if (selectedObject.SelectedBy.Value != ulong.MaxValue &&
                     selectedObject.SelectedBy.Value != NetworkManager.Singleton.LocalClientId)
@@ -87,13 +85,12 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
 
                 holdingFingerOnObj = true;
                 deselectedWithoutInteraction = true;
-
-                
+             
             }
         }
 
         // For moving
-        lastMousePos = Input.mousePosition;
+        previousMousePos = Input.mousePosition;
         prevCamRotation = Camera.main.transform.eulerAngles;
     }
 
@@ -103,8 +100,8 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
 
 
         currentPos = Input.mousePosition;
-        deltaPos = Input.mousePosition - lastMousePos;
-        lastMousePos = currentPos;
+        deltaPos = Input.mousePosition - previousMousePos;
+        previousMousePos = currentPos;
 
         lastPos = currentPos - deltaPos;
 
@@ -173,7 +170,7 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
         float zoom = Vector3.Distance(currentPos, currentPos2) / Vector3.Distance(lastPos, lastPos2);
         selectedObject.ClientScales = true;
 
-        // Check if objects is in desired scale range
+        // Check if object is in desired scale range
         Vector3 expectedScale = selectedObject.transform.localScale * zoom;
         if (expectedScale.y > selectedObject.allowedMin && expectedScale.y < selectedObject.allowedMax)
         {
@@ -186,7 +183,7 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
         }
     }
 
-    // http://answers.unity.com/answers/1215311/view.html
+    
     public void MoveObject()
     {
         selectedObject.ClientMoves = true;
@@ -201,6 +198,7 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
             selectedObject.transform.position = hit.point;
         }
 
+        // http://answers.unity.com/answers/1215311/view.html
         //Vector3 dis = new Vector3(
         //Input.mousePosition.x - newPos.x,
         //Input.mousePosition.y - newPos.y,
