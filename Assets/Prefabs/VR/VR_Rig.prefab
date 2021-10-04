@@ -139,7 +139,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 10
-  InputSource: 4
   AdditionalHeight: 0.2
 --- !u!114 &82063089756099628
 MonoBehaviour:
@@ -153,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d0d66e9c01c61e4b9f8464b4502ce5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
+  VRPlayer: {fileID: 0}
   OculusInUse: 0
   SnapTurnProvider: {fileID: 0}
   XRInputLeft: {fileID: 0}

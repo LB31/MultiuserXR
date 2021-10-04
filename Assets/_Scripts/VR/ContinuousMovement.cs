@@ -5,7 +5,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class ContinuousMovement : MonoBehaviour
 {
     public float Speed = 1;
-    public XRNode InputSource;
+    //public XRNode InputSource;
     public float AdditionalHeight = 0.2f;
 
     private XRRig rig;
