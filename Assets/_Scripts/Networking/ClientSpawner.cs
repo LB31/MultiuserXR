@@ -21,6 +21,7 @@ public class ClientSpawner : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void SpawnClientServerRpc(ulong clientID)
     {
+        Debug.Log("SpawnClientServerRpc " + clientID);
         // TODO handle all kinds of XR players
         GameObject ownPlayer = Instantiate(ClientAR, new Vector3(0, 0, 0), Quaternion.identity);
         NetworkObject netObj = ownPlayer.GetComponent<NetworkObject>();

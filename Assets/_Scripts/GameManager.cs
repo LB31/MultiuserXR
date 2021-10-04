@@ -28,6 +28,9 @@ public class GameManager : Singleton<GameManager>
     {
         base.Awake();
         MakeAppearOnPlane.enabled = false;
+
+        Debug.Log($"{SystemInfo.deviceType} | {SystemInfo.deviceName} | {SystemInfo.deviceModel}");
+        DebugText.text = SystemInfo.deviceType.ToString();
     }
 
     private void HandleAllLookAtObjects()
