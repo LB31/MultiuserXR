@@ -4,28 +4,44 @@ using MLAPI.NetworkVariable;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class VRPlayer : XREntity
 {
-    public GameObject Nose;
+    public XRRig XRRig;
+    public GameObject Head;
+    public GameManagerVR GameManagerVR;
 
     public ulong LocalPlayerID;
 
 
     public override void NetworkStart()
     {
+        Renderer = Head.GetComponent<Renderer>();
+        ScaleValue = 1;
+
         base.NetworkStart();
 
         if (IsOwner)
         {
-            Nose.SetActive(false);
+            ToggleVR(true);
+        }
+        else
+        {
+            ToggleVR(false);
         }
     }
 
-    public void PrepareARPlayer()
+    private void ToggleVR(bool activate)
     {
-        transform.parent = Camera.main.transform;
-        transform.position = Vector3.zero;
+        XRRig.enabled = activate;
+        GameManagerVR.enabled = activate;
+        Head.SetActive(!activate);
+    }
+
+    public void PrepareVRPlayer()
+    {
+
     }
 
     [ClientRpc]

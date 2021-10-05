@@ -10,9 +10,6 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class GameManagerVR : Singleton<GameManagerVR>
 {
-    public Transform VRPlayer;
-
-
     [HideInInspector] public bool OculusInUse;
     [HideInInspector] public DeviceBasedSnapTurnProvider SnapTurnProvider;
     [HideInInspector] public XRInput XRInputLeft;
@@ -23,10 +20,11 @@ public class GameManagerVR : Singleton<GameManagerVR>
 
     protected override void Awake()
     {
-        base.Awake();
+        base.Awake();       
+    }
 
-        VRPlayer = GetComponent<XRRig>().transform;
-
+    private void OnEnable()
+    {
         GetXRInputs();
     }
 

@@ -16,13 +16,29 @@ public class HandPresence : MonoBehaviour
     private GameObject spawnedHand;
     private Animator handAnimator;
 
+    public bool offline;
+    private bool isOwner;
+
     private void Awake()
     {
+        if (offline) isOwner = true;
+        else
+            isOwner = GetComponentInParent<VRPlayer>().IsOwner;
+
+
         TryInitialize();
     }
 
     void TryInitialize()
     {
+        if (!isOwner)
+        {
+            HideController = true;
+            spawnedHand = Instantiate(HandModelPrefab, transform);
+            handAnimator = spawnedHand.GetComponent<Animator>();
+            return;
+        }
+
         List<InputDevice> devices = new List<InputDevice>();
 
         InputDevices.GetDevicesWithCharacteristics(ControllerCharacteristics, devices);
@@ -55,7 +71,7 @@ public class HandPresence : MonoBehaviour
             GameManagerVR.Instance.LeftCon = targetDevice;
             //GameStateHandler.Instance.RigsterMenu();
         }
-            
+
         if (targetDevice.name.ToLower().Contains("right"))
         {
             GameManagerVR.Instance.RightCon = targetDevice;
@@ -71,7 +87,7 @@ public class HandPresence : MonoBehaviour
 
     [ContextMenu("ON")]
     public void On() => ToggleHands(true);
-    
+
     [ContextMenu("OFF")]
     public void Off() => ToggleHands(false);
 
@@ -117,7 +133,7 @@ public class HandPresence : MonoBehaviour
 
     void Update()
     {
-        if (!targetDevice.isValid)
+        if (!targetDevice.isValid && isOwner)
             TryInitialize();
         else if (HideController)
             UpdateHandAnimation();

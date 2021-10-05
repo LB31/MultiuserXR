@@ -916,6 +916,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3217106535149114877, guid: 73a96d780cf9c3d449adfe66459d4972,
+        type: 3}
+      propertyPath: offline
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4055409528577143467, guid: 73a96d780cf9c3d449adfe66459d4972,
+        type: 3}
+      propertyPath: offline
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7261175321642952213, guid: 73a96d780cf9c3d449adfe66459d4972,
         type: 3}
       propertyPath: m_Name
@@ -976,7 +986,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8960089381261708353, guid: 73a96d780cf9c3d449adfe66459d4972, type: 3}
+    - {fileID: 3840935774066586423, guid: 73a96d780cf9c3d449adfe66459d4972, type: 3}
+    - {fileID: 1747648751707438066, guid: 73a96d780cf9c3d449adfe66459d4972, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 73a96d780cf9c3d449adfe66459d4972, type: 3}
 --- !u!1 &928955359 stripped
 GameObject:
@@ -1469,6 +1482,9 @@ MonoBehaviour:
     AllowRuntimeSceneChanges: 0
     NetworkPrefabs:
     - Prefab: {fileID: 5696259755772296434, guid: 719c7db85cb591d4dbd5e1441bb5c717,
+        type: 3}
+      PlayerPrefab: 0
+    - Prefab: {fileID: 8412083986861322095, guid: 26b1677767d12ab4b967a57ac28738bd,
         type: 3}
       PlayerPrefab: 0
     PlayerPrefabHash:

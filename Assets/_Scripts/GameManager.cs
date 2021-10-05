@@ -7,7 +7,7 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     public TextMeshProUGUI DebugText;
-
+    public bool VRPlayer;
     public ARPlanePlacer MakeAppearOnPlane;
     public ulong OwnClientID;
     public NetworkObject OwnClient
@@ -17,7 +17,15 @@ public class GameManager : Singleton<GameManager>
         {
             Client = value;
             // TODO handle all kinds of XR players
-            Client.GetComponent<ARPlayer>().PrepareARPlayer();
+            if (VRPlayer)
+            {
+
+            }
+            else
+            {
+                Client.GetComponent<ARPlayer>().PrepareARPlayer();
+            }
+            
             HandleAllLookAtObjects();
             MakeAppearOnPlane.enabled = true;
         }

@@ -31,8 +31,8 @@ public class XREntity : NetworkBehaviour
             MaterialColor.Value = Random.ColorHSV();
             OwnScale.Value = ScaleValue;
         }
-
-        Renderer.material.color = MaterialColor.Value;
+        if (Renderer)
+            Renderer.material.color = MaterialColor.Value;
         transform.localScale = new Vector3(OwnScale.Value, OwnScale.Value, OwnScale.Value);
     }
 }
