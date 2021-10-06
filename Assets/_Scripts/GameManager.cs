@@ -20,7 +20,7 @@ public class GameManager : Singleton<GameManager>
             Client.GetComponent<NetworkPlayer>().PreparePlatformSpecificPlayer();
 
             HandleAllLookAtObjects();
-            MakeAppearOnPlane.enabled = true;
+            //MakeAppearOnPlane.enabled = true;
         }
     }
     public NetworkObject Client;
@@ -28,7 +28,7 @@ public class GameManager : Singleton<GameManager>
     protected override void Awake()
     {
         base.Awake();
-        MakeAppearOnPlane.enabled = false;
+        //MakeAppearOnPlane.enabled = false;
 
 #if UNITY_EDITOR
         CurrentPlatform = MainPlatform.VR_WINDOWS;

@@ -26,7 +26,9 @@ public class NetworkPlayer : NetworkBehaviour
 
     public void PreparePlatformSpecificPlayer()
     {
-        if (IsServer) return;
+        if (IsServer && !IsHost) return;
+
+        Debug.Log("PreparePlatformSpecificPlayer " + GameManager.Instance.CurrentPlatform);
 
         if (GameManager.Instance.CurrentPlatform == MainPlatform.VR_WINDOWS)
         {

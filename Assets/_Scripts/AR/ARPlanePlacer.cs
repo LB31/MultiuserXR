@@ -58,6 +58,15 @@ public class ARPlanePlacer : MonoBehaviour
         Rotation = m_Rotation;
     }
 
+    private void OnEnable()
+    {
+        Content = Instantiate(Content);
+        Content.gameObject.SetActive(false);
+
+        ContentRepresentation = Instantiate(ContentRepresentation);
+
+    }
+
     private void Start()
     {
         // For debugging
@@ -80,12 +89,12 @@ public class ARPlanePlacer : MonoBehaviour
 
         }
 
-#if UNITY_EDITOR
-        Camera.main.transform.position += new Vector3(0, 1, -2);
-        ContentRepresentation.SetActive(false);
-        Content.gameObject.SetActive(true);
-        return;
-#endif
+//#if UNITY_EDITOR
+//        Camera.main.transform.position += new Vector3(0, 1, -2);
+//        ContentRepresentation.SetActive(false);
+//        Content.gameObject.SetActive(true);
+//        return;
+//#endif
 
         // Show real content
         if (!isClient)
