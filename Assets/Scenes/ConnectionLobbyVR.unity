@@ -926,6 +926,11 @@ PrefabInstance:
       propertyPath: offline
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7261175320568051351, guid: 73a96d780cf9c3d449adfe66459d4972,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7261175321642952213, guid: 73a96d780cf9c3d449adfe66459d4972,
         type: 3}
       propertyPath: m_Name
@@ -1485,6 +1490,9 @@ MonoBehaviour:
         type: 3}
       PlayerPrefab: 0
     - Prefab: {fileID: 8412083986861322095, guid: 26b1677767d12ab4b967a57ac28738bd,
+        type: 3}
+      PlayerPrefab: 0
+    - Prefab: {fileID: 6178190362154763444, guid: 3784d4cef93dee241bce76bbfea4c1c4,
         type: 3}
       PlayerPrefab: 0
     PlayerPrefabHash:

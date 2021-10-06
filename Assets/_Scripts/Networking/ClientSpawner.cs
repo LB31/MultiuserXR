@@ -4,18 +4,10 @@ using UnityEngine;
 
 public class ClientSpawner : NetworkBehaviour
 {
-    //public GameObject HostPrefab;
-    public GameObject ClientAR;
-    public GameObject ClientVR;
     public GameObject ClientXR;
 
     public override void NetworkStart()
     {
-        if (SystemInfo.deviceType == DeviceType.Desktop)
-        {
-            GameManager.Instance.VRPlayer = true;
-        }
-
         if (IsClient || IsHost)
         {
             SpawnClientServerRpc(NetworkManager.Singleton.LocalClientId);
@@ -29,7 +21,7 @@ public class ClientSpawner : NetworkBehaviour
         Debug.Log("SpawnClientServerRpc " + clientID);
         // TODO handle all kinds of XR players
 
-        GameObject ownPlayer = Instantiate(GameManager.Instance.VRPlayer ? ClientVR : ClientAR, new Vector3(0, 0, 0), Quaternion.identity);
+        GameObject ownPlayer = Instantiate(ClientXR, new Vector3(0, 0, 0), Quaternion.identity);
         NetworkObject netObj = ownPlayer.GetComponent<NetworkObject>();
         //Player2.GetComponent<NetworkObject>().SpawnWithOwnership(clientID, null, true);
 

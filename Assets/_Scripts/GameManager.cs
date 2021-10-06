@@ -7,7 +7,7 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     public TextMeshProUGUI DebugText;
-    public bool VRPlayer;
+    public MainPlatform CurrentPlatform;
     public ARPlanePlacer MakeAppearOnPlane;
     public ulong OwnClientID;
     public NetworkObject OwnClient
@@ -17,15 +17,8 @@ public class GameManager : Singleton<GameManager>
         {
             Client = value;
             // TODO handle all kinds of XR players
-            if (VRPlayer)
-            {
+            Client.GetComponent<NetworkPlayer>().PreparePlatformSpecificPlayer();
 
-            }
-            else
-            {
-                Client.GetComponent<ARPlayer>().PrepareARPlayer();
-            }
-            
             HandleAllLookAtObjects();
             MakeAppearOnPlane.enabled = true;
         }
@@ -37,9 +30,17 @@ public class GameManager : Singleton<GameManager>
         base.Awake();
         MakeAppearOnPlane.enabled = false;
 
-        Debug.Log($"{SystemInfo.deviceType} | {SystemInfo.deviceName} | {SystemInfo.deviceModel}");
-        DebugText.text = SystemInfo.deviceType.ToString();
+#if UNITY_EDITOR
+        CurrentPlatform = MainPlatform.VR_WINDOWS;
+#elif MOBILE
+        CurrentPlatform = MainPlatform.MOBILE;
+#elif OCULUS_ANDROID
+        CurrentPlatform = MainPlatform.VR_ANDROID;
+#elif OCULUS_WINDOWS || UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+        CurrentPlatform = MainPlatform.VR_WINDOWS;
+#endif
     }
+
 
     private void HandleAllLookAtObjects()
     {

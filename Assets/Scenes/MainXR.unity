@@ -142,7 +142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DebugText: {fileID: 1325012450}
-  VRPlayer: 0
+  CurrentPlatform: 0
   MakeAppearOnPlane: {fileID: 1659859601}
   OwnClientID: 0
   Client: {fileID: 0}
@@ -885,7 +885,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &958488049
 Transform:
   m_ObjectHideFlags: 0
@@ -1540,7 +1540,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1348110675
 Transform:
   m_ObjectHideFlags: 0
@@ -1738,6 +1738,12 @@ PrefabInstance:
       propertyPath: ClientVR
       value: 
       objectReference: {fileID: 8412083986861322095, guid: 26b1677767d12ab4b967a57ac28738bd,
+        type: 3}
+    - target: {fileID: 3692393868424508241, guid: 87f4ad1517486f242b51ac32dca6c91d,
+        type: 3}
+      propertyPath: ClientXR
+      value: 
+      objectReference: {fileID: 6178190362154763444, guid: 3784d4cef93dee241bce76bbfea4c1c4,
         type: 3}
     - target: {fileID: 3692393868424508246, guid: 87f4ad1517486f242b51ac32dca6c91d,
         type: 3}
