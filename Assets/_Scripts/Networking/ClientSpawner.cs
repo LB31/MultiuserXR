@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class ClientSpawner : NetworkBehaviour
 {
-    //public GameObject HostPrefab;
-    public GameObject ClientAR;
-    public GameObject ClientVR;
     public GameObject ClientXR;
 
     public override void NetworkStart()
@@ -21,8 +18,10 @@ public class ClientSpawner : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void SpawnClientServerRpc(ulong clientID)
     {
+        Debug.Log("SpawnClientServerRpc " + clientID);
         // TODO handle all kinds of XR players
-        GameObject ownPlayer = Instantiate(ClientAR, new Vector3(0, 0, 0), Quaternion.identity);
+
+        GameObject ownPlayer = Instantiate(ClientXR, new Vector3(0, 0, 0), Quaternion.identity);
         NetworkObject netObj = ownPlayer.GetComponent<NetworkObject>();
         //Player2.GetComponent<NetworkObject>().SpawnWithOwnership(clientID, null, true);
 

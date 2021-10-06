@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1008,9 +1008,16 @@ MonoBehaviour:
     - MainXR
     - Connection
     - ConnectionLobby
+    - ConnectionLobbyVR
     AllowRuntimeSceneChanges: 0
     NetworkPrefabs:
     - Prefab: {fileID: 5696259755772296434, guid: 719c7db85cb591d4dbd5e1441bb5c717,
+        type: 3}
+      PlayerPrefab: 0
+    - Prefab: {fileID: 8412083986861322095, guid: 26b1677767d12ab4b967a57ac28738bd,
+        type: 3}
+      PlayerPrefab: 0
+    - Prefab: {fileID: 6178190362154763444, guid: 3784d4cef93dee241bce76bbfea4c1c4,
         type: 3}
       PlayerPrefab: 0
     PlayerPrefabHash:

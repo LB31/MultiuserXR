@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 253380dd133020d479401de850f8f0de, type: 3}
+  m_Name: buildSetup
+  m_EditorClassIdentifier: 
+  abortBatchOnFailure: 0
+  entriesList:
+  - enabled: 1
+    buildName: MultiuserXR_Android.apk
+    target: 13
+    debugBuild: 0
+    scriptingDefineSymbols: MOBILE
+    useDefaultBuildScenes: 1
+    customScenes: []
+    strippingLevel: 0
+    scriptingBackend: 1
+    assetBundleManifestPath: 
+    strictMode: 0
+    xrInitOnStart: 1
+    xrLoaders:
+    - AR Core Loader
+    test: 0
+    detailedBuildReport: 0
+    iosSymlinkLibraries: 0
+    androidAppBundle: 0
+    androidArchitecture: 2
+    androidGraphicsDeviceType: 
+    ps4BuildSubtarget: 0
+    ps4HardwareTarget: 0
+    headlessModeServerBuild: 0
+  - enabled: 1
+    buildName: MultiuserXR_Quest.apk
+    target: 13
+    debugBuild: 0
+    scriptingDefineSymbols: OCULUS_ANDROID
+    useDefaultBuildScenes: 0
+    customScenes:
+    - Assets/Scenes/ConnectionLobbyVR.unity
+    - Assets/Scenes/MainXR.unity
+    strippingLevel: 0
+    scriptingBackend: 1
+    assetBundleManifestPath: 
+    strictMode: 0
+    xrInitOnStart: 1
+    xrLoaders:
+    - Oculus Loader
+    test: 0
+    detailedBuildReport: 0
+    iosSymlinkLibraries: 0
+    androidAppBundle: 0
+    androidArchitecture: 2
+    androidGraphicsDeviceType: 
+    ps4BuildSubtarget: 0
+    ps4HardwareTarget: 0
+    headlessModeServerBuild: 0

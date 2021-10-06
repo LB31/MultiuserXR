@@ -10,9 +10,6 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class GameManagerVR : Singleton<GameManagerVR>
 {
-    public Transform VRPlayer;
-
-
     [HideInInspector] public bool OculusInUse;
     [HideInInspector] public DeviceBasedSnapTurnProvider SnapTurnProvider;
     [HideInInspector] public XRInput XRInputLeft;
@@ -21,20 +18,19 @@ public class GameManagerVR : Singleton<GameManagerVR>
     public InputDevice RightCon;
     public InputFeatureUsage<Vector2> Axis2D;
 
-    public bool MoveSun { get; set; }
-
     protected override void Awake()
     {
-        base.Awake();
+        base.Awake();       
+    }
 
-        VRPlayer = FindObjectOfType<XRRig>().transform;
-
+    private void OnEnable()
+    {
         GetXRInputs();
     }
 
     private void GetXRInputs()
     {
-        XRInput[] inputs = FindObjectsOfType<XRInput>();
+        XRInput[] inputs = GetComponents<XRInput>();
         int indexLeft = Array.IndexOf(inputs, inputs.First(con => con.controller.name.ToLower().Contains("left")));
         XRInputLeft = inputs[indexLeft];
         XRInputRight = inputs[indexLeft == 0 ? 1 : 0];
@@ -42,7 +38,7 @@ public class GameManagerVR : Singleton<GameManagerVR>
 
     public void ChangeHeadsetDependencies()
     {
-        SnapTurnProvider = FindObjectOfType<DeviceBasedSnapTurnProvider>();
+        SnapTurnProvider = GetComponent<DeviceBasedSnapTurnProvider>();
         if (OculusInUse)
         {
             SnapTurnProvider.turnUsage = DeviceBasedSnapTurnProvider.InputAxes.Primary2DAxis;

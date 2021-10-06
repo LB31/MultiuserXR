@@ -16,6 +16,7 @@ public class HandPresence : MonoBehaviour
     private GameObject spawnedHand;
     private Animator handAnimator;
 
+
     private void Awake()
     {
         TryInitialize();
@@ -55,7 +56,7 @@ public class HandPresence : MonoBehaviour
             GameManagerVR.Instance.LeftCon = targetDevice;
             //GameStateHandler.Instance.RigsterMenu();
         }
-            
+
         if (targetDevice.name.ToLower().Contains("right"))
         {
             GameManagerVR.Instance.RightCon = targetDevice;
@@ -71,7 +72,7 @@ public class HandPresence : MonoBehaviour
 
     [ContextMenu("ON")]
     public void On() => ToggleHands(true);
-    
+
     [ContextMenu("OFF")]
     public void Off() => ToggleHands(false);
 
