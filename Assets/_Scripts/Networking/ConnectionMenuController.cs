@@ -74,9 +74,9 @@ public class ConnectionMenuController : MonoBehaviour
         Client();
     }
 
-    public void StartClientRouter()
+    public void StartClientRouter(string ip)
     {
-        ipToConnect = "79.225.188.34";
+        ipToConnect = ip;
         Client();
     }
 
@@ -86,9 +86,9 @@ public class ConnectionMenuController : MonoBehaviour
         Client();
     }
 
-    public void StartClientNetwork()
+    public void StartClientNetwork(string ip)
     {
-        ipToConnect = "192.168.178.76";
+        ipToConnect = ip;
         Client();
     }
 

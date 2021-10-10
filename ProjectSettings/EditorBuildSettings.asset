@@ -14,6 +14,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/DragTest.unity
     guid: c172faf4deff0504da9cbc501052cf2d
+  - enabled: 0
+    path: Assets/Scenes/LinuxTest.unity
+    guid: 5452fa6f2d3101e43b26811b55c67c5e
   m_configObjects:
     AR Foundation RemoteARFoundationRemoteLoaderSettings: {fileID: 11400000, guid: e9e7fb2188658bd4ca08f8ae69659198,
       type: 2}
