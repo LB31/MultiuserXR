@@ -18,8 +18,9 @@ public class ARPlanePlacer : MonoBehaviour
     // Debug
     public bool Debugging;
 
+    public GameObject DraggingPlane;
     public GameObject ContentRepresentation;
-    public Transform Content;
+    private Transform content;
 
     [HideInInspector]
     public bool Recenter { get; set; } = true;
@@ -49,7 +50,7 @@ public class ARPlanePlacer : MonoBehaviour
         {
             m_Rotation = value;
             if (m_SessionOrigin != null)
-                m_SessionOrigin.MakeContentAppearAt(Content, Content.transform.position, m_Rotation);
+                m_SessionOrigin.MakeContentAppearAt(content, content.transform.position, m_Rotation);
         }
     }
 
@@ -60,8 +61,9 @@ public class ARPlanePlacer : MonoBehaviour
 
     private void OnEnable()
     {
-        Content = Instantiate(Content);
-        Content.gameObject.SetActive(false);
+        content = GameManager.Instance.WorldCenter;
+        content.gameObject.SetActive(false);
+        DraggingPlane.SetActive(false);
 
         ContentRepresentation = Instantiate(ContentRepresentation);
 
@@ -100,13 +102,13 @@ public class ARPlanePlacer : MonoBehaviour
         if (!isClient)
         {
             ContentRepresentation.SetActive(false);
-            Content.gameObject.SetActive(true);
+            content.gameObject.SetActive(true);
             return;
         }
 
         // Show content representation for placement
         ContentRepresentation.SetActive(true);
-        Content.gameObject.SetActive(false);
+        content.gameObject.SetActive(false);
 
         RecenterButton.SetActive(false);
         PlaceButton.SetActive(true);
@@ -137,9 +139,9 @@ public class ARPlanePlacer : MonoBehaviour
     {
         if (!placementPoseIsValid) return;
 
-        float angle = Quaternion.Angle(Content.rotation, m_SessionOrigin.transform.rotation);
+        float angle = Quaternion.Angle(content.rotation, m_SessionOrigin.transform.rotation);
         placementPose.rotation.y = angle;
-        m_SessionOrigin.MakeContentAppearAt(Content, placementPose.position, placementPose.rotation);
+        m_SessionOrigin.MakeContentAppearAt(content, placementPose.position, placementPose.rotation);
 
         TooglePlacing(false);
     }
@@ -149,7 +151,8 @@ public class ARPlanePlacer : MonoBehaviour
     {
         RecenterButton.SetActive(!startPlacing);
         PlaceButton.SetActive(startPlacing);
-        Content.gameObject.SetActive(!startPlacing);
+        content.gameObject.SetActive(!startPlacing);
+        DraggingPlane.SetActive(!startPlacing);
         ContentRepresentation.SetActive(startPlacing); // Test !
         Recenter = startPlacing;
     }

@@ -24,18 +24,18 @@ public class ConnectionMenuController : MonoBehaviour
 
     private void Start()
     {
-        ButtonServer.onClick.AddListener(Server);
-        ButtonHost.onClick.AddListener(() => Host());
-
-        // Just for testing
-        NetworkManager.Singleton.ConnectionApprovalCallback += ApprovalCheck;
-
 #if UNITY_STANDALONE_LINUX
         StartDirectlyAsServer = true;
 #endif
 
         if (StartDirectlyAsServer)
             Server();
+
+        ButtonServer.onClick.AddListener(Server);
+        ButtonHost.onClick.AddListener(() => Host());
+
+        // Just for testing
+        NetworkManager.Singleton.ConnectionApprovalCallback += ApprovalCheck;
     }
 
     private void ApprovalCheck(byte[] connectionData, ulong clientID, NetworkManager.ConnectionApprovedDelegate callback)

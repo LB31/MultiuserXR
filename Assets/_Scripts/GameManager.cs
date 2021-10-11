@@ -7,6 +7,8 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     public TextMeshProUGUI DebugText;
+
+    public Transform WorldCenter;
     public MainPlatform CurrentPlatform;
     public ARPlanePlacer MakeAppearOnPlane;
     public ulong OwnClientID;

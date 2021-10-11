@@ -3,6 +3,7 @@ using MLAPI.NetworkVariable;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -73,7 +74,7 @@ public class InteractableObject : NetworkBehaviour
 
     private Vector3 originalScale;
 
-    public void Awake()
+    public async void Awake()
     {
 
         // Prepare selection Reticle     
@@ -96,8 +97,11 @@ public class InteractableObject : NetworkBehaviour
             ObjectRotation.Value = transform.rotation.eulerAngles;
             ObjectPosition.Value = transform.position;
 
-            MaterialColor.Value = Renderer.material.color;
+            //MaterialColor.Value = Renderer.material.color;
         }
+
+        await Task.Delay(1000);
+
         // Assign start values
         if (IsHost || IsServer || IsClient)
         {
@@ -105,7 +109,7 @@ public class InteractableObject : NetworkBehaviour
             transform.rotation = Quaternion.Euler(ObjectRotation.Value);
             transform.position = ObjectPosition.Value;
 
-            Renderer.material.color = MaterialColor.Value;
+            //Renderer.material.color = MaterialColor.Value;
         }
 
 
@@ -199,10 +203,10 @@ public class InteractableObject : NetworkBehaviour
         if (ClientScales)
             ObjectScale.Value = transform.localScale;
         // When Client is rotating the object
-        else if (ClientRotates)
+        if (ClientRotates)
             ObjectRotation.Value = transform.rotation.eulerAngles;
         // When Client is moving the object
-        else if (ClientMoves)
+        if (ClientMoves)
             ObjectPosition.Value = transform.position;
 
         
@@ -216,7 +220,7 @@ public class InteractableObject : NetworkBehaviour
         }
 
         // When Client is not rotating and the network value was changed
-        else if (!ClientRotates && transform.rotation.eulerAngles != ObjectRotation.Value)
+        if (!ClientRotates && transform.rotation.eulerAngles != ObjectRotation.Value)
         {
             // Interpolate rotation
             lerpTime += Time.deltaTime;
@@ -226,7 +230,7 @@ public class InteractableObject : NetworkBehaviour
         }
 
         // When Client is not moving and the network value was changed
-        else if (!ClientMoves && transform.position != ObjectPosition.Value)
+        if (!ClientMoves && transform.position != ObjectPosition.Value)
         {
             lerpTime += Time.deltaTime;
             transform.position = Vector3.Lerp(transform.position, newPositionValue, lerpTime);

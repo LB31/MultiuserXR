@@ -62,3 +62,25 @@ MonoBehaviour:
     ps4BuildSubtarget: 0
     ps4HardwareTarget: 0
     headlessModeServerBuild: 0
+  - enabled: 1
+    buildName: MultiuserXR_Server
+    target: 24
+    debugBuild: 0
+    scriptingDefineSymbols: SERVER
+    useDefaultBuildScenes: 1
+    customScenes: []
+    strippingLevel: 0
+    scriptingBackend: 1
+    assetBundleManifestPath: 
+    strictMode: 0
+    xrInitOnStart: 0
+    xrLoaders: []
+    test: 0
+    detailedBuildReport: 0
+    iosSymlinkLibraries: 0
+    androidAppBundle: 0
+    androidArchitecture: 0
+    androidGraphicsDeviceType: 
+    ps4BuildSubtarget: 0
+    ps4HardwareTarget: 0
+    headlessModeServerBuild: 1

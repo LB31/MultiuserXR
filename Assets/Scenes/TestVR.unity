@@ -1796,16 +1796,6 @@ MonoBehaviour:
     _prefab: Assets/Prefabs/VR/HandPresenceRight.prefab
   - _gameObject: {fileID: 1991177223}
     _prefab: Assets/Prefabs/TeleportReticle.prefab
-  - _gameObject: {fileID: 1031610788}
-    _prefab: Assets/Prefabs/XRPlayer.prefab
-  - _gameObject: {fileID: 5627660964565983436}
-    _prefab: Assets/Prefabs/VR/VR_Rig.prefab
-  - _gameObject: {fileID: 5627660964565983435}
-    _prefab: Assets/Prefabs/VR/HandPresenceLeft.prefab
-  - _gameObject: {fileID: 5627660964565983434}
-    _prefab: Assets/Prefabs/VR/HandPresenceRight.prefab
-  - _gameObject: {fileID: 5627660964565983433}
-    _prefab: Assets/Prefabs/TeleportReticle.prefab
 --- !u!4 &731541307
 Transform:
   m_ObjectHideFlags: 11
@@ -2103,12 +2093,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 920985585}
   m_CullTransparentMesh: 1
---- !u!1 &1031610788 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6178190362154763444, guid: 3784d4cef93dee241bce76bbfea4c1c4,
-    type: 3}
-  m_PrefabInstance: {fileID: 6178190362096903440}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1091717137
 GameObject:
   m_ObjectHideFlags: 0
@@ -4242,119 +4226,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &5627660964565983433 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 927243867363536145, guid: 3784d4cef93dee241bce76bbfea4c1c4,
-    type: 3}
-  m_PrefabInstance: {fileID: 6178190362096903440}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5627660964565983434 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3963543616796233771, guid: 3784d4cef93dee241bce76bbfea4c1c4,
-    type: 3}
-  m_PrefabInstance: {fileID: 6178190362096903440}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5627660964565983435 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2586075301215582077, guid: 3784d4cef93dee241bce76bbfea4c1c4,
-    type: 3}
-  m_PrefabInstance: {fileID: 6178190362096903440}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5627660964565983436 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9178548014003971010, guid: 3784d4cef93dee241bce76bbfea4c1c4,
-    type: 3}
-  m_PrefabInstance: {fileID: 6178190362096903440}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &6178190362096903440
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 6178190362154763444, guid: 3784d4cef93dee241bce76bbfea4c1c4,
-        type: 3}
-      propertyPath: m_Name
-      value: XRPlayer
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178190362154763445, guid: 3784d4cef93dee241bce76bbfea4c1c4,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178190362154763445, guid: 3784d4cef93dee241bce76bbfea4c1c4,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178190362154763445, guid: 3784d4cef93dee241bce76bbfea4c1c4,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178190362154763445, guid: 3784d4cef93dee241bce76bbfea4c1c4,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178190362154763445, guid: 3784d4cef93dee241bce76bbfea4c1c4,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178190362154763445, guid: 3784d4cef93dee241bce76bbfea4c1c4,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178190362154763445, guid: 3784d4cef93dee241bce76bbfea4c1c4,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178190362154763445, guid: 3784d4cef93dee241bce76bbfea4c1c4,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178190362154763445, guid: 3784d4cef93dee241bce76bbfea4c1c4,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178190362154763445, guid: 3784d4cef93dee241bce76bbfea4c1c4,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178190362154763445, guid: 3784d4cef93dee241bce76bbfea4c1c4,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178190362154763447, guid: 3784d4cef93dee241bce76bbfea4c1c4,
-        type: 3}
-      propertyPath: VRHead
-      value: 
-      objectReference: {fileID: 8412083986840935900}
-    - target: {fileID: 6178190362154763447, guid: 3784d4cef93dee241bce76bbfea4c1c4,
-        type: 3}
-      propertyPath: VRPlayer
-      value: 
-      objectReference: {fileID: 33108662}
-    - target: {fileID: 6178190362154763447, guid: 3784d4cef93dee241bce76bbfea4c1c4,
-        type: 3}
-      propertyPath: VRLeftHand
-      value: 
-      objectReference: {fileID: 8412083986840935899}
-    - target: {fileID: 6178190362154763447, guid: 3784d4cef93dee241bce76bbfea4c1c4,
-        type: 3}
-      propertyPath: VRRightHand
-      value: 
-      objectReference: {fileID: 8412083986840935898}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 3784d4cef93dee241bce76bbfea4c1c4, type: 3}
 --- !u!23 &8397904457069048560
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4411,6 +4282,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1187078567587266094, guid: 26b1677767d12ab4b967a57ac28738bd,
+        type: 3}
+      propertyPath: m_InteractionLayerMask.m_Bits
+      value: 160
+      objectReference: {fileID: 0}
+    - target: {fileID: 6573952879757553808, guid: 26b1677767d12ab4b967a57ac28738bd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8412083986861322080, guid: 26b1677767d12ab4b967a57ac28738bd,
         type: 3}
       propertyPath: m_RootOrder
@@ -4471,26 +4352,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: VRPlayer
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8412083986861322094, guid: 26b1677767d12ab4b967a57ac28738bd, type: 3}
+    - {fileID: 8412083986861322081, guid: 26b1677767d12ab4b967a57ac28738bd, type: 3}
+    - {fileID: 6757049176896671086, guid: 26b1677767d12ab4b967a57ac28738bd, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 26b1677767d12ab4b967a57ac28738bd, type: 3}
---- !u!4 &8412083986840935898 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1187078567004265367, guid: 26b1677767d12ab4b967a57ac28738bd,
-    type: 3}
-  m_PrefabInstance: {fileID: 8412083986840935897}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8412083986840935899 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1187078567587266081, guid: 26b1677767d12ab4b967a57ac28738bd,
-    type: 3}
-  m_PrefabInstance: {fileID: 8412083986840935897}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8412083986840935900 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1187078566356615848, guid: 26b1677767d12ab4b967a57ac28738bd,
-    type: 3}
-  m_PrefabInstance: {fileID: 8412083986840935897}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8415485922846266344
 Transform:
   m_ObjectHideFlags: 0
