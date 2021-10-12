@@ -90,6 +90,8 @@ public class InteractableObject : NetworkBehaviour
         allowedMin = transform.localScale.y / MinMaxScale.x;
         allowedMax = transform.localScale.y * MinMaxScale.y;
 
+        transform.parent = null;
+
         // Define start values
         if (IsServer || IsHost)
         {
@@ -191,7 +193,9 @@ public class InteractableObject : NetworkBehaviour
         // Another player selected this object
         else
         {
-            SelectionReticle.GetComponent<SpriteRenderer>().color = Color.red;
+            Color newColor = NetworkManager.Singleton.ConnectedClients[newValue].
+                PlayerObject.GetComponent<NetworkPlayer>().MaterialColor.Value;
+            SelectionReticle.GetComponent<SpriteRenderer>().color = newColor;
             SelectionReticle.SetActive(true);
         }
             

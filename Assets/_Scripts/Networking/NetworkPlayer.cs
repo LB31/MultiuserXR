@@ -34,10 +34,10 @@ public class NetworkPlayer : NetworkBehaviour
         {
             MaterialColor.Value = new Color(Random.value, Random.value, Random.value);
             HeadRenderer.gameObject.SetActive(false);
-            Debug.Log(MaterialColor.Value);
+            
         }
 
-        
+        Debug.Log(NetworkManager.Singleton.LocalClientId);
 
     }
 

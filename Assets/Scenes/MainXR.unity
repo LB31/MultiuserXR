@@ -662,7 +662,8 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2115104696443357346, guid: 53ae410990c662d48b2d0edabfc48011, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 53ae410990c662d48b2d0edabfc48011, type: 3}
 --- !u!1 &1007812990 stripped
 GameObject:
@@ -944,6 +945,40 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1007812989}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1007813000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007812992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NetworkInstanceId: 0
+  PrefabHash: 11775775558691873522
+  PrefabHashGenerator: SM_Prop_VR_Headset_02
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+--- !u!114 &1007813001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007812993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NetworkInstanceId: 0
+  PrefabHash: 11379264990401418002
+  PrefabHashGenerator: SM_Icon_Boat_01
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
 --- !u!1 &1348110674
 GameObject:
   m_ObjectHideFlags: 0

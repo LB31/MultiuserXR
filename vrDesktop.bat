@@ -4,4 +4,4 @@ echo "Inside your Oculus Quest start the Virtual Desktop App and connect with yo
 
 timeout 60
 
-"C:\Program Files\Virtual Desktop Streamer\VirtualDesktop.Streamer.exe" "C:\Program Files\Unity\Hub\Editor\2020.3.8f1\Editor\Unity.exe" -projectpath "C:\UnityProjectsTemp\MultiuserXR -cloudEnvironment"
+"C:\Program Files\Virtual Desktop Streamer\VirtualDesktop.Streamer.exe" "C:\Program Files\Unity\Hub\Editor\2020.3.1f1\Editor\Unity.exe" -projectpath "C:\UnityProjectsTemp\MultiuserXR -cloudEnvironment"

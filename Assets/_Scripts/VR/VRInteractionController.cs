@@ -1,3 +1,4 @@
+using MLAPI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -33,6 +34,28 @@ public class VRInteractionController : MonoBehaviour, IInteractionController
             selectedObject = selectArgs.interactable.gameObject.GetComponent<InteractableObject>();
             selectedObject.SelectionReticle.SetActive(true);
 
+            // Is this object selected already by someone else?
+            if (selectedObject.SelectedBy.Value != ulong.MaxValue &&
+                selectedObject.SelectedBy.Value != NetworkManager.Singleton.LocalClientId)
+            {
+                selectedObject = null;
+                return;
+            }
+            // Show that the object is now selected by the client
+            else
+            {
+                Color ownColor = transform.root.GetComponent<NetworkPlayer>().MaterialColor.Value;
+                selectedObject.SelectedBy.Value = NetworkManager.Singleton.LocalClientId;
+                selectedObject.SelectionReticle.GetComponent<SpriteRenderer>().color = ownColor;
+            }
+
+            // When Client selects a new object
+            if (previousSelectedObject && previousSelectedObject != selectedObject)
+            {
+                previousSelectedObject.SelectionReticle.SetActive(false);
+                previousSelectedObject.SelectedBy.Value = ulong.MaxValue;
+            }
+
             // Test
             selectedObject.ClientMoves = true;
             selectedObject.ClientRotates = true;
@@ -47,6 +70,10 @@ public class VRInteractionController : MonoBehaviour, IInteractionController
             selectedObject.ClientRotates = false;
             selectedObject.ClientScales = false;
             selectedObject.ClientMoves = false;
+
+            selectedObject.SelectedBy.Value = ulong.MaxValue;
+            selectedObject.SelectionReticle.SetActive(false);
+            selectedObject = null;
         }
     }
 

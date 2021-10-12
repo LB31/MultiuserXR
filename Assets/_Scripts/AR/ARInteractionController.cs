@@ -69,11 +69,12 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
                     selectedObject = null;
                     return;
                 }
-                // Show that the other object was selected by Client now
+                // Show that the object is now selected by the client
                 else
                 {
+                    Color ownColor = transform.root.GetComponent<NetworkPlayer>().MaterialColor.Value;
                     selectedObject.SelectedBy.Value = NetworkManager.Singleton.LocalClientId;
-                    selectedObject.SelectionReticle.GetComponent<SpriteRenderer>().color = Color.cyan;
+                    selectedObject.SelectionReticle.GetComponent<SpriteRenderer>().color = ownColor;
                 }
 
                 // When Client selects a new object
