@@ -97,7 +97,7 @@ public class InteractableObject : NetworkBehaviour
             ObjectRotation.Value = transform.rotation.eulerAngles;
             ObjectPosition.Value = transform.position;
 
-            //MaterialColor.Value = Renderer.material.color;
+            MaterialColor.Value = Renderer.material.color;
         }
 
         await Task.Delay(1000);
@@ -109,7 +109,7 @@ public class InteractableObject : NetworkBehaviour
             transform.rotation = Quaternion.Euler(ObjectRotation.Value);
             transform.position = ObjectPosition.Value;
 
-            //Renderer.material.color = MaterialColor.Value;
+            Renderer.material.color = MaterialColor.Value;
         }
 
 

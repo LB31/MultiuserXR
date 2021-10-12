@@ -1,11 +1,14 @@
 using MLAPI;
+using MLAPI.NetworkVariable;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class NetworkPlayer : NetworkBehaviour
 {
     public Transform Head;
+    public Renderer HeadRenderer;
     public Transform LeftHand;
     public Transform RightHand;
 
@@ -19,9 +22,29 @@ public class NetworkPlayer : NetworkBehaviour
     public GameObject ARPlayer;
     public Transform ARHead;
 
+    public NetworkVariable<Color> MaterialColor = new NetworkVariable<Color>(new NetworkVariableSettings
+    {
+        WritePermission = NetworkVariablePermission.Everyone,
+        ReadPermission = NetworkVariablePermission.Everyone
+    }, Color.white);
+
     public override void NetworkStart()
     {
+        if (IsOwner)
+        {
+            MaterialColor.Value = new Color(Random.value, Random.value, Random.value);
+            HeadRenderer.gameObject.SetActive(false);
+            Debug.Log(MaterialColor.Value);
+        }
 
+        
+
+    }
+
+    private async void Start()
+    {
+        await Task.Delay(1000);
+        HeadRenderer.material.color = MaterialColor.Value;
     }
 
     public void PreparePlatformSpecificPlayer()
