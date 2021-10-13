@@ -110,20 +110,21 @@ public class InteractableObject : NetworkBehaviour
         await Task.Delay(1000);
 
         // Assign start values
-        if (IsHost || IsServer || IsClient)
-        {
-            transform.localScale = ObjectScale.Value;
-            transform.rotation = Quaternion.Euler(ObjectRotation.Value);
-            transform.position = ObjectPosition.Value;
 
-            //Renderer.material.color = MaterialColor.Value;
-        }
+        transform.localScale = ObjectScale.Value;
+        transform.rotation = Quaternion.Euler(ObjectRotation.Value);
+        transform.position = ObjectPosition.Value;
 
+        //Renderer.material.color = MaterialColor.Value;
+
+        NetworkManager.Singleton.OnClientDisconnectCallback += RevemoSelectionOnDisconnect;
 
         // Prepare interaction buttons
         // TODO maybe assign in inspector because of runtime condition with plane dragging
         //ColorButton.onClick.AddListener(ChangeColor);
     }
+
+
 
     private void OnEnable()
     {
@@ -203,6 +204,15 @@ public class InteractableObject : NetworkBehaviour
             SelectionReticle.SetActive(true);
         }
 
+    }
+
+    private void RevemoSelectionOnDisconnect(ulong leavingClient)
+    {
+        if (SelectedBy.Value.Equals(leavingClient))
+        {
+            SelectedBy.Value = ulong.MaxValue;
+            SelectionReticle.SetActive(false);
+        }
     }
 
     private void Update()
