@@ -4,5 +4,6 @@ public enum MainPlatform
     VR_ANDROID = 1,
     VR_WINDOWS = 2,
     MOBILE = 3,
-    SERVER = 4
+    SERVER = 4,
+    DESKTOP = 5
 }

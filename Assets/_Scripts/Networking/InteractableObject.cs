@@ -57,6 +57,12 @@ public class InteractableObject : NetworkBehaviour
         WritePermission = NetworkVariablePermission.Everyone,
         ReadPermission = NetworkVariablePermission.Everyone
     }, ulong.MaxValue);
+    public NetworkVariable<Color> ReticleColor = new NetworkVariable<Color>(new NetworkVariableSettings
+    {
+        WritePermission = NetworkVariablePermission.Everyone,
+        ReadPermission = NetworkVariablePermission.Everyone
+    }, Color.red);
+
 
     [HideInInspector]
     public bool ClientRotates;
@@ -76,7 +82,6 @@ public class InteractableObject : NetworkBehaviour
 
     public async void Awake()
     {
-
         // Prepare selection Reticle     
         Vector3 reticlePos = Vector3.zero;
         if (PivotIsInMiddle) reticlePos.y -= GetHeight() * 0.5f;
@@ -99,7 +104,7 @@ public class InteractableObject : NetworkBehaviour
             ObjectRotation.Value = transform.rotation.eulerAngles;
             ObjectPosition.Value = transform.position;
 
-            MaterialColor.Value = Renderer.material.color;
+            //MaterialColor.Value = Renderer.material.color;
         }
 
         await Task.Delay(1000);
@@ -111,7 +116,7 @@ public class InteractableObject : NetworkBehaviour
             transform.rotation = Quaternion.Euler(ObjectRotation.Value);
             transform.position = ObjectPosition.Value;
 
-            Renderer.material.color = MaterialColor.Value;
+            //Renderer.material.color = MaterialColor.Value;
         }
 
 
@@ -177,7 +182,8 @@ public class InteractableObject : NetworkBehaviour
 
     private void ChangeLocalColor(Color previousValue, Color newValue)
     {
-        Renderer.material.color = newValue;
+        if (newValue != Color.white)
+            Renderer.material.color = newValue;
     }
 
     private void ChangeSelectionOwner(ulong previousValue, ulong newValue)
@@ -186,19 +192,17 @@ public class InteractableObject : NetworkBehaviour
         if (NetworkManager.Singleton.LocalClientId == newValue)
             return;
         // Object was deselcted
-        else if(newValue == ulong.MaxValue)
+        else if (newValue == ulong.MaxValue)
         {
             SelectionReticle.SetActive(false);
         }
         // Another player selected this object
         else
         {
-            Color newColor = NetworkManager.Singleton.ConnectedClients[newValue].
-                PlayerObject.GetComponent<NetworkPlayer>().MaterialColor.Value;
-            SelectionReticle.GetComponent<SpriteRenderer>().color = newColor;
+            SelectionReticle.GetComponent<SpriteRenderer>().color = ReticleColor.Value;
             SelectionReticle.SetActive(true);
         }
-            
+
     }
 
     private void Update()
@@ -213,7 +217,7 @@ public class InteractableObject : NetworkBehaviour
         if (ClientMoves)
             ObjectPosition.Value = transform.position;
 
-        
+
         // When Client is not scaling and the network value was changed
         if (!ClientScales && transform.localScale != ObjectScale.Value)
         {
@@ -240,7 +244,7 @@ public class InteractableObject : NetworkBehaviour
             transform.position = Vector3.Lerp(transform.position, newPositionValue, lerpTime);
             if (Vector3.Distance(transform.position, newPositionValue) > SnapDistance) lerpTime = 1;
         }
-        
+
 
 
 

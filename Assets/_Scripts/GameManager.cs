@@ -33,12 +33,17 @@ public class GameManager : Singleton<GameManager>
         //MakeAppearOnPlane.enabled = false;
 
 #if UNITY_EDITOR
-        CurrentPlatform = MainPlatform.VR_WINDOWS;
+        Debug.Log("UNITY_EDITOR");
+        // For debbing we select the inspector selection
+        //CurrentPlatform = MainPlatform.VR_WINDOWS;
 #elif MOBILE
+Debug.Log("MOBILE");
         CurrentPlatform = MainPlatform.MOBILE;
 #elif OCULUS_ANDROID
+Debug.Log("OCULUS_ANDROID");
         CurrentPlatform = MainPlatform.VR_ANDROID;
 #elif OCULUS_WINDOWS || UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+Debug.Log("OCULUS_WINDOWS");
         CurrentPlatform = MainPlatform.VR_WINDOWS;
 #endif
     }

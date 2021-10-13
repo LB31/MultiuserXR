@@ -143,7 +143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DebugText: {fileID: 0}
   WorldCenter: {fileID: 1007812991}
-  CurrentPlatform: 0
+  CurrentPlatform: 5
   MakeAppearOnPlane: {fileID: 0}
   OwnClientID: 0
   Client: {fileID: 0}

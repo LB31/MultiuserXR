@@ -31,8 +31,7 @@ public class VRInteractionController : MonoBehaviour, IInteractionController
         if (selectArgs.interactable.gameObject.GetComponent<InteractableObject>())
         {
             previousSelectedObject = selectedObject;
-            selectedObject = selectArgs.interactable.gameObject.GetComponent<InteractableObject>();
-            selectedObject.SelectionReticle.SetActive(true);
+            selectedObject = selectArgs.interactable.gameObject.GetComponent<InteractableObject>();   
 
             // Is this object selected already by someone else?
             if (selectedObject.SelectedBy.Value != ulong.MaxValue &&
@@ -46,7 +45,8 @@ public class VRInteractionController : MonoBehaviour, IInteractionController
             {
                 Color ownColor = transform.root.GetComponent<NetworkPlayer>().MaterialColor.Value;
                 selectedObject.SelectedBy.Value = NetworkManager.Singleton.LocalClientId;
-                selectedObject.SelectionReticle.GetComponent<SpriteRenderer>().color = ownColor;
+                selectedObject.SelectionReticle.SetActive(true);
+                selectedObject.SelectionReticle.GetComponent<SpriteRenderer>().color = ownColor;            
             }
 
             // When Client selects a new object

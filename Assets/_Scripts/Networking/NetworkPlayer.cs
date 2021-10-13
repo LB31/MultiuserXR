@@ -22,6 +22,10 @@ public class NetworkPlayer : NetworkBehaviour
     public GameObject ARPlayer;
     public Transform ARHead;
 
+    [Header("Test Components")]
+    public GameObject DesktopTester;
+    public Transform DesktopHead;
+
     public NetworkVariable<Color> MaterialColor = new NetworkVariable<Color>(new NetworkVariableSettings
     {
         WritePermission = NetworkVariablePermission.Everyone,
@@ -34,11 +38,8 @@ public class NetworkPlayer : NetworkBehaviour
         {
             MaterialColor.Value = new Color(Random.value, Random.value, Random.value);
             HeadRenderer.gameObject.SetActive(false);
-            
+
         }
-
-        Debug.Log(NetworkManager.Singleton.LocalClientId);
-
     }
 
     private async void Start()
@@ -73,8 +74,13 @@ public class NetworkPlayer : NetworkBehaviour
         {
             ARPlayer.SetActive(true);
             Head.SetParent(ARHead);
-            LeftHand.gameObject.SetActive(true);
-            RightHand.gameObject.SetActive(true);
+            LeftHand.gameObject.SetActive(false);
+            RightHand.gameObject.SetActive(false);
+        }
+        else if (GameManager.Instance.CurrentPlatform == MainPlatform.DESKTOP)
+        {
+            DesktopTester.SetActive(true);
+            Head.SetParent(DesktopHead);
         }
 
         if (IsLocalPlayer)

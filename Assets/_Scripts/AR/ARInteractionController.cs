@@ -74,6 +74,7 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
                 {
                     Color ownColor = transform.root.GetComponent<NetworkPlayer>().MaterialColor.Value;
                     selectedObject.SelectedBy.Value = NetworkManager.Singleton.LocalClientId;
+                    selectedObject.ReticleColor.Value = ownColor;
                     selectedObject.SelectionReticle.GetComponent<SpriteRenderer>().color = ownColor;
                 }
 
@@ -110,12 +111,10 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
 #if UNITY_EDITOR
         touchCount = 1;
 #endif
-        float distanceAngle = Vector3.Angle(Camera.main.transform.eulerAngles, prevCamRotation);
-
-        Debug.Log(distanceAngle > 2 ? distanceAngle : 1);
+        //float distanceAngle = Vector3.Angle(Camera.main.transform.eulerAngles, prevCamRotation);
 
         // Moving; only allowed with one finger + when finger was moved or when cam has rotated enough
-        if (holdingFingerOnObj && Input.touchCount == 1 && (Mathf.Abs(deltaPos.magnitude) > 10 || Vector3.Angle(Camera.main.transform.eulerAngles, prevCamRotation) > 3))
+        if (holdingFingerOnObj && touchCount == 1 && (Mathf.Abs(deltaPos.magnitude) > 10 || Vector3.Angle(Camera.main.transform.eulerAngles, prevCamRotation) > 3))
         {
             MoveObject();
             deselectedWithoutInteraction = false;
@@ -127,7 +126,7 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
             deselectedWithoutInteraction = false;
         }
         // Rotation
-        else if (!holdingFingerOnObj && Input.touchCount == 1)
+        else if (!holdingFingerOnObj && touchCount == 1)
         {
             RotateObject();
             deselectedWithoutInteraction = false;
