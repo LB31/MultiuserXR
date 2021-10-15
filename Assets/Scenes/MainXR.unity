@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -725,6 +725,7 @@ GameObject:
   - component: {fileID: 336594715}
   - component: {fileID: 336594714}
   - component: {fileID: 336594719}
+  - component: {fileID: 336594720}
   m_Layer: 9
   m_Name: PlaneToDraw
   m_TagString: Untagged
@@ -744,8 +745,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 571045d48cec88d48848f53bf379f673, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TextureValue:
-    m_InternalValue: {fileID: 0}
   Drawing_Layers:
     serializedVersion: 2
     m_Bits: 512
@@ -850,6 +849,23 @@ MonoBehaviour:
   PrefabHashGenerator: PlaneToDraw
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
+--- !u!114 &336594720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 336594713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17d7721f5eb1bc94bb1ac39838544a55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Texture: {fileID: 2800000, guid: 3ec8a00ba44542d438e2c23d01a413d2, type: 3}
+  TextureClone: {fileID: 0}
+  MTU_Size: 65000
+  ChunkSize: 0
+  SendIterations: 0
 --- !u!1 &367844643
 GameObject:
   m_ObjectHideFlags: 0

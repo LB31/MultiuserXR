@@ -244,8 +244,6 @@ namespace FreeDraw
         {
             DrawableTexture.SetPixels32(cur_colors);
             DrawableTexture.Apply();
-
-            TestValuesClientRpc();
         }
 
 
@@ -299,12 +297,17 @@ namespace FreeDraw
             DrawableTexture.Apply();
         }
 
-        [ClientRpc]
-        private void TestValuesClientRpc()
+        void SendColors(int index, Color[] colors)
         {
-            foreach (int item in DrawnPixels)
+
+        }
+
+        void SendImage()
+        {
+            int arrayLength = 1000;
+            for(int i = 0; i < width * height / arrayLength; i++)
             {
-                Debug.Log(item);
+
             }
         }
 

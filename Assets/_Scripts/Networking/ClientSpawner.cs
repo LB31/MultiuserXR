@@ -18,7 +18,6 @@ public class ClientSpawner : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void SpawnClientServerRpc(ulong clientID)
     {
-        Debug.Log("SpawnClientServerRpc " + clientID);
         // TODO handle all kinds of XR players
 
         GameObject ownPlayer = Instantiate(ClientXR, new Vector3(0, 0, 0), Quaternion.identity);
@@ -48,7 +47,6 @@ public class ClientSpawner : NetworkBehaviour
         NetworkObject netObj = NetworkManager.Singleton.ConnectedClients[clientID].PlayerObject;
         GameManager.Instance.OwnClientID = clientID;
         GameManager.Instance.OwnClient = netObj;
-        Debug.Log("SpawnReadyClientRpc " + netObj.name);
         //}
     }
 
