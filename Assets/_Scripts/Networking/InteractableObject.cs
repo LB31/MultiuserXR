@@ -63,6 +63,7 @@ public class InteractableObject : NetworkBehaviour
         ReadPermission = NetworkVariablePermission.Everyone
     }, Color.red);
 
+    public NetworkVariable<Texture2D> TextTest;
 
     [HideInInspector]
     public bool ClientRotates;
