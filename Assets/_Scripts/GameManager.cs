@@ -33,7 +33,6 @@ public class GameManager : Singleton<GameManager>
         //MakeAppearOnPlane.enabled = false;
 
 #if UNITY_EDITOR
-        Debug.Log("UNITY_EDITOR");
         // For debbing we select the inspector selection
         //CurrentPlatform = MainPlatform.VR_WINDOWS;
 #elif MOBILE

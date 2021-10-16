@@ -25,58 +25,23 @@ public class SendTextureTest : NetworkBehaviour
         //NetworkManager.Singleton.OnClientConnectedCallback += ClientConnected;
 
         textureToSend = Texture.GetRawTextureData();
-        
         receivedTexture = new byte[textureToSend.Length];
-        Debug.Log(Texture.format);
-
-        Debug.Log(string.Join(", ", textureToSend));
 
         SendIterations = (int)Math.Ceiling((float)textureToSend.Length / (float)MTU_Size);
         ChunkSize = (int)Math.Ceiling((float)textureToSend.Length / (float)SendIterations);
-
-        GetComponent<Renderer>().material.mainTexture = Texture;
-
     }
 
     [ContextMenu("Dammit")]
     private void ClientConnected()
     {
+        
         for (int i = 0; i < SendIterations; i++)
         {
             byte[] data = textureToSend.Skip(i * ChunkSize).Take(ChunkSize).ToArray();
-            //byte[] datar = textureToSend.Sub
-            Debug.Log(data.Length + " data l");
-            Debug.Log(string.Join(", ", data) + " the sent one");
-            bool finalChunk = i == SendIterations - 1;
-
+            bool finalChunk = i == (SendIterations - 1);
+            Debug.Log(data.Length);
             SendChunkClientRpc(data, i * ChunkSize, data.Length, finalChunk);
         }
-    }
-
-    //public T[] SubArray<T>(this T[] data, int index, int length)
-    //{
-    //    T[] result = new T[length];
-    //    Array.Copy(data, index, result, 0, length);
-    //    return result;
-    //}
-
-    void Update()
-    {
-
-    }
-
-    private void SendTexture()
-    {
-        var test = textureToSend.Take(4);
-        foreach (var item in test)
-        {
-            Debug.Log(item);
-        }
-    }
-
-    private void ReceiveTexture()
-    {
-
     }
 
     [ServerRpc]
@@ -88,20 +53,11 @@ public class SendTextureTest : NetworkBehaviour
     [ClientRpc]
     private void SendChunkClientRpc(byte[] chunk, int startIndex, int elemenAmount, bool finalChunk = false)
     {
-        //Debug.Log("Marker");
-        //Debug.Log(string.Join(", ", chunk));
-
-        Debug.Log($"{startIndex}, {elemenAmount}");
-
+        Debug.Log("SendChunkClientRpc");
         for (int i = startIndex, j = 0; i < elemenAmount + startIndex; i++, j++)
         {
             receivedTexture[i] = chunk[j];
         }
-
-        Debug.Log(string.Join(", ", chunk) + " the received one");
-        Debug.Log("Marker Ende");
-
-
 
         if (finalChunk)
         {
@@ -114,11 +70,10 @@ public class SendTextureTest : NetworkBehaviour
 
     }
 
-
     [ClientRpc]
-    private void TestClientRpc()
+    private void BlaClientRpc()
     {
-        Debug.Log("Obama cares");
+        Debug.Log("BlaClientRpc");
     }
 
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -147,6 +147,58 @@ MonoBehaviour:
   MakeAppearOnPlane: {fileID: 0}
   OwnClientID: 0
   Client: {fileID: 0}
+--- !u!1 &103487864
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 103487865}
+  - component: {fileID: 103487866}
+  m_Layer: 0
+  m_Name: Drawing
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &103487865
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103487864}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.9780542, y: 1.9354722, z: 2.2219772}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 336594718}
+  - {fileID: 606402856}
+  - {fileID: 198275829}
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &103487866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103487864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fa6fb124981bda42a61ed60b12e9768, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DrawTexture: {fileID: 0}
+  TextureClone: {fileID: 0}
+  MessageFrequency: 200
+  MTU_Size: 30000
+  ChunkSize: 0
+  SendIterations: 0
 --- !u!1 &114036738
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,12 +448,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 198275827}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 174.39664, y: 54.700344, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 175.3747, y: 52.764874, z: -2.2219772}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_Father: {fileID: 103487865}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &251496780
 GameObject:
@@ -821,16 +873,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 336594713}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.927, y: 1.852, z: 1.123}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.1}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0.05105424, y: -0.08347225, z: -1.0989772}
+  m_LocalScale: {x: 0.2, y: 0.20000002, z: 0.10000001}
   m_Children:
   - {fileID: 708307595}
   - {fileID: 1173863357}
   - {fileID: 529310897}
   - {fileID: 291773024}
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_Father: {fileID: 103487865}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!114 &336594719
 MonoBehaviour:
@@ -856,14 +908,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 336594713}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17d7721f5eb1bc94bb1ac39838544a55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Texture: {fileID: 2800000, guid: 3ec8a00ba44542d438e2c23d01a413d2, type: 3}
+  Texture: {fileID: 0}
   TextureClone: {fileID: 0}
-  MTU_Size: 65000
+  MTU_Size: 64000
   ChunkSize: 0
   SendIterations: 0
 --- !u!1 &367844643
@@ -1580,8 +1632,8 @@ RectTransform:
   - {fileID: 1551479668}
   - {fileID: 477442127}
   - {fileID: 481188934}
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_Father: {fileID: 103487865}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

@@ -13,14 +13,8 @@ using UnityEngine.EventSystems;
 
 namespace FreeDraw
 {
-    public class Drawable : NetworkBehaviour
+    public class Drawable : MonoBehaviour
     {
-        public NetworkList<int> DrawnPixels = new NetworkList<int>(new NetworkVariableSettings
-        {
-            WritePermission = NetworkVariablePermission.Everyone,
-            ReadPermission = NetworkVariablePermission.Everyone
-        });
-
         // PEN COLOUR
         public static Color Pen_Colour = Color.red;
         // PEN WIDTH (actually, it's a radius, in pixels)
@@ -51,7 +45,6 @@ namespace FreeDraw
         bool mouse_was_previously_held_down = false;
         bool no_drawing_on_current_drag = false;
         float width, height;
-        private int i;
 
         void Awake()
         {
@@ -227,6 +220,7 @@ namespace FreeDraw
                 }
             }
         }
+
         public void MarkPixelToChange(int x, int y, Color color)
         {
             // Need to transform x and y coordinates to flat coordinates of array
@@ -237,8 +231,6 @@ namespace FreeDraw
                 return;
 
             cur_colors[array_pos] = color;
-
-            DrawnPixels.Add(x);
         }
         public void ApplyMarkedPixelChanges()
         {
@@ -297,19 +289,7 @@ namespace FreeDraw
             DrawableTexture.Apply();
         }
 
-        void SendColors(int index, Color[] colors)
-        {
 
-        }
-
-        void SendImage()
-        {
-            int arrayLength = 1000;
-            for(int i = 0; i < width * height / arrayLength; i++)
-            {
-
-            }
-        }
 
     }
 }
