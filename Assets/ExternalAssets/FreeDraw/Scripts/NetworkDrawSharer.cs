@@ -15,6 +15,8 @@ public class NetworkDrawSharer : NetworkBehaviour
     private byte[] textureToSend;
     private byte[] receivedTexture;
 
+    private ulong serverID;
+
     private NetworkVariable<ulong> lastClient = new NetworkVariable<ulong>(new NetworkVariableSettings
     {
         WritePermission = NetworkVariablePermission.Everyone,
@@ -25,36 +27,40 @@ public class NetworkDrawSharer : NetworkBehaviour
     {
         DrawableTexture = Drawable.drawable.DrawableTexture;
 
-        // Update new clients with current image
+        serverID = NetworkManager.Singleton.ServerClientId;
+
+        // Update new client with current image
         NetworkManager.Singleton.OnClientConnectedCallback += ((clientID) =>
         {
             Debug.Log("Server welcoming");
-            textureToSend = DrawableTexture.GetRawTextureData().Compress();
-            SendMessage(clientID, textureToSend);
+            ShareUpdate(clientID, serverID);
         });
 
         //Receiving
-        CustomMessagingManager.OnUnnamedMessage += ((senderClientId, stream) =>
-        {
-            using (PooledNetworkReader reader = PooledNetworkReader.Get(stream))
-            {
-                byte[] image = reader.ReadByteArray();
-                byte[] imageOriginal = image.Decompress();
-                DrawableTexture.LoadRawTextureData(imageOriginal);
-                DrawableTexture.Apply();
-                Debug.Log("Client getting");
+        CustomMessagingManager.OnUnnamedMessage += ReceiveMessage;
+    }
 
-                // Send update to all clients
-                if (IsServer)
+    private void ReceiveMessage(ulong senderClientId, Stream stream)
+    {
+        using (PooledNetworkReader reader = PooledNetworkReader.Get(stream))
+        {
+            byte[] image = reader.ReadByteArray();
+            byte[] imageOriginal = image.Decompress();
+            DrawableTexture.LoadRawTextureData(imageOriginal);
+            DrawableTexture.Apply();
+            Debug.Log("Client getting");
+
+            // Send update to all clients
+            if (IsServer)
+            {
+                foreach (ulong client in NetworkManager.Singleton.ConnectedClients.Keys)
                 {
-                    foreach (ulong client in NetworkManager.Singleton.ConnectedClients.Keys)
-                    {
-                        if (client != lastClient.Value)
-                            SendMessage(client, image);
-                    }
+                    // Except to the client who was drawing
+                    if (client != lastClient.Value)
+                        SendMessage(client, image);
                 }
-            }            
-        });
+            }
+        }
     }
 
     public void ShareUpdate(ulong sendTo, ulong sender)
