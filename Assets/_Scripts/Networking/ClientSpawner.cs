@@ -1,5 +1,6 @@
 using MLAPI;
 using MLAPI.Messaging;
+using MLAPI.Spawning;
 using UnityEngine;
 
 public class ClientSpawner : NetworkBehaviour
@@ -44,9 +45,10 @@ public class ClientSpawner : NetworkBehaviour
         //// Only for the new player
         //if(clientID == NetworkManager.Singleton.LocalClientId)
         //{
-        NetworkObject netObj = NetworkManager.Singleton.ConnectedClients[clientID].PlayerObject;
+        
+        //NetworkObject netObj = NetworkManager.Singleton.ConnectedClients[clientID].PlayerObject;
         GameManager.Instance.OwnClientID = clientID;
-        GameManager.Instance.OwnClient = netObj;
+        GameManager.Instance.OwnClient = NetworkSpawnManager.GetLocalPlayerObject();
         //}
     }
 

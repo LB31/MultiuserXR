@@ -19,7 +19,7 @@ MonoBehaviour:
     target: 13
     debugBuild: 0
     scriptingDefineSymbols: MOBILE
-    useDefaultBuildScenes: 0
+    useDefaultBuildScenes: 1
     customScenes:
     - Assets/ExternalAssets/FreeDraw/ExampleDrawingScene.unity
     strippingLevel: 0
@@ -64,9 +64,31 @@ MonoBehaviour:
     ps4HardwareTarget: 0
     headlessModeServerBuild: 0
   - enabled: 1
-    buildName: MultiuserXR_Server
+    buildName: MultiuserXR_ServerLinux
     target: 24
     debugBuild: 0
+    scriptingDefineSymbols: SERVER
+    useDefaultBuildScenes: 1
+    customScenes: []
+    strippingLevel: 0
+    scriptingBackend: 1
+    assetBundleManifestPath: 
+    strictMode: 0
+    xrInitOnStart: 0
+    xrLoaders: []
+    test: 0
+    detailedBuildReport: 0
+    iosSymlinkLibraries: 0
+    androidAppBundle: 0
+    androidArchitecture: 0
+    androidGraphicsDeviceType: 
+    ps4BuildSubtarget: 0
+    ps4HardwareTarget: 0
+    headlessModeServerBuild: 1
+  - enabled: 1
+    buildName: MultiuserXR_ServerWindows
+    target: 19
+    debugBuild: 1
     scriptingDefineSymbols: SERVER
     useDefaultBuildScenes: 1
     customScenes: []

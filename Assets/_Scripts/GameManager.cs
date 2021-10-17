@@ -18,7 +18,6 @@ public class GameManager : Singleton<GameManager>
         set
         {
             Client = value;
-            // TODO handle all kinds of XR players
             Client.GetComponent<NetworkPlayer>().PreparePlatformSpecificPlayer();
 
             HandleAllLookAtObjects();
