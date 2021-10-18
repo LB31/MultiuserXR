@@ -25,7 +25,7 @@ public class MessageTest : MonoBehaviour {
 
     public void Start() {
         CustomMessagingManager.RegisterNamedMessageHandler(MESSAGE_NAME, OnMessageReceived);
-        DrawTexture = FindObjectOfType<Drawable>().DrawableTexture;
+        DrawTexture = FindObjectOfType<DrawManager>().DrawableTexture;
 
 
         NetworkManager.Singleton.OnClientConnectedCallback += ClientConnected;

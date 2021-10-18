@@ -13,7 +13,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 
-public class Drawable : MonoBehaviour
+public class DrawManager : MonoBehaviour
 {
     public static Color PenColor = Color.red;
     // PEN WIDTH (actually, it's a radius, in pixels)
@@ -29,25 +29,23 @@ public class Drawable : MonoBehaviour
     public Color ResetColor = new Color(0, 0, 0, 0);  // By default, reset the canvas to be transparent
 
     // Used to reference THIS specific file without making all methods static
-    public static Drawable drawable;
+    public static DrawManager drawable;
     // MUST HAVE READ/WRITE enabled set in the file editor of Unity
     public Texture2D DrawableTexture;
 
-    private Vector2 previous_drag_position;
+    public Vector2 PreviousDragPosition;
     private Color[] clean_colours_array;
-    private Color transparent;
     private Color32[] cur_colors;
-    private bool mouse_was_previously_held_down = false;
-    private bool no_drawing_on_current_drag = false;
-    private float width, height;
-    private bool mouse_held_down;
+
+    [HideInInspector]
+    public float Width, Height;
 
     private NetworkDrawSharer drawSharer;
 
     private void Awake()
     {
-        width = DrawableTexture.width;
-        height = DrawableTexture.height;
+        Width = DrawableTexture.width;
+        Height = DrawableTexture.height;
 
         drawable = this;
 
@@ -66,67 +64,27 @@ public class Drawable : MonoBehaviour
             ResetCanvas();
     }
 
-    public void BrushTemplate(Vector2 world_position)
-    {
-        // 1. Change world position to pixel coordinates
-        Vector2 pixel_pos = WorldToPixelCoordinates(world_position);
 
-        // 2. Make sure our variable for pixel array is updated in this frame
-        cur_colors = DrawableTexture.GetPixels32();
-
-        ////////////////////////////////////////////////////////////////
-        // FILL IN CODE BELOW HERE
-
-        // Do we care about the user left clicking and dragging?
-        // If you don't, simply set the below if statement to be:
-        //if (true)
-
-        // If you do care about dragging, use the below if/else structure
-        if (previous_drag_position == Vector2.zero)
-        {
-            // THIS IS THE FIRST CLICK
-            // FILL IN WHATEVER YOU WANT TO DO HERE
-            // Maybe mark multiple pixels to colour?
-            MarkPixelsToColour(pixel_pos, Pen_Width, PenColor);
-        }
-        else
-        {
-            // THE USER IS DRAGGING
-            // Should we do stuff between the previous mouse position and the current one?
-            ColourBetween(previous_drag_position, pixel_pos, Pen_Width, PenColor);
-        }
-        ////////////////////////////////////////////////////////////////
-
-        // 3. Actually apply the changes we marked earlier
-        // Done here to be more efficient
-        ApplyMarkedPixelChanges();
-
-        // 4. If dragging, update where we were previously
-        previous_drag_position = pixel_pos;
-    }
-
-    // Default brush type. Has width and colour.
-    // Pass in a point in WORLD coordinates
-    // Changes the surrounding pixels of the world_point to the static pen_colour
     public void PenBrush(Vector2 pixelUV)
     {
         Vector2 pixel_pos = pixelUV;
 
         cur_colors = DrawableTexture.GetPixels32();
 
-        if (previous_drag_position == Vector2.zero)
+        // Dirst time we've ever dragged on this image, simply colour the pixels at our mouse position
+        if (PreviousDragPosition == Vector2.zero)
         {
-            // If this is the first time we've ever dragged on this image, simply colour the pixels at our mouse position
             MarkPixelsToColour(pixel_pos, Pen_Width, PenColor);
         }
         else
         {
             // Colour in a line from where we were on the last update call
-            ColourBetween(previous_drag_position, pixel_pos, Pen_Width, PenColor);
+            ColourBetween(PreviousDragPosition, pixel_pos, Pen_Width, PenColor);
         }
+
         ApplyMarkedPixelChanges();
 
-        previous_drag_position = pixel_pos;
+        PreviousDragPosition = pixel_pos;
     }
 
 
@@ -141,50 +99,9 @@ public class Drawable : MonoBehaviour
 
     void Update()
     {
-        // Is the user holding down the left mouse button?
-        mouse_held_down = Input.GetMouseButton(0);
-        if (mouse_held_down && !no_drawing_on_current_drag)
-        {
-            Vector3 mousePos = Input.mousePosition;
-            mousePos.z = 10; // select distance = 10 units from the camera
-                             // Convert mouse coordinates to world coordinates
-            Vector2 mouse_world_position = Camera.main.ScreenToWorldPoint(mousePos);
-
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, Drawing_Layers.value))
-            {
-                Vector2 pixelUV = hit.textureCoord;
-                pixelUV.x *= width;
-                pixelUV.y *= height;
-                currentBrush(pixelUV);
-            }
-            else
-            {
-                // We're not over our destination texture
-                previous_drag_position = Vector2.zero;
-                if (!mouse_was_previously_held_down)
-                {
-                    // This is a new drag where the user is left clicking off the canvas
-                    // Ensure no drawing happens until a new drag is started
-                    no_drawing_on_current_drag = true;
-                }
-            }
-        }
-        // Mouse is released
-        else if (!mouse_held_down)
-        {
-            previous_drag_position = Vector2.zero;
-            no_drawing_on_current_drag = false;
-        }
-
-        // Client finished drawing
-        if (mouse_was_previously_held_down && !mouse_held_down)
-        {
-
-        }
 
 
-        mouse_was_previously_held_down = mouse_held_down;
+
     }
 
 
@@ -222,6 +139,7 @@ public class Drawable : MonoBehaviour
             for (int y = center_y - pen_thickness; y <= center_y + pen_thickness; y++)
             {
                 MarkPixelToChange(x, y, color_of_pen);
+                //Debug.Log($"x{x} y{y}");
             }
         }
     }
@@ -242,7 +160,8 @@ public class Drawable : MonoBehaviour
         DrawableTexture.SetPixels32(cur_colors);
         DrawableTexture.Apply();
 
-        drawSharer.ShareUpdate(NetworkManager.Singleton.ServerClientId, NetworkManager.Singleton.LocalClientId);
+        if (drawSharer)
+            drawSharer.ShareUpdate(NetworkManager.Singleton.ServerClientId, NetworkManager.Singleton.LocalClientId);
     }
 
 

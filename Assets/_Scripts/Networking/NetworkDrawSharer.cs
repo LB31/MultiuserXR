@@ -25,7 +25,7 @@ public class NetworkDrawSharer : NetworkBehaviour
 
     private void Start()
     {
-        DrawableTexture = Drawable.drawable.DrawableTexture;
+        DrawableTexture = DrawManager.drawable.DrawableTexture;
 
         serverID = NetworkManager.Singleton.ServerClientId;
 

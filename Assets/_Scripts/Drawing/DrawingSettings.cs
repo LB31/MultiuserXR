@@ -13,12 +13,12 @@ public class DrawingSettings : MonoBehaviour
     // Changing pen settings is easy as changing the static properties Drawable.Pen_Colour and Drawable.Pen_Width
     public void SetMarkerColour(Color new_color)
     {
-        Drawable.PenColor = new_color;
+        DrawManager.PenColor = new_color;
     }
     // new_width is radius in pixels
     public void SetMarkerWidth(int new_width)
     {
-        Drawable.Pen_Width = new_width;
+        DrawManager.Pen_Width = new_width;
     }
     public void SetMarkerWidth(float new_width)
     {
@@ -28,9 +28,9 @@ public class DrawingSettings : MonoBehaviour
     public void SetTransparency(float amount)
     {
         Transparency = amount;
-        Color c = Drawable.PenColor;
+        Color c = DrawManager.PenColor;
         c.a = amount;
-        Drawable.PenColor = c;
+        DrawManager.PenColor = c;
     }
 
 
@@ -40,21 +40,21 @@ public class DrawingSettings : MonoBehaviour
         Color c = Color.red;
         c.a = Transparency;
         SetMarkerColour(c);
-        Drawable.drawable.SetPenBrush();
+        DrawManager.drawable.SetPenBrush();
     }
     public void SetMarkerGreen()
     {
         Color c = Color.green;
         c.a = Transparency;
         SetMarkerColour(c);
-        Drawable.drawable.SetPenBrush();
+        DrawManager.drawable.SetPenBrush();
     }
     public void SetMarkerBlue()
     {
         Color c = Color.blue;
         c.a = Transparency;
         SetMarkerColour(c);
-        Drawable.drawable.SetPenBrush();
+        DrawManager.drawable.SetPenBrush();
     }
     public void SetEraser()
     {
