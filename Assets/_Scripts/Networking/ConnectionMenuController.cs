@@ -68,25 +68,7 @@ public class ConnectionMenuController : MonoBehaviour
     }
 
     #region ClientConnect
-    public void StartClientLocal()
-    {
-        ipToConnect = "127.0.0.1";
-        Client();
-    }
-
-    public void StartClientRouter(string ip)
-    {
-        ipToConnect = ip;
-        Client();
-    }
-
-    public void StartClientAWS()
-    {
-        ipToConnect = "3.236.38.125";
-        Client();
-    }
-
-    public void StartClientNetwork(string ip)
+    public void StartClient(string ip)
     {
         ipToConnect = ip;
         Client();
