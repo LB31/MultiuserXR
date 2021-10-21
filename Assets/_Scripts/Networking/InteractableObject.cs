@@ -22,35 +22,32 @@ public class InteractableObject : NetworkBehaviour
     [HideInInspector]
     public float allowedMax;
 
-    public Button ColorButton;
+    [Header("Transform thresholds")]
+    public float Rotation_MinDegrees = 1.5f;
+    public float Translation_SnapDistance = 5f;
+    public float Scale_SizeGoal = 0.9f;
 
-    public float MinDegrees = 1.5f;
-    public float SnapDistance = 5f;
-
+    [Header("Network Fields")]
     public NetworkVariable<Color> MaterialColor = new NetworkVariable<Color>(new NetworkVariableSettings
     {
         WritePermission = NetworkVariablePermission.Everyone,
         ReadPermission = NetworkVariablePermission.Everyone
     }, Color.white);
-
     public NetworkVariable<Vector3> ObjectScale = new NetworkVariable<Vector3>(new NetworkVariableSettings
     {
         WritePermission = NetworkVariablePermission.Everyone,
         ReadPermission = NetworkVariablePermission.Everyone
     }, Vector3.one);
-
     public NetworkVariable<Vector3> ObjectRotation = new NetworkVariable<Vector3>(new NetworkVariableSettings
     {
         WritePermission = NetworkVariablePermission.Everyone,
         ReadPermission = NetworkVariablePermission.Everyone
     }, Vector3.zero);
-
     public NetworkVariable<Vector3> ObjectPosition = new NetworkVariable<Vector3>(new NetworkVariableSettings
     {
         WritePermission = NetworkVariablePermission.Everyone,
         ReadPermission = NetworkVariablePermission.Everyone
     }, Vector3.zero);
-
     // Network ID of player who has selected this object currently
     public NetworkVariable<ulong> SelectedBy = new NetworkVariable<ulong>(new NetworkVariableSettings
     {
@@ -62,8 +59,6 @@ public class InteractableObject : NetworkBehaviour
         WritePermission = NetworkVariablePermission.Everyone,
         ReadPermission = NetworkVariablePermission.Everyone
     }, Color.red);
-
-    public NetworkVariable<Texture2D> TextTest;
 
     [HideInInspector]
     public bool ClientRotates;
@@ -111,7 +106,6 @@ public class InteractableObject : NetworkBehaviour
         await Task.Delay(1000);
 
         // Assign start values
-
         transform.localScale = ObjectScale.Value;
         transform.rotation = Quaternion.Euler(ObjectRotation.Value);
         transform.position = ObjectPosition.Value;
@@ -204,7 +198,6 @@ public class InteractableObject : NetworkBehaviour
             SelectionReticle.GetComponent<SpriteRenderer>().color = ReticleColor.Value;
             SelectionReticle.SetActive(true);
         }
-
     }
 
     private void RevemoSelectionOnDisconnect(ulong leavingClient)
@@ -228,16 +221,14 @@ public class InteractableObject : NetworkBehaviour
         if (ClientMoves)
             ObjectPosition.Value = transform.position;
 
-
         // When Client is not scaling and the network value was changed
         if (!ClientScales && transform.localScale != ObjectScale.Value)
         {
             lerpTime += Time.deltaTime;
             transform.localScale = Vector3.Lerp(transform.localScale, newScaleValue, lerpTime);
             // When scale has reached almost the new scale
-            if (transform.localScale.x >= newScaleValue.x * 0.9f) lerpTime = 1;
+            if (transform.localScale.x >= newScaleValue.x * Scale_SizeGoal) lerpTime = 1;
         }
-
         // When Client is not rotating and the network value was changed
         if (!ClientRotates && transform.rotation.eulerAngles != ObjectRotation.Value)
         {
@@ -245,20 +236,15 @@ public class InteractableObject : NetworkBehaviour
             lerpTime += Time.deltaTime;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(newRotationValue), lerpTime);
             // Finish lerping
-            if (Quaternion.Angle(transform.rotation, Quaternion.Euler(newRotationValue)) < MinDegrees) lerpTime = 1;
+            if (Quaternion.Angle(transform.rotation, Quaternion.Euler(newRotationValue)) < Rotation_MinDegrees) lerpTime = 1;
         }
-
         // When Client is not moving and the network value was changed
         if (!ClientMoves && transform.position != ObjectPosition.Value)
         {
             lerpTime += Time.deltaTime;
             transform.position = Vector3.Lerp(transform.position, newPositionValue, lerpTime);
-            if (Vector3.Distance(transform.position, newPositionValue) > SnapDistance) lerpTime = 1;
+            if (Vector3.Distance(transform.position, newPositionValue) > Translation_SnapDistance) lerpTime = 1;
         }
-
-
-
-
     }
 
 }
