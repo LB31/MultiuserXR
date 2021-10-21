@@ -6,6 +6,7 @@ public class DrawController : MonoBehaviour
 {
     public MainPlatform CurrentPlatform;
     public LayerMask Drawing_Layers;
+    public float MaxDistanceToBoard = 1;
 
     private DrawManager dm;
     private bool noDrawingOnCurrentDrag = false;
@@ -29,6 +30,11 @@ public class DrawController : MonoBehaviour
 
     private void Update()
     {
+        // Check if user is near enough to draw
+        float distance = Vector3.Distance(Camera.main.transform.position, dm.transform.position);
+        Debug.Log(distance);
+        if (distance > MaxDistanceToBoard) return;
+
         if (CurrentPlatform == MainPlatform.MOBILE || CurrentPlatform == MainPlatform.DESKTOP)
             TrackInputAR();
         if (CurrentPlatform == MainPlatform.VR_WINDOWS || CurrentPlatform == MainPlatform.VR_ANDROID)

@@ -69,6 +69,8 @@ public class NetworkPlayer : NetworkBehaviour
             Head.localRotation = Quaternion.identity;
             LeftHand.localRotation = Quaternion.identity;
             RightHand.localRotation = Quaternion.identity;
+
+            AssignCanvasCamera(VRHead);
         }
         else if (GameManager.Instance.CurrentPlatform == MainPlatform.MOBILE)
         {
@@ -76,19 +78,29 @@ public class NetworkPlayer : NetworkBehaviour
             Head.SetParent(ARHead);
             LeftHand.gameObject.SetActive(false);
             RightHand.gameObject.SetActive(false);
+
+            AssignCanvasCamera(ARHead);
         }
         else if (GameManager.Instance.CurrentPlatform == MainPlatform.DESKTOP)
         {
             DesktopTester.SetActive(true);
             Head.SetParent(DesktopHead);
+
+            AssignCanvasCamera(DesktopHead);
         }
 
+        // Hide representation objects for local player
         if (IsLocalPlayer)
         {
             Head.GetChild(0).gameObject.SetActive(false);
             LeftHand.GetChild(0).gameObject.SetActive(false);
             RightHand.GetChild(0).gameObject.SetActive(false);
         }
+    }
+
+    private void AssignCanvasCamera(Transform camera)
+    {
+        GameManager.Instance.DrawCanvas.worldCamera = camera.GetComponent<Camera>();
     }
 
     public void ToggleMeshes(MeshRenderer[] renderers, bool activate)

@@ -9,6 +9,7 @@ public class GameManager : Singleton<GameManager>
     public TextMeshProUGUI DebugText;
 
     public Transform WorldCenter;
+    public Canvas DrawCanvas;
     public MainPlatform CurrentPlatform;
     public ARPlanePlacer MakeAppearOnPlane;
     public ulong OwnClientID;
