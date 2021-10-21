@@ -42,7 +42,6 @@ public class DrawController : MonoBehaviour
 
     public void TrackInputVR()
     {
-        Debug.Log("TrackInputVR");
         Vector3 fwd = BrushTip.TransformDirection(Vector3.forward);
 
         if (Physics.Raycast(BrushTip.position, fwd, out RaycastHit hit, DistancteToDraw, Drawing_Layers.value))

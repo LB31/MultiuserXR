@@ -85,7 +85,7 @@ MonoBehaviour:
     ps4BuildSubtarget: 0
     ps4HardwareTarget: 0
     headlessModeServerBuild: 1
-  - enabled: 1
+  - enabled: 0
     buildName: MultiuserXR_ServerWindows
     target: 19
     debugBuild: 1
