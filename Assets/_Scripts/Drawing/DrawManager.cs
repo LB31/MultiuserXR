@@ -34,6 +34,7 @@ public class DrawManager : MonoBehaviour
     public Texture2D DrawableTexture;
 
     public Vector2 PreviousDragPosition;
+
     private Color[] clean_colours_array;
     private Color32[] cur_colors;
 

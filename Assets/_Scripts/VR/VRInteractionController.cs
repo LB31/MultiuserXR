@@ -28,7 +28,7 @@ public class VRInteractionController : MonoBehaviour, IInteractionController
     public void SelectObject(SelectEnterEventArgs selectArgs)
     {
         // only hit objects that are shared through network
-        if (selectArgs.interactable.gameObject.GetComponent<InteractableObject>())
+        if (selectArgs.interactable.gameObject.HasComponent<InteractableObject>())
         {
             previousSelectedObject = selectedObject;
             selectedObject = selectArgs.interactable.gameObject.GetComponent<InteractableObject>();   

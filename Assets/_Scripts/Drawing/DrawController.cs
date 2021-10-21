@@ -32,17 +32,17 @@ public class DrawController : MonoBehaviour
     {
         // Check if user is near enough to draw
         float distance = Vector3.Distance(Camera.main.transform.position, dm.transform.position);
-        Debug.Log(distance);
         if (distance > MaxDistanceToBoard) return;
 
         if (CurrentPlatform == MainPlatform.MOBILE || CurrentPlatform == MainPlatform.DESKTOP)
             TrackInputAR();
-        if (CurrentPlatform == MainPlatform.VR_WINDOWS || CurrentPlatform == MainPlatform.VR_ANDROID)
-            TrackInputVR();
+        //if (CurrentPlatform == MainPlatform.VR_WINDOWS || CurrentPlatform == MainPlatform.VR_ANDROID)
+        //    TrackInputVR();
     }
 
-    private void TrackInputVR()
+    public void TrackInputVR()
     {
+        Debug.Log("TrackInputVR");
         Vector3 fwd = BrushTip.TransformDirection(Vector3.forward);
 
         if (Physics.Raycast(BrushTip.position, fwd, out RaycastHit hit, DistancteToDraw, Drawing_Layers.value))
@@ -50,8 +50,7 @@ public class DrawController : MonoBehaviour
         // not over destination texture
         else
         {
-            dm.PreviousDragPosition = Vector2.zero;
-            noDrawingOnCurrentDrag = true;
+            Deselect();
         }
     }
 
@@ -74,9 +73,14 @@ public class DrawController : MonoBehaviour
         // Release mouse / finger
         if (Input.GetMouseButtonUp(0))
         {
-            noDrawingOnCurrentDrag = false;
-            dm.PreviousDragPosition = Vector2.zero;
+            Deselect();
         }
+    }
+
+    public void Deselect()
+    {
+        noDrawingOnCurrentDrag = false;
+        dm.PreviousDragPosition = Vector2.zero;
     }
 
     private void RayHit(RaycastHit hit)
