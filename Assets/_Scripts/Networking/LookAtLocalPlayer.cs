@@ -21,12 +21,19 @@ public class LookAtLocalPlayer : NetworkBehaviour
         //{
         //    PlayerObject = NetworkManager.Singleton.ConnectedClients[localPlayerID].PlayerObject.transform;
         //}
-        PlayerObject = GameManager.Instance.OwnClient.transform;
+        NetworkPlayer np = GameManager.Instance.OwnClient.GetComponent<NetworkPlayer>();
+        PlayerObject = np.Head;
     }
 
     void Update()
     {
         if ((IsClient || IsHost) && PlayerObject != null)
-            transform.rotation = Quaternion.LookRotation(transform.position - PlayerObject.position);
+        {
+            Vector3 dir = transform.position - PlayerObject.position;
+            Quaternion lookAtRotation = Quaternion.LookRotation(dir);
+            Quaternion lookAtRotationOnly_Y = Quaternion.Euler(transform.rotation.eulerAngles.x, lookAtRotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+            transform.rotation = lookAtRotationOnly_Y;
+        }
+            //transform.rotation = Quaternion.LookRotation(transform.position - PlayerObject.position);
     }
 }

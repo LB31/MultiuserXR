@@ -91,7 +91,7 @@ public class InteractableObject : NetworkBehaviour
         allowedMin = transform.localScale.y / MinMaxScale.x;
         allowedMax = transform.localScale.y * MinMaxScale.y;
 
-        transform.parent = null;
+        //transform.parent = null;
 
         // Define start values
         if (IsServer || IsHost)
