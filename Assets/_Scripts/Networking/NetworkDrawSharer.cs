@@ -50,8 +50,8 @@ public class NetworkDrawSharer : NetworkBehaviour
             DrawableTexture.Apply();
             Debug.Log("Client getting");
 
-            // Send update to all clients
-            if (IsServer)
+            // Send update to all clients // TODO check if this works
+            if (IsServer && senderClientId != serverID)
             {
                 foreach (ulong client in NetworkManager.Singleton.ConnectedClients.Keys)
                 {

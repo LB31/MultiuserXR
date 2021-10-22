@@ -35,7 +35,8 @@ public class ConnectionMenuController : MonoBehaviour
         ButtonHost.onClick.AddListener(() => Host());
 
         // Just for testing
-        NetworkManager.Singleton.ConnectionApprovalCallback += ApprovalCheck;
+        //NetworkManager.Singleton.ConnectionApprovalCallback += ApprovalCheck;
+        NetworkManager.Singleton.NetworkConfig.ConnectionApproval = false;
     }
 
     private void ApprovalCheck(byte[] connectionData, ulong clientID, NetworkManager.ConnectionApprovedDelegate callback)
@@ -81,7 +82,7 @@ public class ConnectionMenuController : MonoBehaviour
             ipToConnect = InputFieldIP.text;
         }
         // TODO read the password via input when needed
-        NetworkManager.Singleton.NetworkConfig.ConnectionData = System.Text.Encoding.ASCII.GetBytes(correctPassword);
+        //NetworkManager.Singleton.NetworkConfig.ConnectionData = System.Text.Encoding.ASCII.GetBytes(correctPassword);
 
         NetworkManager.Singleton.GetComponent<UNetTransport>().ConnectAddress = ipToConnect;
         NetworkManager.Singleton.StartClient();

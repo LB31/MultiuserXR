@@ -15,6 +15,11 @@ public class DrawController : MonoBehaviour
     public Transform BrushTip;
     public float DistancteToDraw = 0.2f;
 
+    public XRInput LeftHandInput;
+    public XRInput RightHandInput;
+
+    private List<XRBinding> bindingsRight = new List<XRBinding>();
+
     private void Start()
     {
         dm = DrawManager.drawable;
@@ -26,10 +31,14 @@ public class DrawController : MonoBehaviour
         if (CurrentPlatform.Equals(MainPlatform.UNSPECIFIED))
             CurrentPlatform = GameManager.Instance.CurrentPlatform;
         dm = DrawManager.drawable;
+
+        AssignDrawButttons();
     }
 
     private void Update()
     {
+        if (Camera.main == null) return;
+
         // Check if user is near enough to draw
         float distance = Vector3.Distance(Camera.main.transform.position, dm.transform.position);
         if (distance > MaxDistanceToBoard) return;
@@ -38,6 +47,18 @@ public class DrawController : MonoBehaviour
             TrackInputAR();
         //if (CurrentPlatform == MainPlatform.VR_WINDOWS || CurrentPlatform == MainPlatform.VR_ANDROID)
         //    TrackInputVR();
+    }
+
+    private void AssignDrawButttons()
+    {
+        if(bindingsRight.Count == 0)
+        {
+            bindingsRight.Add(new XRBinding(XRButton.Trigger, PressType.Continuous, () => TrackInputVR()));
+            bindingsRight.Add(new XRBinding(XRButton.Trigger, PressType.End, () => Deselect()));
+            foreach (var item in bindingsRight)
+                RightHandInput.bindings.Add(item);
+            Debug.Log(RightHandInput.bindings.Count);
+        } 
     }
 
     public void TrackInputVR()

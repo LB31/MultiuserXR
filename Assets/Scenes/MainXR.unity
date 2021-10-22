@@ -143,8 +143,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DebugText: {fileID: 0}
   WorldCenter: {fileID: 1007812991}
-  DrawCanvas: {fileID: 0}
-  CurrentPlatform: 5
+  DrawCanvas: {fileID: 1357573241}
+  CurrentPlatform: 2
   MakeAppearOnPlane: {fileID: 0}
   OwnClientID: 0
   Client: {fileID: 0}
@@ -994,6 +994,12 @@ MonoBehaviour:
   PrefabHashGenerator: SM_Icon_Boat_01
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
+--- !u!223 &1357573241 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 914881478923349235, guid: 52e6df329477c9743909a1c751b3446b,
+    type: 3}
+  m_PrefabInstance: {fileID: 335232019}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1453823505
 PrefabInstance:
   m_ObjectHideFlags: 0

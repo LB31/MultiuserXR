@@ -7,7 +7,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class VRInteractionController : MonoBehaviour, IInteractionController
 {
-    public float rotationSpeed = 10;
+    private float rotationSpeed = 10;
     public float RotationSpeed { get { return rotationSpeed; } set { rotationSpeed = value; } }
 
     private InteractableObject selectedObject;
