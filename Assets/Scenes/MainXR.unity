@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -142,7 +142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DebugText: {fileID: 0}
-  WorldCenter: {fileID: 2113790619982290617}
+  WorldCenter: {fileID: 1860031430}
   DrawCanvas: {fileID: 1357573241}
   CurrentPlatform: 2
   MakeAppearOnPlane: {fileID: 0}
@@ -388,6 +388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d2951824142fdd4cb647584fc1a39ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxistanceToLook: 2
   PlayerObject: {fileID: 0}
 --- !u!1 &367844643
 GameObject:
@@ -1030,8 +1031,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1070914901}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.337, y: 0.9, z: 0.144}
-  m_LocalScale: {x: 1, y: 1.8, z: 1}
+  m_LocalPosition: {x: -2.337, y: 0.9, z: 0.678}
+  m_LocalScale: {x: 1, y: 1.8, z: 1.8223}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
@@ -1139,7 +1140,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: 2448bd6a5888ad646b8c665e877aaaed, type: 3}
       propertyPath: m_Name
-      value: SM_Icon_Circle_01 (1)
+      value: InteractionIndicator
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 2448bd6a5888ad646b8c665e877aaaed, type: 3}
       propertyPath: m_RootOrder
@@ -1155,7 +1156,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 2448bd6a5888ad646b8c665e877aaaed, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.0512469
+      value: 0.44645405
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 2448bd6a5888ad646b8c665e877aaaed, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1163,7 +1164,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 2448bd6a5888ad646b8c665e877aaaed, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.58
+      value: -1.5
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 2448bd6a5888ad646b8c665e877aaaed, type: 3}
       propertyPath: m_LocalPosition.z

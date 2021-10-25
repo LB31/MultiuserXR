@@ -214,6 +214,9 @@ public class DrawManager : MonoBehaviour
     {
         DrawableTexture.SetPixels(clean_colours_array);
         DrawableTexture.Apply();
+
+        if (drawSharer)
+            drawSharer.ShareUpdate(NetworkManager.Singleton.ServerClientId, NetworkManager.Singleton.LocalClientId);
     }
 
 

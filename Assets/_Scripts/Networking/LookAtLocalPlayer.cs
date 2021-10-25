@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class LookAtLocalPlayer : NetworkBehaviour
 {
+    public float MaxistanceToLook = 2;
     public Transform PlayerObject;
     private ulong localPlayerID;
 
@@ -27,13 +28,16 @@ public class LookAtLocalPlayer : NetworkBehaviour
 
     void Update()
     {
-        if ((IsClient || IsHost) && PlayerObject != null)
+        if (!PlayerObject) return;
+
+        float distance = Vector3.Distance(PlayerObject.position, transform.position);
+        if ((IsClient || IsHost) && PlayerObject != null && distance > MaxistanceToLook)
         {
             Vector3 dir = transform.position - PlayerObject.position;
             Quaternion lookAtRotation = Quaternion.LookRotation(dir);
             Quaternion lookAtRotationOnly_Y = Quaternion.Euler(transform.rotation.eulerAngles.x, lookAtRotation.eulerAngles.y, transform.rotation.eulerAngles.z);
             transform.rotation = lookAtRotationOnly_Y;
         }
-            //transform.rotation = Quaternion.LookRotation(transform.position - PlayerObject.position);
+        //transform.rotation = Quaternion.LookRotation(transform.position - PlayerObject.position);
     }
 }
