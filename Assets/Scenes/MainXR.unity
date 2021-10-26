@@ -144,7 +144,7 @@ MonoBehaviour:
   DebugText: {fileID: 0}
   WorldCenter: {fileID: 1860031430}
   DrawCanvas: {fileID: 1357573241}
-  CurrentPlatform: 2
+  CurrentPlatform: 3
   MakeAppearOnPlane: {fileID: 0}
   OwnClientID: 0
   Client: {fileID: 0}
@@ -267,6 +267,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1860031430}
     m_Modifications:
+    - target: {fileID: 914881479194678004, guid: 52e6df329477c9743909a1c751b3446b,
+        type: 3}
+      propertyPath: DrawableTexture
+      value: 
+      objectReference: {fileID: 2800000, guid: a33b8a6cf583c534b83219b0504884d0, type: 3}
     - target: {fileID: 914881479425690796, guid: 52e6df329477c9743909a1c751b3446b,
         type: 3}
       propertyPath: m_Name
