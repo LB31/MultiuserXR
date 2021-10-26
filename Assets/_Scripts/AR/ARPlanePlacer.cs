@@ -21,6 +21,7 @@ public class ARPlanePlacer : MonoBehaviour
     public GameObject DraggingPlane;
     public GameObject ContentRepresentation;
     private Transform content;
+    private ARAnchorManager anchorManager;
 
     [HideInInspector]
     public bool Recenter { get; set; } = true;
@@ -91,12 +92,12 @@ public class ARPlanePlacer : MonoBehaviour
 
         }
 
-//#if UNITY_EDITOR
-//        Camera.main.transform.position += new Vector3(0, 1, -2);
-//        ContentRepresentation.SetActive(false);
-//        Content.gameObject.SetActive(true);
-//        return;
-//#endif
+        //#if UNITY_EDITOR
+        //        Camera.main.transform.position += new Vector3(0, 1, -2);
+        //        ContentRepresentation.SetActive(false);
+        //        Content.gameObject.SetActive(true);
+        //        return;
+        //#endif
 
         // Show real content
         if (!isClient)
@@ -142,6 +143,8 @@ public class ARPlanePlacer : MonoBehaviour
         float angle = Quaternion.Angle(content.rotation, m_SessionOrigin.transform.rotation);
         placementPose.rotation.y = angle;
         m_SessionOrigin.MakeContentAppearAt(content, placementPose.position, placementPose.rotation);
+
+        AddAnchor();
 
         TooglePlacing(false);
     }
@@ -191,11 +194,22 @@ public class ARPlanePlacer : MonoBehaviour
             //return;
             placementPose = hits[0].pose;
 
+            return;
+
             Vector3 cameraForward = Camera.main.transform.forward;
             Vector3 cameraBearing = new Vector3(cameraForward.x, 0, cameraForward.z).normalized;
             placementPose.rotation = Quaternion.LookRotation(cameraBearing);
         }
     }
 
+    private void AddAnchor()
+    {
+        if (!anchorManager) return;
+
+        if (content.GetComponent<ARAnchor>() != null)
+            Destroy(content.GetComponent<ARAnchor>());
+
+        content.gameObject.AddComponent<ARAnchor>();
+    }
 
 }
