@@ -148,6 +148,7 @@ MonoBehaviour:
   MakeAppearOnPlane: {fileID: 0}
   OwnClientID: 0
   Client: {fileID: 0}
+  AllLookAtObjects: []
 --- !u!1001 &118806892
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -295,17 +296,17 @@ PrefabInstance:
     - target: {fileID: 914881479425690797, guid: 52e6df329477c9743909a1c751b3446b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.047
+      value: -1.019
       objectReference: {fileID: 0}
     - target: {fileID: 914881479425690797, guid: 52e6df329477c9743909a1c751b3446b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.58
+      value: 1.574
       objectReference: {fileID: 0}
     - target: {fileID: 914881479425690797, guid: 52e6df329477c9743909a1c751b3446b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.604
+      value: 0.79
       objectReference: {fileID: 0}
     - target: {fileID: 914881479425690797, guid: 52e6df329477c9743909a1c751b3446b,
         type: 3}
@@ -965,7 +966,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1070914902
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1444,7 +1445,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2116449501399782733}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0.474, z: 0}
   m_LocalScale: {x: 1.5, y: 1, z: 1.5}
   m_Children: []
   m_Father: {fileID: 1860031430}

@@ -51,7 +51,7 @@ public class NetworkDrawSharer : NetworkBehaviour
             Debug.Log("Client getting");
 
             // Send update to all clients // TODO check if this works
-            if (IsServer && senderClientId != serverID)
+            if (IsServer/* && senderClientId != serverID*/)
             {
                 foreach (ulong client in NetworkManager.Singleton.ConnectedClients.Keys)
                 {

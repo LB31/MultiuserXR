@@ -6,13 +6,14 @@ using UnityEngine;
 
 public class LookAtLocalPlayer : NetworkBehaviour
 {
-    public float MaxistanceToLook = 2;
+    public float MaxDistanceToLook = 2;
     public Transform PlayerObject;
     private ulong localPlayerID;
 
     public override void NetworkStart()
     {
-        //NetworkManager.Singleton.OnClientConnectedCallback += PrepareLooking;       
+        //NetworkManager.Singleton.OnClientConnectedCallback += PrepareLooking;
+        GameManager.Instance.AllLookAtObjects.Add(this);
     }
 
     public void PrepareLooking(ulong clientID)
@@ -31,7 +32,7 @@ public class LookAtLocalPlayer : NetworkBehaviour
         if (!PlayerObject) return;
 
         float distance = Vector3.Distance(PlayerObject.position, transform.position);
-        if ((IsClient || IsHost) && PlayerObject != null && distance > MaxistanceToLook)
+        if ((IsClient || IsHost) && PlayerObject != null && distance > MaxDistanceToLook)
         {
             Vector3 dir = transform.position - PlayerObject.position;
             Quaternion lookAtRotation = Quaternion.LookRotation(dir);

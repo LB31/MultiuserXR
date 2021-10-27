@@ -26,6 +26,7 @@ public class GameManager : Singleton<GameManager>
         }
     }
     public NetworkObject Client;
+    public List<LookAtLocalPlayer> AllLookAtObjects = new List<LookAtLocalPlayer>();
 
     protected override void Awake()
     {
@@ -50,8 +51,7 @@ Debug.Log("OCULUS_WINDOWS");
 
     private void HandleAllLookAtObjects()
     {
-        var allLookers = FindObjectsOfType<LookAtLocalPlayer>();
-        foreach (var item in allLookers)
+        foreach (LookAtLocalPlayer item in AllLookAtObjects)
         {
             item.PrepareLooking(OwnClientID);
         }
