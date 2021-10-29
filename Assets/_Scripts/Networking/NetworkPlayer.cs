@@ -79,6 +79,9 @@ public class NetworkPlayer : NetworkBehaviour
             LeftHand.gameObject.SetActive(false);
             RightHand.gameObject.SetActive(false);
 
+            Head.localPosition = Vector3.zero;
+            Head.localRotation = Quaternion.identity;
+
             AssignCanvasCamera(ARHead);
         }
         else if (GameManager.Instance.CurrentPlatform == MainPlatform.DESKTOP)
@@ -92,7 +95,7 @@ public class NetworkPlayer : NetworkBehaviour
         // Hide representation objects for local player
         if (IsLocalPlayer)
         {
-            Head.GetChild(0).gameObject.SetActive(false);
+            //Head.GetChild(0).gameObject.SetActive(false);
             LeftHand.GetChild(0).gameObject.SetActive(false);
             RightHand.GetChild(0).gameObject.SetActive(false);
         }

@@ -69,6 +69,7 @@ public class ARPlanePlacer : MonoBehaviour
         DraggingPlane.SetActive(false);
 
         ContentRepresentation = Instantiate(ContentRepresentation);
+        ContentRepresentation.transform.localScale *= 2;
         ContentRepresentation.AddComponent<BoxCollider>();
         ContentRepresentation.AddComponent<OnTap>().Tapped += PlaceObject;
 
@@ -91,18 +92,6 @@ public class ARPlanePlacer : MonoBehaviour
 
     private void CustomStart()
     {
-        if (Debugging)
-        {
-
-        }
-
-        //#if UNITY_EDITOR
-        //        Camera.main.transform.position += new Vector3(0, 1, -2);
-        //        ContentRepresentation.SetActive(false);
-        //        Content.gameObject.SetActive(true);
-        //        return;
-        //#endif
-
         // Show real content
         if (!isClient)
         {

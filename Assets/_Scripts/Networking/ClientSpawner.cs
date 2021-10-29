@@ -13,17 +13,13 @@ public class ClientSpawner : NetworkBehaviour
         {
             SpawnClientServerRpc(NetworkManager.Singleton.LocalClientId);
         }
-
     }
 
     [ServerRpc(RequireOwnership = false)]
     public void SpawnClientServerRpc(ulong clientID)
     {
-        // TODO handle all kinds of XR players
-
         GameObject ownPlayer = Instantiate(ClientXR, new Vector3(0, 0, 0), Quaternion.identity);
         NetworkObject netObj = ownPlayer.GetComponent<NetworkObject>();
-        //Player2.GetComponent<NetworkObject>().SpawnWithOwnership(clientID, null, true);
 
         // Spawns an object across the network and makes it the player object for the given client
         netObj.SpawnAsPlayerObject(clientID, null, true);
@@ -42,14 +38,8 @@ public class ClientSpawner : NetworkBehaviour
     [ClientRpc]
     public void SpawnReadyClientRpc(ulong clientID, ClientRpcParams clientRpcParams = default)
     {
-        //// Only for the new player
-        //if(clientID == NetworkManager.Singleton.LocalClientId)
-        //{
-        
-        //NetworkObject netObj = NetworkManager.Singleton.ConnectedClients[clientID].PlayerObject;
         GameManager.Instance.OwnClientID = clientID;
         GameManager.Instance.OwnClient = NetworkSpawnManager.GetLocalPlayerObject();
-        //}
     }
 
 }
