@@ -25,8 +25,10 @@ public class ARPlanePlacer : MonoBehaviour
 
     [HideInInspector]
     public bool Recenter { get; set; } = true;
+
     public GameObject RecenterButton;
     public GameObject PlaceButton;
+    public GameObject PlaceTutorial;
 
     private static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
 
@@ -67,6 +69,8 @@ public class ARPlanePlacer : MonoBehaviour
         DraggingPlane.SetActive(false);
 
         ContentRepresentation = Instantiate(ContentRepresentation);
+        ContentRepresentation.AddComponent<BoxCollider>();
+        ContentRepresentation.AddComponent<OnTap>().Tapped += PlaceObject;
 
     }
 
@@ -111,8 +115,9 @@ public class ARPlanePlacer : MonoBehaviour
         ContentRepresentation.SetActive(true);
         content.gameObject.SetActive(false);
 
+        PlaceButton.SetActive(false);
         RecenterButton.SetActive(false);
-        PlaceButton.SetActive(true);
+        //PlaceButton.SetActive(true);
     }
 
     void Update()
@@ -165,6 +170,8 @@ public class ARPlanePlacer : MonoBehaviour
         if (placementPoseIsValid)
         {
             ContentRepresentation.SetActive(true);
+            PlaceTutorial.SetActive(false);
+            PlaceButton.SetActive(true);
 
             //ContentRepresentation.transform.SetPositionAndRotation(placementPose.position, placementPose.rotation);
             ContentRepresentation.transform.position = placementPose.position;
@@ -172,6 +179,8 @@ public class ARPlanePlacer : MonoBehaviour
         else
         {
             ContentRepresentation.gameObject.SetActive(false);
+            PlaceTutorial.SetActive(true);
+            PlaceButton.SetActive(false);
         }
     }
 

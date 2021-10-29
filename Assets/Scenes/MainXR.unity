@@ -144,7 +144,7 @@ MonoBehaviour:
   DebugText: {fileID: 0}
   WorldCenter: {fileID: 1860031430}
   DrawCanvas: {fileID: 1357573241}
-  CurrentPlatform: 3
+  CurrentPlatform: 2
   MakeAppearOnPlane: {fileID: 0}
   OwnClientID: 0
   Client: {fileID: 0}
@@ -394,7 +394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d2951824142fdd4cb647584fc1a39ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxistanceToLook: 2
+  MaxDistanceToLook: 2
   PlayerObject: {fileID: 0}
 --- !u!1 &367844643
 GameObject:
