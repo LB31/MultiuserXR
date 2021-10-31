@@ -950,6 +950,7 @@ MonoBehaviour:
     - Connection
     - ConnectionLobby
     - ConnectionLobbyVR
+    - 
     AllowRuntimeSceneChanges: 0
     NetworkPrefabs:
     - Prefab: {fileID: 6178190362154763444, guid: 3784d4cef93dee241bce76bbfea4c1c4,

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -144,7 +144,7 @@ MonoBehaviour:
   DebugText: {fileID: 0}
   WorldCenter: {fileID: 1860031430}
   DrawCanvas: {fileID: 1357573241}
-  CurrentPlatform: 2
+  CurrentPlatform: 5
   MakeAppearOnPlane: {fileID: 0}
   OwnClientID: 0
   Client: {fileID: 0}
@@ -1324,7 +1324,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &525119503721275913
 Transform:
   m_ObjectHideFlags: 0
@@ -1540,14 +1540,14 @@ MonoBehaviour:
   allowedMin: 0
   allowedMax: 0
   Rotation_MinDegrees: 1.5
-  Translation_SnapDistance: 5
+  Translation_MinDistance: 0.3
   Scale_SizeGoal: 0.9
   MaterialColor:
     m_InternalValue: {r: 1, g: 1, b: 1, a: 1}
   ObjectScale:
     m_InternalValue: {x: 1, y: 1, z: 1}
   ObjectRotation:
-    m_InternalValue: {x: 0, y: 0, z: 0}
+    m_InternalValue: {x: 0, y: 0, z: 0, w: 1}
   ObjectPosition:
     m_InternalValue: {x: 0, y: 0, z: 0}
   SelectedBy:
@@ -1647,14 +1647,14 @@ MonoBehaviour:
   allowedMin: 0
   allowedMax: 0
   Rotation_MinDegrees: 1.5
-  Translation_SnapDistance: 5
+  Translation_MinDistance: 0.3
   Scale_SizeGoal: 0.9
   MaterialColor:
     m_InternalValue: {r: 1, g: 1, b: 1, a: 1}
   ObjectScale:
     m_InternalValue: {x: 1, y: 1, z: 1}
   ObjectRotation:
-    m_InternalValue: {x: 0, y: 0, z: 0}
+    m_InternalValue: {x: 0, y: 0, z: 0, w: 1}
   ObjectPosition:
     m_InternalValue: {x: 0, y: 0, z: 0}
   SelectedBy:

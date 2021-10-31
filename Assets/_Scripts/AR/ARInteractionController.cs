@@ -50,7 +50,7 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
             FingerHeld();
     }
 
-    private void FingerPressed()
+    public void FingerPressed()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit))

@@ -57,11 +57,6 @@ public class ARPlanePlacer : MonoBehaviour
         }
     }
 
-    public void TestSetRotation()
-    {
-        Rotation = m_Rotation;
-    }
-
     private void OnEnable()
     {
         content = GameManager.Instance.WorldCenter;
@@ -158,9 +153,9 @@ public class ARPlanePlacer : MonoBehaviour
     {
         if (placementPoseIsValid)
         {
-            ContentRepresentation.SetActive(true);
-            PlaceTutorial.SetActive(false);
+            ContentRepresentation.SetActive(true);          
             PlaceButton.SetActive(true);
+            PlaceTutorial.SetActive(false);
 
             //ContentRepresentation.transform.SetPositionAndRotation(placementPose.position, placementPose.rotation);
             ContentRepresentation.transform.position = placementPose.position;
@@ -168,8 +163,8 @@ public class ARPlanePlacer : MonoBehaviour
         else
         {
             ContentRepresentation.gameObject.SetActive(false);
-            PlaceTutorial.SetActive(true);
             PlaceButton.SetActive(false);
+            PlaceTutorial.SetActive(true);
         }
     }
 
@@ -191,8 +186,6 @@ public class ARPlanePlacer : MonoBehaviour
             //ContentRepresentation.transform.eulerAngles = newRotation;
             //return;
             placementPose = hits[0].pose;
-
-            return;
 
             Vector3 cameraForward = Camera.main.transform.forward;
             Vector3 cameraBearing = new Vector3(cameraForward.x, 0, cameraForward.z).normalized;
