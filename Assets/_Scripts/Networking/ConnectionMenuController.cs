@@ -24,7 +24,7 @@ public class ConnectionMenuController : MonoBehaviour
 
     private void Start()
     {
-#if UNITY_STANDALONE_LINUX
+#if UNITY_STANDALONE_LINUX && !UNITY_EDITOR
         StartDirectlyAsServer = true;
 #endif
 
