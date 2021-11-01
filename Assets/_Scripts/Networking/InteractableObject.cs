@@ -211,31 +211,6 @@ public class InteractableObject : NetworkBehaviour
 
     private void Update()
     {
-        //if (IsLocalPlayer)
-        //{
-        //    if (newPositionValue != transform.position)
-        //    {
-        //        ClientMoves = true;
-        //        ObjectPosition.Value = newPositionValue = transform.position;
-        //    }
-        //    else ClientMoves = false;
-
-        //    if (newRotationValue != transform.rotation)
-        //    {
-        //        ClientRotates = true;
-        //        ObjectRotation.Value = newRotationValue = transform.rotation;
-        //    }
-        //    else ClientRotates = false;
-            
-        //    if (newScaleValue != transform.localScale)
-        //    {
-        //        ClientScales = true;
-        //        ObjectScale.Value = newScaleValue = transform.localScale;
-        //    }
-        //    else ClientScales = false;
-        //}
-
-
         // When Client is scaling the object
         if (ClientScales)
             ObjectScale.Value = transform.localScale;
@@ -253,7 +228,6 @@ public class InteractableObject : NetworkBehaviour
             transform.position = Vector3.Lerp(transform.position, newPositionValue, lerpTime);
             if (Vector3.Distance(transform.position, newPositionValue) < Translation_MinDistance) lerpTime = 1; 
         }
-
         // When Client is not rotating and the network value was changed
         if (!ClientRotates && transform.rotation != ObjectRotation.Value)
         {
@@ -263,7 +237,6 @@ public class InteractableObject : NetworkBehaviour
             // Finish lerping
             if (Quaternion.Angle(transform.rotation, newRotationValue) < Rotation_MinDegrees) lerpTime = 1; 
         }
-
         // When Client is not scaling and the network value was changed
         if (!ClientScales && transform.localScale != ObjectScale.Value)
         {
@@ -272,7 +245,6 @@ public class InteractableObject : NetworkBehaviour
             // When scale has reached almost the new scale
             if (transform.localScale.x >= newScaleValue.x * Scale_SizeGoal) lerpTime = 1; 
         }
-
     }
 
 }
