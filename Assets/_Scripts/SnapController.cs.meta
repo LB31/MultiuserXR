@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: e30ff935bd93fe74ba5be96a8f6239c7
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - SnapVisualization: {fileID: 1677348325838525361, guid: 551333d6a44f0584ebd64ae63d44c98b,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
