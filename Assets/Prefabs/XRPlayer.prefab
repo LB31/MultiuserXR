@@ -1744,6 +1744,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 10
+  LayerMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &4216741508432278638
 GameObject:
   m_ObjectHideFlags: 0
@@ -3420,6 +3423,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 10
+  LayerMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &6178190362468184934
 GameObject:
   m_ObjectHideFlags: 0
@@ -3549,7 +3555,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6178190362600834764
 Transform:
   m_ObjectHideFlags: 0

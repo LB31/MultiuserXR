@@ -7,3 +7,12 @@ public enum MainPlatform
     SERVER = 4,
     DESKTOP = 5
 }
+
+public enum PlateType
+{
+    NONE = 0,
+    CORNER = 1,
+    CROSSOVER = 2,
+    STRAIGHT = 3,
+    THREEWAY = 4
+}

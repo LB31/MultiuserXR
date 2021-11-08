@@ -7,6 +7,8 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
     public float rotationSpeed = 10;
     public float RotationSpeed { get { return rotationSpeed; } set { rotationSpeed = value; } }
 
+    public LayerMask LayerMask;
+
     private InteractableObject selectedObject;
     private InteractableObject previousSelectedObject;
 
@@ -53,7 +55,7 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
     public void FingerPressed()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.value))
         {
             // only hit objects that are shared through network
             if (hit.transform.GetComponent<InteractableObject>())
@@ -165,6 +167,8 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
 
     public void ScaleObject()
     {
+        if (!selectedObject.ScalingAllowed) return;
+
         currentPos2 = Input.GetTouch(1).position;
         lastPos2 = Input.GetTouch(1).position - Input.GetTouch(1).deltaPosition;
         float zoom = Vector3.Distance(currentPos, currentPos2) / Vector3.Distance(lastPos, lastPos2);

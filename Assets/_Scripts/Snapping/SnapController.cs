@@ -49,8 +49,16 @@ public class SnapController : MonoBehaviour
             // Wait for next frame before stop sending
             await Task.Delay(100);
             io.ClientMoves = false;
-            io.ClientRotates = false;        
+            io.ClientRotates = false;
+
+            Deselect(io);
         }
+    }
+
+    private void Deselect(InteractableObject selectedObject)
+    {
+        selectedObject.SelectedBy.Value = ulong.MaxValue;
+        selectedObject.SelectionReticle.SetActive(false);
     }
 
     private void OnTriggerExit(Collider other)

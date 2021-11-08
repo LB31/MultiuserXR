@@ -37,7 +37,7 @@ public class DrawController : MonoBehaviour
 
     private void Update()
     {
-        if (Camera.main == null) return;
+        if (Camera.main == null || dm == null) return;
 
         // Check if user is near enough to draw
         float distance = Vector3.Distance(Camera.main.transform.position, dm.transform.position);

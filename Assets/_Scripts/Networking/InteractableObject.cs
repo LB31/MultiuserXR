@@ -16,6 +16,7 @@ public class InteractableObject : NetworkBehaviour
     public GameObject SelectionReticle;
     [Tooltip("X times as big or small")]
     public float SelectionReticleSize = 1;
+    public bool ScalingAllowed = true;
     [SerializeField]
     [Tooltip("Use absolute values. Like 10 -> 10 times bigger than original")]
     private Vector2 MinMaxScale;
