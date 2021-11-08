@@ -8,6 +8,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(NetworkObject))]
+[RequireComponent(typeof(XROffsetGrabInteractable))]
 public class InteractableObject : NetworkBehaviour
 {
     public bool PivotIsInMiddle;
@@ -89,6 +91,8 @@ public class InteractableObject : NetworkBehaviour
 
         Renderer = GetComponent<Renderer>();
 
+        gameObject.layer = LayerMask.NameToLayer("Grab");
+
         allowedMin = transform.localScale.y / MinMaxScale.x;
         allowedMax = transform.localScale.y * MinMaxScale.y;
 
@@ -116,7 +120,7 @@ public class InteractableObject : NetworkBehaviour
 
         // Prepare interaction buttons
         // TODO maybe assign in inspector because of runtime condition with plane dragging
-        //ColorButton.onClick.AddListener(ChangeColor);
+        //ColorButton.onClick.AddListener(ChangeColor); 
     }
 
 
