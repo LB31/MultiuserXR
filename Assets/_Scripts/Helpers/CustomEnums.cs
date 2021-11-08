@@ -14,5 +14,6 @@ public enum PlateType
     CORNER = 1,
     CROSSOVER = 2,
     STRAIGHT = 3,
-    THREEWAY = 4
+    THREEWAY = 4,
+    TREE = 5
 }
