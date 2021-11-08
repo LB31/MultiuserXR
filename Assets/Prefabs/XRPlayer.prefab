@@ -3192,7 +3192,7 @@ MonoBehaviour:
   ARHead: {fileID: 6178190363674272549}
   DesktopTester: {fileID: 4022771450187565124}
   DesktopHead: {fileID: 543387051657788014}
-  MaterialColor:
+  PlayerMaterialColor:
     m_InternalValue: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &8179126712712889263
 MonoBehaviour:
@@ -3549,7 +3549,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6178190362600834764
 Transform:
   m_ObjectHideFlags: 0

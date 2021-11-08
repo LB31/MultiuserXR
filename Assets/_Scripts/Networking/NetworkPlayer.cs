@@ -26,7 +26,7 @@ public class NetworkPlayer : NetworkBehaviour
     public GameObject DesktopTester;
     public Transform DesktopHead;
 
-    public NetworkVariable<Color> MaterialColor = new NetworkVariable<Color>(new NetworkVariableSettings
+    public NetworkVariable<Color> PlayerMaterialColor = new NetworkVariable<Color>(new NetworkVariableSettings
     {
         WritePermission = NetworkVariablePermission.Everyone,
         ReadPermission = NetworkVariablePermission.Everyone
@@ -36,7 +36,7 @@ public class NetworkPlayer : NetworkBehaviour
     {
         if (IsOwner)
         {
-            MaterialColor.Value = new Color(Random.value, Random.value, Random.value);
+            PlayerMaterialColor.Value = new Color(Random.value, Random.value, Random.value);
             HeadRenderer.gameObject.SetActive(false);
 
         }
@@ -45,7 +45,7 @@ public class NetworkPlayer : NetworkBehaviour
     private async void Start()
     {
         await Task.Delay(1000);
-        HeadRenderer.material.color = MaterialColor.Value;
+        HeadRenderer.material.color = PlayerMaterialColor.Value;
     }
 
     public void PreparePlatformSpecificPlayer()
