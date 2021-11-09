@@ -4765,7 +4765,7 @@ MonoBehaviour:
   SnapZoneParent: {fileID: 1836658000}
   SnapFieldSize: {x: 5, y: 5}
   SnapZoneSize: 0.2
-  PlateObject: {fileID: 90611947681036598, guid: 6c2e595a7bab6d341b707f888b08686c,
+  PlateObject: {fileID: 9123159827494209031, guid: 6c2e595a7bab6d341b707f888b08686c,
     type: 3}
 --- !u!114 &1173318912
 MonoBehaviour:

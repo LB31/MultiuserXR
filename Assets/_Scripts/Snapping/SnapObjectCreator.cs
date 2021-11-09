@@ -14,7 +14,7 @@ public class SnapObjectCreator : NetworkBehaviour
     public Vector2 SnapFieldSize = new Vector3(5, 5);
     public float SnapZoneSize = 0.2f;
 
-    public GameObject PlateObject;
+    public NetworkObject PlateObject;
     
 
 
@@ -48,16 +48,16 @@ public class SnapObjectCreator : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     private void SpawnObjectServerRpc(int type, Vector3 pos, Vector3 forward)
     {
-        GameObject plate = Instantiate(PlateObject, transform);
-        SnapObject snapObj = plate.GetComponent<SnapObject>();
+        NetworkObject plate = Instantiate(PlateObject, transform);
 
+        SnapObject snapObj = plate.GetComponent<SnapObject>();
         StreetObject plateType = snapObj.StreetObjects.FirstOrDefault(t => t.Type.Equals((PlateType)type));
         plateType.Object.SetActive(true);
    
         plate.transform.position = pos + forward * 0.1f;
-        plate.SetActive(true);
+        plate.gameObject.SetActive(true);
 
-        plate.GetComponent<NetworkObject>().Spawn();
+        plate.Spawn();
     }
 }
 
