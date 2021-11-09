@@ -6,45 +6,58 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class SnapObjectCreator : MonoBehaviour
+public class SnapObjectCreator : NetworkBehaviour
 {
+    public GameObject SnapZone;
+    public Transform SnapZoneParent;
+    [Tooltip("X = width; Y = height")]
+    public Vector2 SnapFieldSize = new Vector3(5, 5);
+    public float SnapZoneSize = 0.2f;
+
     public GameObject PlateObject;
-    public List<StreetObject> StreetObjects = new List<StreetObject>();
+    
+
+
     private Transform sendingPlate;
 
-    public void RegisterSender(Transform sender) => sendingPlate = sender;
-
-    public void PlaceObject(int type)
+    private void Start()
     {
-        StreetObject plateType = StreetObjects.FirstOrDefault(t => t.Type.Equals((PlateType)type));
-        plateType.Object.SetActive(true);
-
-        GameObject plate = Instantiate(PlateObject, transform);
-        plate.transform.position = sendingPlate.position + sendingPlate.forward * 0.2f;
-        plate.SetActive(true);
-
-        SpawnObjectServerRPC(plate);
-        CleanModel();
+        CreateSnapField();
     }
 
-    private void CleanModel()
+    private void CreateSnapField()
     {
-        foreach (var item in StreetObjects)
+        for (int i = 0; i < SnapFieldSize.x; i++)
         {
-            item.Object.SetActive(false);
+            for (int j = 0; j < SnapFieldSize.y; j++)
+            {
+                GameObject snapZone = Instantiate(SnapZone, SnapZoneParent);
+                snapZone.transform.localPosition = new Vector3(i * SnapZoneSize, 0, j * SnapZoneSize);
+            }
         }
     }
 
-    [ServerRpc]
-    private void SpawnObjectServerRPC(GameObject obj)
+    // Called by button
+    public void RegisterSender(Transform sender) => sendingPlate = sender;
+    // Called by button
+    public void PlaceObject(int type)
     {
-        obj.GetComponent<NetworkObject>().Spawn();
+        SpawnObjectServerRpc(type, sendingPlate.position, sendingPlate.forward);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void SpawnObjectServerRpc(int type, Vector3 pos, Vector3 forward)
+    {
+        GameObject plate = Instantiate(PlateObject, transform);
+        SnapObject snapObj = plate.GetComponent<SnapObject>();
+
+        StreetObject plateType = snapObj.StreetObjects.FirstOrDefault(t => t.Type.Equals((PlateType)type));
+        plateType.Object.SetActive(true);
+   
+        plate.transform.position = pos + forward * 0.1f;
+        plate.SetActive(true);
+
+        plate.GetComponent<NetworkObject>().Spawn();
     }
 }
 
-[Serializable]
-public class StreetObject
-{
-    public PlateType Type;
-    public GameObject Object;
-}

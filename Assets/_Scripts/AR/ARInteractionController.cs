@@ -100,7 +100,7 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
 
     private void FingerHeld()
     {
-        if (selectedObject == null) return;
+        if (selectedObject == null || selectedObject.SelectedBy.Value != NetworkManager.Singleton.LocalClientId) return;
 
 
         currentPos = Input.mousePosition;

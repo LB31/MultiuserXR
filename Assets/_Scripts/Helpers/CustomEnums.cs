@@ -15,5 +15,6 @@ public enum PlateType
     CROSSOVER = 2,
     STRAIGHT = 3,
     THREEWAY = 4,
-    TREE = 5
+    TREE = 5,
+    HOUSE = 6
 }
