@@ -930,8 +930,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NetworkInstanceId: 0
-  PrefabHash: 15584619753974619985
-  PrefabHashGenerator: Muh
+  PrefabHash: 4146969634335495554
+  PrefabHashGenerator: PlateObject
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
 --- !u!114 &7601396943401088448

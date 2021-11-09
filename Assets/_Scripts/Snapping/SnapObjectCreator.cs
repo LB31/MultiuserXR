@@ -48,14 +48,14 @@ public class SnapObjectCreator : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     private void SpawnObjectServerRpc(int type, Vector3 pos, Vector3 forward)
     {
-        NetworkObject plate = Instantiate(PlateObject, transform);
+        Vector3 newPos = pos + forward * 0.1f;
+        NetworkObject plate = Instantiate(PlateObject, newPos, Quaternion.identity, transform);
 
         SnapObject snapObj = plate.GetComponent<SnapObject>();
-        StreetObject plateType = snapObj.StreetObjects.FirstOrDefault(t => t.Type.Equals((PlateType)type));
-        plateType.Object.SetActive(true);
-   
-        plate.transform.position = pos + forward * 0.1f;
-        plate.gameObject.SetActive(true);
+        snapObj.PlateType.Value = type;
+        snapObj.AssignPlate();
+
+        //plate.transform.position = pos + forward * 0.1f;
 
         plate.Spawn();
     }
