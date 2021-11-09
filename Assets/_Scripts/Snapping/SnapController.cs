@@ -1,3 +1,4 @@
+using MLAPI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -25,9 +26,9 @@ public class SnapController : MonoBehaviour
         if (other.gameObject.HasComponent<InteractableObject>())
         {
             var io = other.GetComponent<InteractableObject>();
-            // Return when client is still moving the object
-            if (io.ClientMoves) return;
-          
+            // Return when client is still moving the object or when someone else is moving the object
+            if (io.ClientMoves || !IsClientMoving(other)) return;
+
             // Show that object is now in zone
             placed = true;
             SnapVisualization.SetActive(false);
@@ -63,6 +64,7 @@ public class SnapController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if (!IsClientMoving(other)) return;
         triggered = false; 
         placed = false;
         SnapVisualization.SetActive(false);
@@ -70,8 +72,14 @@ public class SnapController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (placed) return;
+        if (placed || !IsClientMoving(other)) return;
         triggered = true;
         SnapVisualization.SetActive(true);
+    }
+
+    private bool IsClientMoving(Collider other)
+    {
+        var io = other.GetComponent<InteractableObject>();
+        return io.SelectedBy.Value == NetworkManager.Singleton.LocalClientId;
     }
 }
