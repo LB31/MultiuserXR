@@ -10,6 +10,7 @@ public class SnapController : MonoBehaviour
 
     private bool triggered;
     private bool placed;
+    private Transform placedObject;
 
 
     private void Start()
@@ -27,10 +28,11 @@ public class SnapController : MonoBehaviour
         {
             var io = other.GetComponent<InteractableObject>();
             // Return when client is still moving the object or when someone else is moving the object
-            if (io.ClientMoves || !IsClientMoving(other)) return;
+            if (io.ClientMoves || !IsLocalClientMoving(other)) return;
 
             // Show that object is now in zone
             placed = true;
+            placedObject = other.transform;
             SnapVisualization.SetActive(false);
             triggered = false;
 
@@ -64,7 +66,10 @@ public class SnapController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (!IsClientMoving(other)) return;
+        if (!IsLocalClientMoving(other)) return;
+        // When another object moves trough the zone
+        if (placed && other.transform != placedObject) return;
+
         triggered = false; 
         placed = false;
         SnapVisualization.SetActive(false);
@@ -72,12 +77,12 @@ public class SnapController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (placed || !IsClientMoving(other)) return;
+        if (placed || !IsLocalClientMoving(other)) return;
         triggered = true;
         SnapVisualization.SetActive(true);
     }
 
-    private bool IsClientMoving(Collider other)
+    private bool IsLocalClientMoving(Collider other)
     {
         var io = other.GetComponent<InteractableObject>();
         return io.SelectedBy.Value == NetworkManager.Singleton.LocalClientId;
