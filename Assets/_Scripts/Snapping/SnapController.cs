@@ -29,7 +29,7 @@ public class SnapController : MonoBehaviour
         {
             var io = other.GetComponent<InteractableObject>();
             // Return when object is still being moved
-            if (IsObjectMoved(other)) return;
+            if (IsObjectSelected(other)) return;
 
             // Show that object is now in zone
             placed = true;
@@ -88,7 +88,7 @@ public class SnapController : MonoBehaviour
         SnapVisualization.SetActive(true);
     }
 
-    private bool IsObjectMoved(Collider other)
+    private bool IsObjectSelected(Collider other)
     {
         if (!other.gameObject.HasComponent<InteractableObject>()) return false;
         var io = other.GetComponent<InteractableObject>();

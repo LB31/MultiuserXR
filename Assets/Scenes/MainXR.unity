@@ -399,7 +399,7 @@ MonoBehaviour:
   DebugText: {fileID: 0}
   WorldCenter: {fileID: 1860031430}
   DrawCanvas: {fileID: 1357573241}
-  CurrentPlatform: 2
+  CurrentPlatform: 5
   MakeAppearOnPlane: {fileID: 0}
   OwnClientID: 0
   Client: {fileID: 0}

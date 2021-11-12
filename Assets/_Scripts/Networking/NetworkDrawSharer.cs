@@ -12,6 +12,8 @@ public class NetworkDrawSharer : NetworkBehaviour
 {
     public Texture2D DrawableTexture;
 
+    private readonly string MessageName = "Draw";
+
     private byte[] textureToSend;
     private byte[] receivedTexture;
 
@@ -37,7 +39,7 @@ public class NetworkDrawSharer : NetworkBehaviour
         });
 
         //Receiving
-        CustomMessagingManager.OnUnnamedMessage += ReceiveMessage;
+        CustomMessagingManager.RegisterNamedMessageHandler(MessageName, ReceiveMessage);
     }
 
     private void ReceiveMessage(ulong senderClientId, Stream stream)
@@ -76,7 +78,7 @@ public class NetworkDrawSharer : NetworkBehaviour
         using (PooledNetworkBuffer stream = PooledNetworkBuffer.Get())
         {
             WriteColors(stream, image);
-            CustomMessagingManager.SendUnnamedMessage(sendTo, stream);
+            CustomMessagingManager.SendNamedMessage(MessageName, sendTo, stream);
         }
     }
 
