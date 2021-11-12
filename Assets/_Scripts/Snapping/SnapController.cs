@@ -1,4 +1,5 @@
 using MLAPI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -21,14 +22,14 @@ public class SnapController : MonoBehaviour
 
     private async void OnTriggerStay(Collider other)
     {
-        // When zone was not triggered or there is already an object placed
+        // Return when zone was not triggered or there is already an object placed
         if (!triggered || placed) return;
         // When interactable object was the trigger
         if (other.gameObject.HasComponent<InteractableObject>())
         {
             var io = other.GetComponent<InteractableObject>();
-            // Return when client is still moving the object or when someone else is moving the object
-            if (io.ClientMoves || !IsLocalClientMoving(other)) return;
+            // Return when object is still being moved
+            if (IsObjectMoved(other)) return;
 
             // Show that object is now in zone
             placed = true;
@@ -66,24 +67,38 @@ public class SnapController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (!IsLocalClientMoving(other)) return;
-        // When another object moves trough the zone
+        // When not an InteractableObject has triggered
+        if (!other.gameObject.HasComponent<InteractableObject>()) return;
+        // Return when another than the placed object exits the zone
         if (placed && other.transform != placedObject) return;
 
-        triggered = false; 
+        triggered = false;
         placed = false;
         SnapVisualization.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (placed || !IsLocalClientMoving(other)) return;
+        // Return when there is already an object in zone
+        if (placed) return;
+        // When not an InteractableObject has triggered
+        if (!other.gameObject.HasComponent<InteractableObject>()) return;
+
         triggered = true;
         SnapVisualization.SetActive(true);
     }
 
+    private bool IsObjectMoved(Collider other)
+    {
+        if (!other.gameObject.HasComponent<InteractableObject>()) return false;
+        var io = other.GetComponent<InteractableObject>();
+        return io.SelectedBy.Value != ulong.MaxValue;
+    }
+
     private bool IsLocalClientMoving(Collider other)
     {
+        if (!other.gameObject.HasComponent<InteractableObject>()) return false;
+
         var io = other.GetComponent<InteractableObject>();
         return io.SelectedBy.Value == NetworkManager.Singleton.LocalClientId;
     }
