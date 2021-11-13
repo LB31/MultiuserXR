@@ -917,6 +917,8 @@ MonoBehaviour:
     Object: {fileID: 90611947681036592}
   - Type: 6
     Object: {fileID: 90611947681036596}
+  PlateType:
+    m_InternalValue: 0
 --- !u!114 &9123159827494209031
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -8,13 +8,18 @@ using UnityEngine;
 
 public class SnapObjectCreator : NetworkBehaviour
 {
+    public NetworkObject PlateObject;
+
+    public GameObject CityButton;
+    public List<Transform> ButtonRows;
+
     public GameObject SnapZone;
     public Transform SnapZoneParent;
     [Tooltip("X = width; Y = height")]
     public Vector2 SnapFieldSize = new Vector3(5, 5);
     public float SnapZoneSize = 0.2f;
 
-    public NetworkObject PlateObject;
+    
     
 
 
@@ -35,6 +40,11 @@ public class SnapObjectCreator : NetworkBehaviour
                 snapZone.transform.localPosition = new Vector3(i * SnapZoneSize, 0, j * SnapZoneSize);
             }
         }
+    }
+
+    private void CreateSnapButtons()
+    {
+
     }
 
     // Called by button

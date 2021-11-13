@@ -6,26 +6,12 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    public TextMeshProUGUI DebugText;
-
     public Transform WorldCenter;
     public Canvas DrawCanvas;
     public MainPlatform CurrentPlatform;
     public ARPlanePlacer MakeAppearOnPlane;
     public ulong OwnClientID;
-    public NetworkObject OwnClient
-    {
-        get { return Client;  }
-        set
-        {
-            Client = value;
-            Client.GetComponent<NetworkPlayer>().PreparePlatformSpecificPlayer();
 
-            HandleAllLookAtObjects();
-            //MakeAppearOnPlane.enabled = true;
-        }
-    }
-    public NetworkObject Client;
     public List<LookAtLocalPlayer> AllLookAtObjects = new List<LookAtLocalPlayer>();
 
     protected override void Awake()
@@ -46,7 +32,7 @@ public class GameManager : Singleton<GameManager>
     }
 
 
-    private void HandleAllLookAtObjects()
+    public void HandleAllLookAtObjects(ulong id)
     {
         foreach (LookAtLocalPlayer item in AllLookAtObjects)
         {

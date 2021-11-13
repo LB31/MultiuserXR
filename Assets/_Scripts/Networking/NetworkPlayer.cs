@@ -54,42 +54,37 @@ public class NetworkPlayer : NetworkBehaviour
 
         Debug.Log("PreparePlatformSpecificPlayer " + GameManager.Instance.CurrentPlatform);
 
-        if (GameManager.Instance.CurrentPlatform == MainPlatform.VR_WINDOWS)
+        var platform = GameManager.Instance.CurrentPlatform;
+
+        if (platform == MainPlatform.VR_WINDOWS || platform == MainPlatform.VR_ANDROID)
         {
             VRPlayer.SetActive(true);
 
-            Head.SetParent(VRHead);
+            SetHeadDependencies(VRHead);
             LeftHand.SetParent(VRLeftHand);
             RightHand.SetParent(VRRightHand);
 
-            Head.localPosition = Vector3.zero;
-            LeftHand.localPosition = Vector3.zero;
-            RightHand.localPosition = Vector3.zero;
-
-            Head.localRotation = Quaternion.identity;
-            LeftHand.localRotation = Quaternion.identity;
-            RightHand.localRotation = Quaternion.identity;
-
-            AssignCanvasCamera(VRHead);
+            ZeroTransform();          
         }
-        else if (GameManager.Instance.CurrentPlatform == MainPlatform.MOBILE)
+        else if (platform == MainPlatform.MOBILE)
         {
             ARPlayer.SetActive(true);
-            Head.SetParent(ARHead);
+
+            SetHeadDependencies(ARHead);
             LeftHand.gameObject.SetActive(false);
             RightHand.gameObject.SetActive(false);
 
-            Head.localPosition = Vector3.zero;
-            Head.localRotation = Quaternion.identity;
-
-            AssignCanvasCamera(ARHead);
+            ZeroTransform();            
         }
-        else if (GameManager.Instance.CurrentPlatform == MainPlatform.DESKTOP)
+        else if (platform == MainPlatform.DESKTOP)
         {
             DesktopTester.SetActive(true);
-            Head.SetParent(DesktopHead);
 
-            AssignCanvasCamera(DesktopHead);
+            SetHeadDependencies(DesktopHead);
+            LeftHand.gameObject.SetActive(false);
+            RightHand.gameObject.SetActive(false);
+
+            ZeroTransform();       
         }
 
         // Hide representation objects for local player
@@ -101,8 +96,20 @@ public class NetworkPlayer : NetworkBehaviour
         }
     }
 
-    private void AssignCanvasCamera(Transform camera)
+    private void ZeroTransform()
     {
+        Head.localPosition = Vector3.zero;
+        LeftHand.localPosition = Vector3.zero;
+        RightHand.localPosition = Vector3.zero;
+
+        Head.localRotation = Quaternion.identity;
+        LeftHand.localRotation = Quaternion.identity;
+        RightHand.localRotation = Quaternion.identity;
+    }
+
+    private void SetHeadDependencies(Transform camera)
+    {
+        Head.SetParent(camera);
         GameManager.Instance.DrawCanvas.worldCamera = camera.GetComponent<Camera>();
     }
 

@@ -1,4 +1,5 @@
 using MLAPI;
+using MLAPI.Spawning;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ public class LookAtLocalPlayer : NetworkBehaviour
 
     public void PrepareLooking(ulong clientID)
     {
-        NetworkPlayer np = GameManager.Instance.OwnClient.GetComponent<NetworkPlayer>();
+        NetworkPlayer np = NetworkSpawnManager.GetLocalPlayerObject().GetComponent<NetworkPlayer>();
         PlayerObject = np.Head;
     }
 

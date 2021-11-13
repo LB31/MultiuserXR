@@ -1525,15 +1525,18 @@ MonoBehaviour:
     - Prefab: {fileID: 6178190362154763444, guid: 3784d4cef93dee241bce76bbfea4c1c4,
         type: 3}
       PlayerPrefab: 0
+    - Prefab: {fileID: 90611947681036598, guid: 6c2e595a7bab6d341b707f888b08686c,
+        type: 3}
+      PlayerPrefab: 0
     PlayerPrefabHash:
       id: 0
     CreatePlayerPrefab: 0
     ReceiveTickrate: 64
     NetworkTickIntervalSec: 0.05
-    MaxReceiveEventsPerTickRate: 500
+    MaxReceiveEventsPerTickRate: 1000
     EventTickrate: 64
     ClientConnectionBufferTimeout: 10
-    ConnectionApproval: 0
+    ConnectionApproval: 1
     ConnectionData: 
     EnableTimeResync: 0
     TimeResyncInterval: 30

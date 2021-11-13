@@ -13,7 +13,6 @@ using MLAPI.SceneManagement;
 public class ConnectionMenuController : MonoBehaviour
 {
     public bool StartDirectlyAsServer;
-    public GameObject MenuPanel;
     public TMP_InputField InputFieldIP;
     public Button ButtonServer;
     public Button ButtonHost;
@@ -86,7 +85,6 @@ public class ConnectionMenuController : MonoBehaviour
 
         NetworkManager.Singleton.GetComponent<UNetTransport>().ConnectAddress = ipToConnect;
         NetworkManager.Singleton.StartClient();
-        MenuPanel.SetActive(false);
     }
     #endregion
 

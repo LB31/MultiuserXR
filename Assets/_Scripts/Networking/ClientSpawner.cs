@@ -32,14 +32,16 @@ public class ClientSpawner : NetworkBehaviour
                 TargetClientIds = new ulong[] { clientID }
             }
         };
+
         SpawnReadyClientRpc(clientID, clientRpcParams);
     }
 
     [ClientRpc]
     public void SpawnReadyClientRpc(ulong clientID, ClientRpcParams clientRpcParams = default)
-    {
-        GameManager.Instance.OwnClientID = clientID;
-        GameManager.Instance.OwnClient = NetworkSpawnManager.GetLocalPlayerObject();
+    {     
+        var ownClient = NetworkSpawnManager.GetLocalPlayerObject();
+        ownClient.GetComponent<NetworkPlayer>().PreparePlatformSpecificPlayer();
+        GameManager.Instance.HandleAllLookAtObjects(clientID);
     }
 
 }
