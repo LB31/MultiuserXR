@@ -56,7 +56,7 @@ public class DrawController : MonoBehaviour
             bindingsRight.Add(new XRBinding(XRButton.Trigger, PressType.Continuous, () => TrackInputVR()));
             bindingsRight.Add(new XRBinding(XRButton.Trigger, PressType.End, () => Deselect()));
             foreach (var item in bindingsRight)
-                RightHandInput.bindings.Add(item);
+                RightHandInput.Bindings.Add(item);
         } 
     }
 

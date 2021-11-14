@@ -34,9 +34,7 @@ public class ContinuousMovement : MonoBehaviour
 
     void Update()
     {
-        GameManagerVR.Instance.LeftCon.TryGetFeatureValue(GameManagerVR.Instance.Axis2D, out inputAxis);
-
-        InputHelpers.Button m_RotateAnchorLeft = InputHelpers.Button.PrimaryAxis2DLeft;
+        VRManager.Instance.LeftCon.TryGetFeatureValue(VRManager.Instance.Axis2D, out inputAxis);
     }
 
     private void FixedUpdate()
@@ -48,7 +46,7 @@ public class ContinuousMovement : MonoBehaviour
         Vector3 direction = headYaw * new Vector3(inputAxis.x, 0, inputAxis.y);
 
         if (inputAxis.magnitude > 0.15f)
-            character.Move(direction * Time.fixedDeltaTime * Speed);
+            character.Move(Speed * Time.fixedDeltaTime * direction);
 
         // gravity 
         if (character.isGrounded)
@@ -56,7 +54,7 @@ public class ContinuousMovement : MonoBehaviour
         else
             fallingSpeed += gravity * Time.fixedDeltaTime;
 
-        character.Move(Vector3.up * fallingSpeed * Time.fixedDeltaTime);
+        character.Move(fallingSpeed * Time.fixedDeltaTime * Vector3.up);
     }
 
     private void CapsuleFollowHeadset()

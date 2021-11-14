@@ -24,15 +24,15 @@ public class XRControls : Singleton<XRControls>
     {
         if (bindingsTrigger[0] != null) return; // avoid 2 assigments
 
-        GameManagerVR.Instance.XRInputRight.bindings.
+        VRManager.Instance.XRInputRight.Bindings.
             Add(bindingsTrigger[0] = new XRBinding(XRButton.Trigger, PressType.End, () => ControllerEventTrigger()));
-        GameManagerVR.Instance.XRInputLeft.bindings.
+        VRManager.Instance.XRInputLeft.Bindings.
             Add(bindingsTrigger[1] = new XRBinding(XRButton.Trigger, PressType.End, () => ControllerEventTrigger()));
     }
 
     private void RegisterGrabbing()
     {
-        GameManagerVR.Instance.XRInputRight.bindings.
+        VRManager.Instance.XRInputRight.Bindings.
             Add(new XRBinding(XRButton.GripButton, PressType.Begin, () => ControllerEventGrip()));
     }
 
@@ -45,7 +45,7 @@ public class XRControls : Singleton<XRControls>
     {
         if (bindingMenu != null) return;
 
-        GameManagerVR.Instance.XRInputLeft.bindings.
+        VRManager.Instance.XRInputLeft.Bindings.
             Add(bindingMenu = new XRBinding(XRButton.Menu, PressType.End, () => ControllerEventMenu()));
     }
 
@@ -56,7 +56,7 @@ public class XRControls : Singleton<XRControls>
         XRButton teleportLeft;
         XRButton teleportRight;
 
-        if (GameManagerVR.Instance.OculusInUse)
+        if (VRManager.Instance.OculusInUse)
         {
             teleportLeft = XRButton.SecondaryButton;
             teleportRight = XRButton.PrimaryButton;
@@ -70,12 +70,12 @@ public class XRControls : Singleton<XRControls>
             teleportRight = XRButton.Primary2DAxisClick;
         }
 
-        GameManagerVR.Instance.XRInputRight.bindings.
+        VRManager.Instance.XRInputRight.Bindings.
             Add(bindingsButtons[0] = new XRBinding(teleportRight, PressType.End, () => ControllerEventButton(true)));
 
-        if (GameManagerVR.Instance.OculusInUse)
+        if (VRManager.Instance.OculusInUse)
         {
-            GameManagerVR.Instance.XRInputRight.bindings.
+            VRManager.Instance.XRInputRight.Bindings.
                 Add(bindingsButtons[1] = new XRBinding(teleportLeft, PressType.End, () => ControllerEventButton(false)));
         }
 

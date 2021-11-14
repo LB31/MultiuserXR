@@ -7,26 +7,23 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class XRInput : MonoBehaviour
 {
-#pragma warning disable 0649
-    public XRController controller;
-    public List<XRBinding> bindings;
-#pragma warning restore 0649
+    public XRController Controller;
+    public List<XRBinding> Bindings;
+
 
     private void Update()
     {
-        foreach (var binding in bindings)
-            binding.Update(controller.inputDevice);
+        foreach (var binding in Bindings)
+            binding.Update(Controller.inputDevice);
     }
 }
 
 [Serializable]
 public class XRBinding
 {
-#pragma warning disable 0649
     [SerializeField] XRButton button;
     [SerializeField] PressType pressType;
     [SerializeField] UnityEvent OnActive = new UnityEvent();
-#pragma warning restore 0649
 
     bool isPressed;
     bool wasPressed;

@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class GameManagerVR : Singleton<GameManagerVR>
+public class VRManager : Singleton<VRManager>
 {
     [HideInInspector] public bool OculusInUse;
     [HideInInspector] public DeviceBasedSnapTurnProvider SnapTurnProvider;
@@ -31,7 +31,7 @@ public class GameManagerVR : Singleton<GameManagerVR>
     private void GetXRInputs()
     {
         XRInput[] inputs = GetComponents<XRInput>();
-        int indexLeft = Array.IndexOf(inputs, inputs.First(con => con.controller.name.ToLower().Contains("left")));
+        int indexLeft = Array.IndexOf(inputs, inputs.First(con => con.Controller.name.ToLower().Contains("left")));
         XRInputLeft = inputs[indexLeft];
         XRInputRight = inputs[indexLeft == 0 ? 1 : 0];
     }

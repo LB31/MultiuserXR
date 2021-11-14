@@ -32,9 +32,9 @@ public class HandPresence : MonoBehaviour
         targetDevice = devices[0];
 
         if (targetDevice.name.ToLower().Contains("oculus"))
-            GameManagerVR.Instance.OculusInUse = true;
+            VRManager.Instance.OculusInUse = true;
 
-        GameManagerVR.Instance.ChangeHeadsetDependencies();
+        VRManager.Instance.ChangeHeadsetDependencies();
 
         GameObject prefab = ControllerPrefabs.Find(controller => controller.name == targetDevice.name);
 
@@ -53,13 +53,13 @@ public class HandPresence : MonoBehaviour
 
         if (targetDevice.name.ToLower().Contains("left"))
         {
-            GameManagerVR.Instance.LeftCon = targetDevice;
+            VRManager.Instance.LeftCon = targetDevice;
             //GameStateHandler.Instance.RigsterMenu();
         }
 
         if (targetDevice.name.ToLower().Contains("right"))
         {
-            GameManagerVR.Instance.RightCon = targetDevice;
+            VRManager.Instance.RightCon = targetDevice;
         }
 
         return;
