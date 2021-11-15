@@ -396,13 +396,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e75bb55035a3c640addcfd7f729dc6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DebugText: {fileID: 0}
   WorldCenter: {fileID: 1860031430}
   DrawCanvas: {fileID: 1357573241}
   CurrentPlatform: 5
   MakeAppearOnPlane: {fileID: 0}
   OwnClientID: 0
-  Client: {fileID: 0}
   AllLookAtObjects: []
 --- !u!1001 &60724819
 PrefabInstance:

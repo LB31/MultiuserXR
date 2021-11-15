@@ -176,7 +176,7 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
 
         // Check if object is in desired scale range
         Vector3 expectedScale = selectedObject.transform.localScale * zoom;
-        if (expectedScale.y > selectedObject.allowedMin && expectedScale.y < selectedObject.allowedMax)
+        if (expectedScale.y > selectedObject.AllowedMin && expectedScale.y < selectedObject.AllowedMax)
         {
             selectedObject.transform.localScale *= zoom;
             if (selectedObject.PivotIsInMiddle)

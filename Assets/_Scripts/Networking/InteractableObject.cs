@@ -21,14 +21,9 @@ public class InteractableObject : NetworkBehaviour
     [Tooltip("Use absolute values. Like 10 -> 10 times bigger than original")]
     private Vector2 MinMaxScale;
     [HideInInspector]
-    public float allowedMin;
+    public float AllowedMin;
     [HideInInspector]
-    public float allowedMax;
-
-    [Header("Transform thresholds")]
-    public float Rotation_MinDegrees = 1.5f;
-    public float Translation_MinDistance = 0.3f;
-    public float Scale_SizeGoal = 0.9f;
+    public float AllowedMax;
 
     [Header("Network Fields")]
     public NetworkVariable<Color> MaterialColor = new NetworkVariable<Color>(new NetworkVariableSettings
@@ -94,8 +89,8 @@ public class InteractableObject : NetworkBehaviour
 
         gameObject.layer = LayerMask.NameToLayer("Grab");
 
-        allowedMin = transform.localScale.y / MinMaxScale.x;
-        allowedMax = transform.localScale.y * MinMaxScale.y;
+        AllowedMin = transform.localScale.y / MinMaxScale.x;
+        AllowedMax = transform.localScale.y * MinMaxScale.y;
 
         //transform.parent = null;
 
@@ -216,22 +211,21 @@ public class InteractableObject : NetworkBehaviour
 
     private void Update()
     {
-        // When Client is scaling the object
-        if (ClientScales)
-            ObjectScale.Value = transform.localScale;
-        // When Client is rotating the object
-        if (ClientRotates)
-            ObjectRotation.Value = transform.rotation;
         // When Client is moving the object
         if (ClientMoves)
             ObjectPosition.Value = transform.position;
-
+        // When Client is rotating the object
+        if (ClientRotates)
+            ObjectRotation.Value = transform.rotation;
+        // When Client is scaling the object
+        if (ClientScales)
+            ObjectScale.Value = transform.localScale;
+        
         // When Client is not moving and the network value was changed
         if (!ClientMoves && transform.position != ObjectPosition.Value)
         {
             lerpTime += Time.deltaTime;
             transform.position = Vector3.Lerp(transform.position, newPositionValue, lerpTime);
-            if (Vector3.Distance(transform.position, newPositionValue) < Translation_MinDistance) lerpTime = 1; 
         }
         // When Client is not rotating and the network value was changed
         if (!ClientRotates && transform.rotation != ObjectRotation.Value)
@@ -239,16 +233,12 @@ public class InteractableObject : NetworkBehaviour
             // Interpolate rotation
             lerpTime += Time.deltaTime;
             transform.rotation = Quaternion.Slerp(transform.rotation, newRotationValue, lerpTime);
-            // Finish lerping
-            if (Quaternion.Angle(transform.rotation, newRotationValue) < Rotation_MinDegrees) lerpTime = 1; 
         }
         // When Client is not scaling and the network value was changed
         if (!ClientScales && transform.localScale != ObjectScale.Value)
         {
             lerpTime += Time.deltaTime;
             transform.localScale = Vector3.Lerp(transform.localScale, newScaleValue, lerpTime);
-            // When scale has reached almost the new scale
-            if (transform.localScale.x >= newScaleValue.x * Scale_SizeGoal) lerpTime = 1; 
         }
     }
 
