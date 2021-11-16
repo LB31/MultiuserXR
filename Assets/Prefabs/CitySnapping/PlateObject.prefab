@@ -954,11 +954,8 @@ MonoBehaviour:
   SelectionReticleSize: 3
   ScalingAllowed: 0
   MinMaxScale: {x: 2, y: 1.5}
-  allowedMin: 0
-  allowedMax: 0
-  Rotation_MinDegrees: 1.5
-  Translation_MinDistance: 0.3
-  Scale_SizeGoal: 0.9
+  AllowedMin: 0
+  AllowedMax: 0
   MaterialColor:
     m_InternalValue: {r: 1, g: 1, b: 1, a: 1}
   ObjectScale:

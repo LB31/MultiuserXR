@@ -2,15 +2,12 @@ using MLAPI;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class ARInteractionController : MonoBehaviour, IInteractionController
+public class ARInteractionController : InteractionController
 {
     public float rotationSpeed = 10;
     public float RotationSpeed { get { return rotationSpeed; } set { rotationSpeed = value; } }
 
     public LayerMask LayerMask;
-
-    private InteractableObject selectedObject;
-    private InteractableObject previousSelectedObject;
 
     // Finger / Joystick positions
     private Vector2 currentPos;
@@ -57,40 +54,11 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.value))
         {
-            // only hit objects that are shared through network
-            if (hit.transform.GetComponent<InteractableObject>())
-            {
-                previousSelectedObject = selectedObject;
-                selectedObject = hit.transform.GetComponent<InteractableObject>();
-                selectedObject.SelectionReticle.SetActive(true);
+            bool selected = SelectObject(hit.transform.gameObject);
 
-                // Is this object selected already by someone else?
-                if (selectedObject.SelectedBy.Value != ulong.MaxValue &&
-                    selectedObject.SelectedBy.Value != NetworkManager.Singleton.LocalClientId)
-                {
-                    selectedObject = null;
-                    return;
-                }
-                // Show that the object is now selected by the client
-                else
-                {
-                    Color ownColor = transform.root.GetComponent<NetworkPlayer>().PlayerMaterialColor.Value;
-                    selectedObject.SelectedBy.Value = NetworkManager.Singleton.LocalClientId;
-                    selectedObject.ReticleColor.Value = ownColor;
-                    selectedObject.SelectionReticle.GetComponent<SpriteRenderer>().color = ownColor;
-                }
-
-                // When Client selects a new object
-                if (previousSelectedObject && previousSelectedObject != selectedObject)
-                {
-                    previousSelectedObject.SelectionReticle.SetActive(false);
-                    previousSelectedObject.SelectedBy.Value = ulong.MaxValue;
-                }
-
-                holdingFingerOnObj = true;
-                deselectedWithoutInteraction = true;
-             
-            }
+            holdingFingerOnObj = selected;
+            deselectedWithoutInteraction = selected;
+            Debug.Log("selected " + hit.transform.gameObject.name);
         }
 
         // For moving
@@ -101,7 +69,6 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
     private void FingerHeld()
     {
         if (selectedObject == null || selectedObject.SelectedBy.Value != NetworkManager.Singleton.LocalClientId) return;
-
 
         currentPos = Input.mousePosition;
         deltaPos = Input.mousePosition - previousMousePos;
@@ -137,25 +104,13 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
         prevCamRotation = Camera.main.transform.eulerAngles;
     }
 
-    private async void FingerReleased()
+    private void FingerReleased()
     {
-        await Task.Delay(300);
-        if (selectedObject)
-        {
-            selectedObject.ClientRotates = false;
-            selectedObject.ClientScales = false;
-            selectedObject.ClientMoves = false;
-            holdingFingerOnObj = false;
-
-            // Deselect when the same object was hit without interaction
-            if (selectedObject.Equals(previousSelectedObject) && deselectedWithoutInteraction)
-            {
-                selectedObject.SelectedBy.Value = ulong.MaxValue;
-                selectedObject.SelectionReticle.SetActive(false);
-                selectedObject = null;
-                deselectedWithoutInteraction = false;
-            }
-        }
+        if (!selectedObject) return;
+        bool wholeDeselect = selectedObject.Equals(previousSelectedObject) && deselectedWithoutInteraction;
+        DeselectObject(wholeDeselect);
+        deselectedWithoutInteraction = !wholeDeselect;
+        holdingFingerOnObj = false;
     }
 
     public void RotateObject()
@@ -187,7 +142,6 @@ public class ARInteractionController : MonoBehaviour, IInteractionController
         }
     }
 
-    
     public void MoveObject()
     {
         selectedObject.ClientMoves = true;

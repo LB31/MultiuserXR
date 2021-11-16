@@ -398,7 +398,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WorldCenter: {fileID: 1860031430}
   DrawCanvas: {fileID: 1357573241}
-  CurrentPlatform: 5
+  CurrentPlatform: 2
   MakeAppearOnPlane: {fileID: 0}
   OwnClientID: 0
   AllLookAtObjects: []
@@ -5276,11 +5276,8 @@ MonoBehaviour:
   SelectionReticleSize: 1
   ScalingAllowed: 1
   MinMaxScale: {x: 0, y: 0}
-  allowedMin: 0
-  allowedMax: 0
-  Rotation_MinDegrees: 1.5
-  Translation_MinDistance: 0.3
-  Scale_SizeGoal: 0.9
+  AllowedMin: 0
+  AllowedMax: 0
   MaterialColor:
     m_InternalValue: {r: 1, g: 1, b: 1, a: 1}
   ObjectScale:
@@ -9541,11 +9538,8 @@ MonoBehaviour:
   SelectionReticleSize: 1
   ScalingAllowed: 1
   MinMaxScale: {x: 1.5, y: 2}
-  allowedMin: 0
-  allowedMax: 0
-  Rotation_MinDegrees: 1.5
-  Translation_MinDistance: 0.3
-  Scale_SizeGoal: 0.9
+  AllowedMin: 0
+  AllowedMax: 0
   MaterialColor:
     m_InternalValue: {r: 1, g: 1, b: 1, a: 1}
   ObjectScale:
@@ -9616,11 +9610,8 @@ MonoBehaviour:
   SelectionReticleSize: 2
   ScalingAllowed: 1
   MinMaxScale: {x: 2, y: 1.5}
-  allowedMin: 0
-  allowedMax: 0
-  Rotation_MinDegrees: 1.5
-  Translation_MinDistance: 0.3
-  Scale_SizeGoal: 0.9
+  AllowedMin: 0
+  AllowedMax: 0
   MaterialColor:
     m_InternalValue: {r: 1, g: 1, b: 1, a: 1}
   ObjectScale:
