@@ -3376,7 +3376,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   VRConnector: {fileID: 1950275066}
   ARConnector: {fileID: 100093564}
-  CurrentPlatform: 2
+  CurrentPlatform: 0
 --- !u!1 &1572302375
 GameObject:
   m_ObjectHideFlags: 0
