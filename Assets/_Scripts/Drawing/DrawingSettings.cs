@@ -40,21 +40,18 @@ public class DrawingSettings : MonoBehaviour
         Color c = Color.red;
         c.a = Transparency;
         SetMarkerColour(c);
-        DrawManager.drawable.SetPenBrush();
     }
     public void SetMarkerGreen()
     {
         Color c = Color.green;
         c.a = Transparency;
         SetMarkerColour(c);
-        DrawManager.drawable.SetPenBrush();
     }
     public void SetMarkerBlue()
     {
         Color c = Color.blue;
         c.a = Transparency;
         SetMarkerColour(c);
-        DrawManager.drawable.SetPenBrush();
     }
     public void SetEraser()
     {

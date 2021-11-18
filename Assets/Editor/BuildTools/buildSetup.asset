@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abortBatchOnFailure: 0
   entriesList:
-  - enabled: 0
+  - enabled: 1
     buildName: MultiuserXR_Android.apk
     target: 13
     debugBuild: 0
@@ -39,7 +39,7 @@ MonoBehaviour:
     ps4BuildSubtarget: 0
     ps4HardwareTarget: 0
     headlessModeServerBuild: 0
-  - enabled: 1
+  - enabled: 0
     buildName: MultiuserXR_Quest.apk
     target: 13
     debugBuild: 0

@@ -544,7 +544,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WorldCenter: {fileID: 1860031430}
   DrawCanvas: {fileID: 1357573241}
-  CurrentPlatform: 1
+  CurrentPlatform: 0
   MakeAppearOnPlane: {fileID: 0}
   OwnClientID: 0
   AllLookAtObjects: []

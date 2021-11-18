@@ -11,7 +11,7 @@ public class SendTextureTest : NetworkBehaviour
 {
     public Texture2D Texture;
     public Texture2D TextureClone;
-    public int MTU_Size = 65000;
+    public int MTU_Size = 1400;
 
     public int ChunkSize;
     public int SendIterations;

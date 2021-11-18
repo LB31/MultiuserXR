@@ -1,16 +1,5 @@
 using MLAPI;
-using MLAPI.Messaging;
-using MLAPI.NetworkVariable;
-using MLAPI.NetworkVariable.Collections;
-using MLAPI.Serialization;
-using MLAPI.Serialization.Pooled;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Security.Policy;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 
 public class DrawManager : MonoBehaviour
@@ -52,17 +41,16 @@ public class DrawManager : MonoBehaviour
 
         drawSharer = GetComponent<NetworkDrawSharer>();
 
-        // DEFAULT BRUSH SET HERE
-        currentBrush = PenBrush;
-
         // Initialize clean pixels to use
         clean_colours_array = new Color[DrawableTexture.width * DrawableTexture.height];
         for (int x = 0; x < clean_colours_array.Length; x++)
             clean_colours_array[x] = ResetColor;
 
         // Should we reset our canvas image when we hit play in the editor?
-        if (ResetCanvasOnPlay)
+        if (ResetCanvasOnPlay && NetworkManager.Singleton.IsServer)
             ResetCanvas();
+
+
     }
 
 
@@ -80,7 +68,7 @@ public class DrawManager : MonoBehaviour
         else
         {
             // Colour in a line from where we were on the last update call
-            ColourBetween(PreviousDragPosition, pixel_pos, Pen_Width, PenColor);
+            ColorBetween(PreviousDragPosition, pixel_pos, Pen_Width, PenColor);
         }
 
         ApplyMarkedPixelChanges();
@@ -89,25 +77,8 @@ public class DrawManager : MonoBehaviour
     }
 
 
-    // Helper method used by UI to set what brush the user wants
-    // Create a new one for any new brushes you implement
-    public void SetPenBrush()
-    {
-        // PenBrush is the NAME of the method we want to set as our current brush
-        currentBrush = PenBrush;
-    }
-
-
-    void Update()
-    {
-
-
-
-    }
-
-
     // Set the colour of pixels in a straight line from start_point all the way to end_point, to ensure everything inbetween is coloured
-    public void ColourBetween(Vector2 start_point, Vector2 end_point, int width, Color color)
+    public void ColorBetween(Vector2 start_point, Vector2 end_point, int width, Color color)
     {
         // Get the distance from start to finish
         float distance = Vector2.Distance(start_point, end_point);
