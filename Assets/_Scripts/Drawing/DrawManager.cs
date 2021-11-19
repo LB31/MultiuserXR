@@ -24,7 +24,7 @@ public class DrawManager : MonoBehaviour
 
     public Vector2 PreviousDragPosition;
 
-    private Color[] clean_colours_array;
+    private Color[] clean_colors_array;
     private Color32[] cur_colors;
 
     [HideInInspector]
@@ -42,9 +42,9 @@ public class DrawManager : MonoBehaviour
         drawSharer = GetComponent<NetworkDrawSharer>();
 
         // Initialize clean pixels to use
-        clean_colours_array = new Color[DrawableTexture.width * DrawableTexture.height];
-        for (int x = 0; x < clean_colours_array.Length; x++)
-            clean_colours_array[x] = ResetColor;
+        clean_colors_array = new Color[DrawableTexture.width * DrawableTexture.height];
+        for (int x = 0; x < clean_colors_array.Length; x++)
+            clean_colors_array[x] = ResetColor;
 
         // Should we reset our canvas image when we hit play in the editor?
         if (ResetCanvasOnPlay && NetworkManager.Singleton.IsServer)
@@ -54,7 +54,7 @@ public class DrawManager : MonoBehaviour
     }
 
 
-    public void PenBrush(Vector2 pixelUV)
+    public void Draw(Vector2 pixelUV)
     {
         Vector2 pixel_pos = pixelUV;
 
@@ -183,7 +183,7 @@ public class DrawManager : MonoBehaviour
     // Changes every pixel to be the reset colour
     public void ResetCanvas()
     {
-        DrawableTexture.SetPixels(clean_colours_array);
+        DrawableTexture.SetPixels(clean_colors_array);
         DrawableTexture.Apply();
 
         if (drawSharer)
