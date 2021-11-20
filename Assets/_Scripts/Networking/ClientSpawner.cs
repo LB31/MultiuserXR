@@ -1,23 +1,33 @@
 using MLAPI;
 using MLAPI.Messaging;
 using MLAPI.Spawning;
+using System;
 using UnityEngine;
 
 public class ClientSpawner : NetworkBehaviour
 {
     public GameObject ClientXR;
 
+    // Time testing
+    DateTime startTime;
+
     public override void NetworkStart()
     {
         if (IsClient || IsHost)
         {
-            SpawnClientServerRpc(NetworkManager.Singleton.LocalClientId);
+            startTime = DateTime.Now;
+            Debug.Log(startTime);
+            SpawnClientServerRpc(NetworkManager.Singleton.LocalClientId, startTime.ToString());
         }
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void SpawnClientServerRpc(ulong clientID)
+    public void SpawnClientServerRpc(ulong clientID, string dt)
     {
+        // Time test
+        Debug.Log(DateTime.Parse(dt));
+        Debug.Log(TimeManager.Instance.GetTimeDifference(DateTime.Parse(dt)) + " time till the message came to server");
+
         GameObject ownPlayer = Instantiate(ClientXR, new Vector3(0, 0, 0), Quaternion.identity);
         NetworkObject netObj = ownPlayer.GetComponent<NetworkObject>();
 
@@ -38,7 +48,10 @@ public class ClientSpawner : NetworkBehaviour
 
     [ClientRpc]
     public void SpawnReadyClientRpc(ulong clientID, ClientRpcParams clientRpcParams = default)
-    {     
+    {
+        // Time test
+        Debug.Log(TimeManager.Instance.GetTimeDifference(startTime) + " time the server took to answer");
+
         var ownClient = NetworkSpawnManager.GetLocalPlayerObject();
         ownClient.GetComponent<NetworkPlayer>().PreparePlatformSpecificPlayer();
         GameManager.Instance.HandleAllLookAtObjects(clientID);

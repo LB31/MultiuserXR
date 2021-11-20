@@ -26,7 +26,7 @@ public class DrawController : MonoBehaviour
     private void Start()
     {
         dm = DrawManager.drawable;
-        Debug.Log(GetComponent<NetworkObject>().IsOwner);
+
         // Deactivate this component of the instances of other clients
         isOwner = GetComponent<NetworkObject>().IsOwner;
         if (!isOwner)
