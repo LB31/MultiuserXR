@@ -68,6 +68,7 @@ public class NetworkDrawSharer : NetworkBehaviour
     public void ShareUpdate(ulong sendTo, ulong sender)
     {
         textureToSend = DrawableTexture.GetRawTextureData().Compress();
+
         lastClient.Value = sender;
 
         SendMessage(sendTo, textureToSend);

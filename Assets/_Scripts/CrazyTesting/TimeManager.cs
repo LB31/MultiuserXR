@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class TimeManager : Singleton<TimeManager>
 {
+    private DateTime currentRun;
+
     void Start()
     {
         
@@ -32,10 +34,19 @@ public class TimeManager : Singleton<TimeManager>
     }
 
 
-    public int GetTimeDifference(DateTime start, DateTime current)
+    public int GetTimeDifferenceInMs(DateTime start, DateTime current)
     {
         TimeSpan diff = current - start;
         return diff.Milliseconds;
     }
 
+    public void StartCounting()
+    {
+        currentRun = DateTime.Now;
+    }
+
+    public int StopCounting()
+    {
+        return GetTimeDifferenceInMs(currentRun, DateTime.Now);
+    }
 }
