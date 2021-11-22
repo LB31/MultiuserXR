@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1976,13 +1976,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 8960089381261708353, guid: 73a96d780cf9c3d449adfe66459d4972, type: 3}
-    - {fileID: 3840935774066586423, guid: 73a96d780cf9c3d449adfe66459d4972, type: 3}
-    - {fileID: 1747648751707438066, guid: 73a96d780cf9c3d449adfe66459d4972, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     - {fileID: 2015252697, guid: 73a96d780cf9c3d449adfe66459d4972, type: 3}
     - {fileID: 7261175321642952227, guid: 73a96d780cf9c3d449adfe66459d4972, type: 3}
     - {fileID: 7261175321642952224, guid: 73a96d780cf9c3d449adfe66459d4972, type: 3}
-    - {fileID: 7261175321642952212, guid: 73a96d780cf9c3d449adfe66459d4972, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 73a96d780cf9c3d449adfe66459d4972, type: 3}
 --- !u!1 &928955359 stripped
 GameObject:
@@ -3379,7 +3378,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   VRConnector: {fileID: 1950275066}
   ARConnector: {fileID: 100093564}
-  CurrentPlatform: 0
+  CurrentPlatform: 2
 --- !u!1 &1572302375
 GameObject:
   m_ObjectHideFlags: 0

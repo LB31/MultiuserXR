@@ -31,6 +31,7 @@ public class VRManager : Singleton<VRManager>
     private void GetXRInputs()
     {
         XRInput[] inputs = GetComponents<XRInput>();
+        if (inputs.Length == 0) return;
         int indexLeft = Array.IndexOf(inputs, inputs.First(con => con.Controller.name.ToLower().Contains("left")));
         XRInputLeft = inputs[indexLeft];
         XRInputRight = inputs[indexLeft == 0 ? 1 : 0];

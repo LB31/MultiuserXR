@@ -17,17 +17,13 @@ public class ClientSpawner : NetworkBehaviour
         {
             startTime = DateTime.Now;
             Debug.Log(startTime);
-            SpawnClientServerRpc(NetworkManager.Singleton.LocalClientId, startTime.ToString());
+            SpawnClientServerRpc(NetworkManager.Singleton.LocalClientId);
         }
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void SpawnClientServerRpc(ulong clientID, string dt)
+    public void SpawnClientServerRpc(ulong clientID)
     {
-        // Time test
-        Debug.Log(DateTime.Parse(dt));
-        Debug.Log(TimeManager.Instance.GetTimeDifference(DateTime.Parse(dt)) + " time till the message came to server");
-
         GameObject ownPlayer = Instantiate(ClientXR, new Vector3(0, 0, 0), Quaternion.identity);
         NetworkObject netObj = ownPlayer.GetComponent<NetworkObject>();
 
@@ -49,9 +45,6 @@ public class ClientSpawner : NetworkBehaviour
     [ClientRpc]
     public void SpawnReadyClientRpc(ulong clientID, ClientRpcParams clientRpcParams = default)
     {
-        // Time test
-        Debug.Log(TimeManager.Instance.GetTimeDifference(startTime) + " time the server took to answer");
-
         var ownClient = NetworkSpawnManager.GetLocalPlayerObject();
         ownClient.GetComponent<NetworkPlayer>().PreparePlatformSpecificPlayer();
         GameManager.Instance.HandleAllLookAtObjects(clientID);
