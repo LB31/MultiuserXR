@@ -25,9 +25,13 @@ public class NetworkDrawSharer : NetworkBehaviour
         ReadPermission = NetworkVariablePermission.Everyone
     }, ulong.MaxValue);
 
+    // Time testing
+    private TimeManager timeManager;
+
     private void Start()
     {
         DrawableTexture = DrawManager.drawable.DrawableTexture;
+        timeManager = FindObjectOfType<TimeManager>();
 
         serverID = NetworkManager.Singleton.ServerClientId;
 
@@ -39,14 +43,24 @@ public class NetworkDrawSharer : NetworkBehaviour
         });
 
         //Receiving
-        CustomMessagingManager.RegisterNamedMessageHandler(MessageName, ReceiveMessage);
+        CustomMessagingManager.RegisterNamedMessageHandler(MessageName, ReceiveMessage);     
     }
 
     private void ReceiveMessage(ulong senderClientId, Stream stream)
     {
         using (PooledNetworkReader reader = PooledNetworkReader.Get(stream))
         {
+            double sentStartTime = reader.ReadDouble();
             byte[] image = reader.ReadByteArray();
+
+            
+            timeManager.CalculateSentTime(sentStartTime);
+            string output = $"Average time {timeManager.CalculateAverageSendTime()} with {timeManager.AllResults.Count} values; Data size {image.Length}";
+            GameManager.Instance.DebugText.text = output;
+            Debug.Log(output);
+
+            
+
             byte[] imageOriginal = image.Decompress();
             DrawableTexture.LoadRawTextureData(imageOriginal);
             DrawableTexture.Apply();
@@ -68,7 +82,6 @@ public class NetworkDrawSharer : NetworkBehaviour
     public void ShareUpdate(ulong sendTo, ulong sender)
     {
         textureToSend = DrawableTexture.GetRawTextureData().Compress();
-
         lastClient.Value = sender;
 
         SendMessage(sendTo, textureToSend);
@@ -78,16 +91,18 @@ public class NetworkDrawSharer : NetworkBehaviour
     {
         using (PooledNetworkBuffer stream = PooledNetworkBuffer.Get())
         {
-            WriteColors(stream, image);
+            WriteColors(stream, image, NetworkManager.Singleton.NetworkTime);
             CustomMessagingManager.SendNamedMessage(MessageName, sendTo, stream);
         }
     }
 
-    private void WriteColors(Stream stream, byte[] image)
+    private void WriteColors(Stream stream, byte[] image, double startTime)
     {
         using (var writer = PooledNetworkWriter.Get(stream))
         {
+            writer.WriteDouble(startTime);
             writer.WriteByteArray(image);
+            
         }
     }
 

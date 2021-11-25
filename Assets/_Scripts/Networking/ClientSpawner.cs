@@ -8,15 +8,10 @@ public class ClientSpawner : NetworkBehaviour
 {
     public GameObject ClientXR;
 
-    // Time testing
-    DateTime startTime;
-
     public override void NetworkStart()
     {
         if (IsClient || IsHost)
         {
-            startTime = DateTime.Now;
-            Debug.Log(startTime);
             SpawnClientServerRpc(NetworkManager.Singleton.LocalClientId);
         }
     }

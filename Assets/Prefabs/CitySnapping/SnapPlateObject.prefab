@@ -669,7 +669,7 @@ GameObject:
   - component: {fileID: 9123159827494209031}
   - component: {fileID: 7601396943401088448}
   m_Layer: 7
-  m_Name: PlateObject
+  m_Name: SnapPlateObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

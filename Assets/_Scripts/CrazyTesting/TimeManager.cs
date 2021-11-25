@@ -1,20 +1,43 @@
+using MLAPI;
+using MLAPI.Messaging;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
-public class TimeManager : Singleton<TimeManager>
+public class TimeManager : NetworkBehaviour
 {
     private DateTime currentRun;
-
-    void Start()
-    {
-        
-    }
+    public List<double> AllResults = new List<double>();
 
     void Update()
     {
-        GetTimeDifference(DateTime.Now);
+        if (NetworkManager.Singleton.IsServer) return;
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Debug.Log("p");
+            SendDoubleTimeServerRpc(DateTime.Now.ToOADate());
+            //SendServerRpc(NetworkManager.Singleton.NetworkTime);
+        }
+    }
+
+    public double CalculateSentTime(double startTime)
+    {
+        double wholePastTime = NetworkManager.Singleton.NetworkTime - startTime;
+        AllResults.Add(wholePastTime);
+        return wholePastTime;
+    }
+
+    public double CalculateAverageSendTime()
+    {
+        double addedResults = 0;
+        foreach (var result in AllResults)
+        {
+            addedResults += result;
+        }
+
+        return addedResults / AllResults.Count;
     }
 
     public DateTime GetCurrentDate()
@@ -49,4 +72,23 @@ public class TimeManager : Singleton<TimeManager>
     {
         return GetTimeDifferenceInMs(currentRun, DateTime.Now);
     }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void SendDoubleTimeServerRpc(double time)
+    {       
+        DateTime gotTime = DateTime.FromOADate(time);
+        TimeSpan pastTime = DateTime.Now - gotTime;
+        Debug.Log(pastTime.TotalMilliseconds);
+
+        SendClientRpc(pastTime.TotalMilliseconds, DateTime.Now.ToOADate());
+    }
+
+    [ClientRpc]
+    private void SendClientRpc(double pastTime, double sendTime)
+    {
+        DateTime gotTime = DateTime.FromOADate(sendTime);
+        TimeSpan wholePastTime = DateTime.Now - gotTime;
+        Debug.Log(wholePastTime.TotalMilliseconds + pastTime);   
+    }
+
 }
